@@ -1,1 +1,2343 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bounce Lab</title>
 
+<style>
+:root{
+  color-scheme:dark;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+
+*{
+  box-sizing:border-box
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#07080d;
+  color:#f7f7fb
+}
+
+.app{
+  max-width:1320px;
+  margin:auto;
+  padding:16px;
+  display:grid;
+  grid-template-columns:420px minmax(340px,1fr);
+  gap:22px
+}
+
+.panel{
+  background:#11131a;
+  border:1px solid #272b38;
+  border-radius:20px;
+  padding:18px;
+  height:max-content;
+  position:sticky;
+  top:16px;
+  box-shadow:0 18px 60px #0007
+}
+
+h1{
+  margin:0;
+  font-size:26px
+}
+
+.sub{
+  margin:6px 0 18px;
+  color:#939bad;
+  font-size:13px;
+  line-height:1.45
+}
+
+.sec{
+  border-top:1px solid #272b38;
+  padding-top:14px;
+  margin-top:14px
+}
+
+.sec h2{
+  font-size:13px;
+  margin:0 0 11px;
+  color:#d8dce9
+}
+
+label{
+  display:block;
+  font-size:11px;
+  color:#aeb5c7;
+  margin:0 0 6px
+}
+
+input[type=text],
+input[type=number],
+select{
+  width:100%;
+  background:#0b0d13;
+  color:#fff;
+  border:1px solid #303647;
+  border-radius:10px;
+  padding:10px 11px;
+  outline:none
+}
+
+input[type=range]{
+  width:100%
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px
+}
+
+.row3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px
+}
+
+.levels{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px
+}
+
+.level{
+  border:1px solid #2b3040;
+  background:#0b0d13;
+  border-radius:13px;
+  padding:8px;
+  text-align:center
+}
+
+.preview{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  margin:0 auto 7px;
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      #fff,
+      #9f8cff 38%,
+      #20243d 73%
+    );
+  background-size:cover;
+  background-position:center;
+  border:1px solid #ffffff22
+}
+
+.level b{
+  font-size:10px;
+  color:#cbd0df
+}
+
+.level input{
+  font-size:9px;
+  width:100%
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:15px
+}
+
+.buttons button:last-child{
+  grid-column:1/-1
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:11px 13px;
+  font-weight:800;
+  cursor:pointer;
+  background:#292e3b;
+  color:#fff
+}
+
+.primary{
+  background:linear-gradient(135deg,#7c3aed,#ec4899)
+}
+
+.record{
+  background:linear-gradient(135deg,#059669,#0891b2)
+}
+
+.danger{
+  background:#3a1823;
+  color:#ffb8c8
+}
+
+.status{
+  font-size:11px;
+  color:#9da4b6;
+  margin-top:10px;
+  line-height:1.45
+}
+
+.tip{
+  font-size:10px;
+  color:#737c91;
+  margin-top:9px
+}
+
+.stage{
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  min-height:calc(100vh - 32px)
+}
+
+.phone{
+  width:min(520px,100%);
+  aspect-ratio:9/16;
+  border-radius:24px;
+  overflow:hidden;
+  background:#000;
+  border:1px solid #242936;
+  box-shadow:0 22px 70px #000a
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  background:#000
+}
+
+.toggle{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  font-size:11px;
+  color:#aeb5c6
+}
+
+.toggle input{
+  width:16px;
+  height:16px
+}
+
+@media(max-width:930px){
+  .app{
+    grid-template-columns:1fr;
+    padding:12px
+  }
+
+  .panel{
+    position:static
+  }
+
+  .stage{
+    min-height:auto
+  }
+
+  .levels{
+    grid-template-columns:repeat(2,1fr)
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <section class="panel">
+
+    <h1>Bounce Lab</h1>
+
+    <div class="sub">
+      Erstelle 9:16 Ball-Merge-Spiele mit eigenen Bildern.
+      Laufzeit 60–120 Sekunden und Aufnahme direkt im Browser.
+    </div>
+
+    <div class="sec">
+
+      <h2>Video</h2>
+
+      <div class="row">
+
+        <div>
+          <label>
+            Dauer
+            <span id="durationValue">65 s</span>
+          </label>
+
+          <input
+            id="duration"
+            type="range"
+            min="60"
+            max="120"
+            value="65"
+          >
+        </div>
+
+        <div>
+          <label>Spawn-Tempo</label>
+
+          <select id="spawnRate">
+            <option value="0.70">Schnell</option>
+            <option value="0.95" selected>Normal</option>
+            <option value="1.25">Langsam</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div style="margin-top:9px">
+
+        <label>Hook</label>
+
+        <input
+          id="hook"
+          type="text"
+          value="WILL IT REACH THE FINAL FORM?"
+        >
+
+      </div>
+
+      <div style="margin-top:9px">
+
+        <label>Brand / Wasserzeichen</label>
+
+        <input
+          id="brand"
+          type="text"
+          value="@BounceLab"
+        >
+
+      </div>
+
+      <div style="margin-top:9px">
+
+        <label>Final-Text</label>
+
+        <input
+          id="finalText"
+          type="text"
+          value="FINAL FORM UNLOCKED ✨"
+        >
+
+      </div>
+
+    </div>
+
+    <div class="sec">
+
+      <h2>Eigene Ball-Bilder</h2>
+
+      <div class="tip" style="margin:0 0 10px">
+        Für jedes Level PNG, JPG oder WebP hochladen.
+        Transparente PNGs funktionieren am besten.
+      </div>
+
+      <div class="levels" id="levels"></div>
+
+    </div>
+
+    <div class="sec">
+
+      <h2>Physik</h2>
+
+      <div class="row3">
+
+        <div>
+          <label>Gravitation</label>
+
+          <input
+            id="gravity"
+            type="number"
+            min="0.1"
+            max="1.3"
+            step="0.05"
+            value="0.42"
+          >
+        </div>
+
+        <div>
+          <label>Bounce</label>
+
+          <input
+            id="bounce"
+            type="number"
+            min="0.72"
+            max="1.03"
+            step="0.01"
+            value="0.93"
+          >
+        </div>
+
+        <div>
+          <label>Chaos</label>
+
+          <input
+            id="chaos"
+            type="number"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.20"
+          >
+        </div>
+
+      </div>
+
+      <div
+        style="margin-top:10px"
+        class="toggle"
+      >
+
+        <input
+          id="showHud"
+          type="checkbox"
+          checked
+        >
+
+        <span>
+          Timer, Merge-Zähler und Text im Video anzeigen
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="buttons">
+
+      <button
+        id="start"
+        class="primary"
+      >
+        ▶ Spiel starten
+      </button>
+
+      <button id="reset">
+        ↻ Reset
+      </button>
+
+      <button
+        id="record"
+        class="record"
+      >
+        ● Aufnahme starten
+      </button>
+
+    </div>
+
+    <div
+      class="status"
+      id="status"
+    >
+      Bereit. Die Aufnahme enthält nur das 9:16-Video.
+    </div>
+
+  </section>
+
+  <section class="stage">
+
+    <div class="phone">
+
+      <canvas
+        id="game"
+        width="1080"
+        height="1920"
+      ></canvas>
+
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+
+const canvas =
+  document.getElementById("game");
+
+const ctx =
+  canvas.getContext("2d");
+
+const $ =
+  id => document.getElementById(id);
+
+
+const duration =
+  $("duration");
+
+const durationValue =
+  $("durationValue");
+
+const spawnRate =
+  $("spawnRate");
+
+const hook =
+  $("hook");
+
+const brand =
+  $("brand");
+
+const finalText =
+  $("finalText");
+
+const gravity =
+  $("gravity");
+
+const bounce =
+  $("bounce");
+
+const chaos =
+  $("chaos");
+
+const showHud =
+  $("showHud");
+
+const status =
+  $("status");
+
+
+const images =
+  Array(8).fill(null);
+
+
+const palette = [
+  "#ffffff",
+  "#f9a8d4",
+  "#c4b5fd",
+  "#93c5fd",
+  "#86efac",
+  "#fde68a",
+  "#fdba74",
+  "#fca5a5"
+];
+
+
+for(let i = 0; i < 8; i++){
+
+  const box =
+    document.createElement("div");
+
+  box.className =
+    "level";
+
+  box.innerHTML = `
+    <div
+      class="preview"
+      id="preview-${i}">
+    </div>
+
+    <b>
+      LEVEL ${i + 1}
+    </b>
+
+    <input
+      type="file"
+      accept="image/png,image/jpeg,image/webp"
+      style="margin-top:7px"
+    >
+  `;
+
+  $("levels")
+    .appendChild(box);
+
+
+  box
+    .querySelector("input")
+    .addEventListener(
+      "change",
+      event => {
+
+        const file =
+          event.target.files[0];
+
+        if(!file)
+          return;
+
+
+        const image =
+          new Image();
+
+
+        image.onload =
+          () => {
+
+            images[i] =
+              image;
+
+            const preview =
+              $(`preview-${i}`);
+
+            preview.style.backgroundImage =
+              `url("${image.src}")`;
+
+          };
+
+
+        image.src =
+          URL.createObjectURL(file);
+
+      }
+    );
+
+}
+
+
+duration.addEventListener(
+  "input",
+  () => {
+
+    durationValue.textContent =
+      duration.value + " s";
+
+  }
+);
+
+
+const arena = {
+
+  cx: 540,
+
+  cy: 1010,
+
+  radius: 505,
+
+  gap: 220
+
+};
+
+
+let balls = [];
+
+let running = false;
+
+let startTime = 0;
+
+let lastTime = 0;
+
+let lastSpawn = -99;
+
+let merges = 0;
+
+let animationFrame = 0;
+
+
+let recorder = null;
+
+let chunks = [];
+
+let recording = false;
+
+
+function ballRadius(level){
+
+  return [
+    28,
+    38,
+    51,
+    67,
+    86,
+    108,
+    133,
+    160
+  ][level];
+
+}
+
+
+function spawnBall(){
+
+  const radius =
+    ballRadius(0);
+
+
+  balls.push({
+
+    x:
+      arena.cx
+      +
+      (Math.random() - 0.5)
+      *
+      30,
+
+    y:
+      95,
+
+    vx:
+      (Math.random() - 0.5)
+      *
+      90,
+
+    vy:
+      25
+      +
+      Math.random()
+      *
+      35,
+
+    radius,
+
+    level: 0,
+
+    age: 0,
+
+    angle: 0,
+
+    spin:
+      (Math.random() - 0.5)
+      *
+      1.8
+
+  });
+
+}
+
+
+function resetGame(){
+
+  running =
+    false;
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+  balls =
+    [];
+
+  merges =
+    0;
+
+  draw(
+    0,
+    Number(duration.value)
+  );
+
+  status.textContent =
+    "Zurückgesetzt.";
+
+}
+
+
+function startGame(){
+
+  balls =
+    [];
+
+  merges =
+    0;
+
+  running =
+    true;
+
+  startTime =
+    performance.now();
+
+  lastTime =
+    startTime;
+
+  lastSpawn =
+    -99;
+
+  status.textContent =
+    "Spiel läuft…";
+
+  gameLoop(
+    startTime
+  );
+
+}
+
+
+$("start").onclick =
+  startGame;
+
+
+$("reset").onclick =
+  resetGame;
+
+
+function physics(dt){
+
+  const gravityValue =
+    Number(gravity.value)
+    *
+    1700;
+
+  const bounceValue =
+    Number(bounce.value);
+
+  const chaosValue =
+    Number(chaos.value);
+
+
+  for(const ball of balls){
+
+    ball.age += dt;
+
+    ball.vy +=
+      gravityValue
+      *
+      dt;
+
+    ball.x +=
+      ball.vx
+      *
+      dt;
+
+    ball.y +=
+      ball.vy
+      *
+      dt;
+
+    ball.angle +=
+      ball.spin
+      *
+      dt;
+
+
+    const neck =
+      arena.cy
+      -
+      arena.radius
+      +
+      28;
+
+
+    const left =
+      arena.cx
+      -
+      arena.gap
+      /
+      2;
+
+
+    const right =
+      arena.cx
+      +
+      arena.gap
+      /
+      2;
+
+
+    if(ball.y < neck){
+
+      if(
+        ball.x
+        -
+        ball.radius
+        <
+        left
+      ){
+
+        ball.x =
+          left
+          +
+          ball.radius;
+
+        ball.vx =
+          Math.abs(ball.vx)
+          *
+          bounceValue;
+
+      }
+
+
+      if(
+        ball.x
+        +
+        ball.radius
+        >
+        right
+      ){
+
+        ball.x =
+          right
+          -
+          ball.radius;
+
+        ball.vx =
+          -Math.abs(ball.vx)
+          *
+          bounceValue;
+
+      }
+
+
+      if(
+        ball.y
+        -
+        ball.radius
+        <
+        28
+      ){
+
+        ball.y =
+          28
+          +
+          ball.radius;
+
+        ball.vy =
+          Math.abs(ball.vy)
+          *
+          bounceValue;
+
+      }
+
+    }
+
+
+    const dx =
+      ball.x
+      -
+      arena.cx;
+
+    const dy =
+      ball.y
+      -
+      arena.cy;
+
+    const distance =
+      Math.hypot(
+        dx,
+        dy
+      )
+      ||
+      1;
+
+
+    const insideGap =
+      dy < 0
+      &&
+      Math.abs(dx)
+      <
+      arena.gap
+      /
+      2
+      +
+      20;
+
+
+    if(
+      distance
+      +
+      ball.radius
+      >
+      arena.radius
+      &&
+      !insideGap
+    ){
+
+      const nx =
+        dx
+        /
+        distance;
+
+      const ny =
+        dy
+        /
+        distance;
+
+
+      ball.x =
+        arena.cx
+        +
+        nx
+        *
+        (
+          arena.radius
+          -
+          ball.radius
+        );
+
+
+      ball.y =
+        arena.cy
+        +
+        ny
+        *
+        (
+          arena.radius
+          -
+          ball.radius
+        );
+
+
+      const normalVelocity =
+        ball.vx
+        *
+        nx
+        +
+        ball.vy
+        *
+        ny;
+
+
+      if(normalVelocity > 0){
+
+        ball.vx -=
+          (
+            1
+            +
+            bounceValue
+          )
+          *
+          normalVelocity
+          *
+          nx;
+
+
+        ball.vy -=
+          (
+            1
+            +
+            bounceValue
+          )
+          *
+          normalVelocity
+          *
+          ny;
+
+
+        ball.vx +=
+          (
+            Math.random()
+            -
+            0.5
+          )
+          *
+          chaosValue
+          *
+          130;
+
+
+        ball.vy +=
+          (
+            Math.random()
+            -
+            0.5
+          )
+          *
+          chaosValue
+          *
+          130;
+
+      }
+
+    }
+
+  }
+
+
+  const dead =
+    new Set();
+
+
+  const newborn =
+    [];
+
+
+  for(
+    let i = 0;
+    i < balls.length;
+    i++
+  ){
+
+    for(
+      let j = i + 1;
+      j < balls.length;
+      j++
+    ){
+
+      const a =
+        balls[i];
+
+      const b =
+        balls[j];
+
+
+      if(
+        dead.has(a)
+        ||
+        dead.has(b)
+      )
+        continue;
+
+
+      const dx =
+        b.x
+        -
+        a.x;
+
+      const dy =
+        b.y
+        -
+        a.y;
+
+
+      const distance =
+        Math.hypot(
+          dx,
+          dy
+        )
+        ||
+        0.001;
+
+
+      const minimum =
+        a.radius
+        +
+        b.radius;
+
+
+      if(distance < minimum){
+
+        const nx =
+          dx
+          /
+          distance;
+
+        const ny =
+          dy
+          /
+          distance;
+
+
+        const overlap =
+          minimum
+          -
+          distance;
+
+
+        a.x -=
+          nx
+          *
+          overlap
+          *
+          0.5;
+
+        a.y -=
+          ny
+          *
+          overlap
+          *
+          0.5;
+
+
+        b.x +=
+          nx
+          *
+          overlap
+          *
+          0.5;
+
+        b.y +=
+          ny
+          *
+          overlap
+          *
+          0.5;
+
+
+        if(
+          a.level === b.level
+          &&
+          a.level < 7
+          &&
+          a.age > 0.20
+          &&
+          b.age > 0.20
+        ){
+
+          const nextLevel =
+            a.level
+            +
+            1;
+
+
+          dead.add(a);
+
+          dead.add(b);
+
+
+          merges++;
+
+
+          newborn.push({
+
+            x:
+              (
+                a.x
+                +
+                b.x
+              )
+              /
+              2,
+
+            y:
+              (
+                a.y
+                +
+                b.y
+              )
+              /
+              2,
+
+            vx:
+              (
+                a.vx
+                +
+                b.vx
+              )
+              /
+              2
+              +
+              (
+                Math.random()
+                -
+                0.5
+              )
+              *
+              90,
+
+            vy:
+              (
+                a.vy
+                +
+                b.vy
+              )
+              /
+              2
+              -
+              100,
+
+            radius:
+              ballRadius(
+                nextLevel
+              ),
+
+            level:
+              nextLevel,
+
+            age:
+              0,
+
+            angle:
+              0,
+
+            spin:
+              (
+                Math.random()
+                -
+                0.5
+              )
+              *
+              1.8
+
+          });
+
+        }
+        else{
+
+          const relativeVelocity =
+            (
+              b.vx
+              -
+              a.vx
+            )
+            *
+            nx
+            +
+            (
+              b.vy
+              -
+              a.vy
+            )
+            *
+            ny;
+
+
+          if(relativeVelocity < 0){
+
+            const impulse =
+              -
+              (
+                1
+                +
+                bounceValue
+              )
+              *
+              relativeVelocity
+              /
+              2;
+
+
+            a.vx -=
+              impulse
+              *
+              nx;
+
+            a.vy -=
+              impulse
+              *
+              ny;
+
+
+            b.vx +=
+              impulse
+              *
+              nx;
+
+            b.vy +=
+              impulse
+              *
+              ny;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  balls =
+    balls.filter(
+      ball =>
+        !dead.has(ball)
+    );
+
+
+  balls.push(
+    ...newborn
+  );
+
+
+  if(balls.length > 110){
+
+    balls.splice(
+      0,
+      balls.length
+      -
+      110
+    );
+
+  }
+
+}
+
+
+function rainbowGradient(){
+
+  const gradient =
+    ctx.createLinearGradient(
+      35,
+      500,
+      1045,
+      1500
+    );
+
+
+  gradient.addColorStop(
+    0,
+    "#ff36b7"
+  );
+
+  gradient.addColorStop(
+    0.20,
+    "#9d57ff"
+  );
+
+  gradient.addColorStop(
+    0.42,
+    "#45d9ff"
+  );
+
+  gradient.addColorStop(
+    0.62,
+    "#63ffb1"
+  );
+
+  gradient.addColorStop(
+    0.80,
+    "#f5ff67"
+  );
+
+  gradient.addColorStop(
+    1,
+    "#ff9b43"
+  );
+
+
+  return gradient;
+
+}
+
+
+function roundedRectangle(
+  x,
+  y,
+  width,
+  height,
+  radius
+){
+
+  ctx.beginPath();
+
+  ctx.roundRect(
+    x,
+    y,
+    width,
+    height,
+    radius
+  );
+
+  ctx.fill();
+
+}
+
+
+function fitText(
+  text,
+  maximumWidth,
+  startingSize
+){
+
+  let size =
+    startingSize;
+
+
+  ctx.font =
+    `900 ${size}px system-ui`;
+
+
+  while(
+    size > 24
+    &&
+    ctx.measureText(text).width
+    >
+    maximumWidth
+  ){
+
+    size -= 2;
+
+    ctx.font =
+      `900 ${size}px system-ui`;
+
+  }
+
+
+  return size;
+
+}
+
+
+function drawBall(ball){
+
+  ctx.save();
+
+
+  ctx.translate(
+    ball.x,
+    ball.y
+  );
+
+
+  ctx.rotate(
+    ball.angle
+  );
+
+
+  ctx.beginPath();
+
+  ctx.arc(
+    0,
+    0,
+    ball.radius,
+    0,
+    Math.PI
+    *
+    2
+  );
+
+
+  ctx.clip();
+
+
+  const image =
+    images[
+      ball.level
+    ];
+
+
+  if(image){
+
+    const scale =
+      Math.max(
+        (
+          ball.radius
+          *
+          2
+        )
+        /
+        image.width,
+        (
+          ball.radius
+          *
+          2
+        )
+        /
+        image.height
+      );
+
+
+    const width =
+      image.width
+      *
+      scale;
+
+
+    const height =
+      image.height
+      *
+      scale;
+
+
+    ctx.drawImage(
+      image,
+      -width
+      /
+      2,
+      -height
+      /
+      2,
+      width,
+      height
+    );
+
+  }
+  else{
+
+    const gradient =
+      ctx.createRadialGradient(
+        -ball.radius
+        *
+        0.35,
+        -ball.radius
+        *
+        0.35,
+        ball.radius
+        *
+        0.05,
+        0,
+        0,
+        ball.radius
+      );
+
+
+    gradient.addColorStop(
+      0,
+      "#fff"
+    );
+
+
+    gradient.addColorStop(
+      0.34,
+      palette[
+        ball.level
+      ]
+    );
+
+
+    gradient.addColorStop(
+      1,
+      "#10131c"
+    );
+
+
+    ctx.fillStyle =
+      gradient;
+
+
+    ctx.fillRect(
+      -ball.radius,
+      -ball.radius,
+      ball.radius
+      *
+      2,
+      ball.radius
+      *
+      2
+    );
+
+
+    ctx.fillStyle =
+      "#000b";
+
+
+    ctx.font =
+      `900 ${Math.max(
+        18,
+        ball.radius
+        *
+        0.72
+      )}px system-ui`;
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.textBaseline =
+      "middle";
+
+
+    ctx.fillText(
+      String(
+        ball.level
+        +
+        1
+      ),
+      0,
+      2
+    );
+
+  }
+
+
+  ctx.restore();
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+    ball.x,
+    ball.y,
+    ball.radius,
+    0,
+    Math.PI
+    *
+    2
+  );
+
+
+  ctx.strokeStyle =
+    "#ffffff55";
+
+
+  ctx.lineWidth =
+    3;
+
+
+  ctx.stroke();
+
+}
+
+
+function draw(
+  elapsed,
+  timeLeft
+){
+
+  ctx.fillStyle =
+    "#000";
+
+
+  ctx.fillRect(
+    0,
+    0,
+    1080,
+    1920
+  );
+
+
+  ctx.strokeStyle =
+    rainbowGradient();
+
+
+  ctx.lineWidth =
+    13;
+
+
+  ctx.shadowBlur =
+    22;
+
+
+  ctx.shadowColor =
+    "#9b5cff55";
+
+
+  const gapAngle =
+    Math.asin(
+      (
+        arena.gap
+        /
+        2
+      )
+      /
+      arena.radius
+    );
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+    arena.cx,
+    arena.cy,
+    arena.radius,
+    -Math.PI
+    /
+    2
+    +
+    gapAngle,
+    Math.PI
+    *
+    1.5
+    -
+    gapAngle
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.shadowBlur =
+    0;
+
+
+  ctx.strokeStyle =
+    "#f7f7fb";
+
+
+  ctx.lineWidth =
+    10;
+
+
+  ctx.beginPath();
+
+
+  ctx.moveTo(
+    arena.cx
+    -
+    arena.gap
+    /
+    2,
+    30
+  );
+
+
+  ctx.lineTo(
+    arena.cx
+    -
+    arena.gap
+    /
+    2,
+    arena.cy
+    -
+    arena.radius
+    +
+    30
+  );
+
+
+  ctx.moveTo(
+    arena.cx
+    +
+    arena.gap
+    /
+    2,
+    30
+  );
+
+
+  ctx.lineTo(
+    arena.cx
+    +
+    arena.gap
+    /
+    2,
+    arena.cy
+    -
+    arena.radius
+    +
+    30
+  );
+
+
+  ctx.stroke();
+
+
+  for(const ball of balls){
+
+    drawBall(ball);
+
+  }
+
+
+  if(showHud.checked){
+
+    ctx.fillStyle =
+      "rgba(0,0,0,.62)";
+
+
+    roundedRectangle(
+      44,
+      48,
+      255,
+      76,
+      34
+    );
+
+
+    roundedRectangle(
+      781,
+      48,
+      255,
+      76,
+      34
+    );
+
+
+    ctx.fillStyle =
+      "#fff";
+
+
+    ctx.font =
+      "800 30px system-ui";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.textBaseline =
+      "middle";
+
+
+    ctx.fillText(
+      "MERGES "
+      +
+      merges,
+      171,
+      87
+    );
+
+
+    const seconds =
+      Math.max(
+        0,
+        Math.ceil(
+          timeLeft
+        )
+      );
+
+
+    const timerText =
+      String(
+        Math.floor(
+          seconds
+          /
+          60
+        )
+      )
+      .padStart(
+        2,
+        "0"
+      )
+      +
+      ":"
+      +
+      String(
+        seconds
+        %
+        60
+      )
+      .padStart(
+        2,
+        "0"
+      );
+
+
+    ctx.fillText(
+      timerText,
+      908,
+      87
+    );
+
+
+    if(
+      brand.value.trim()
+    ){
+
+      ctx.globalAlpha =
+        0.16;
+
+
+      ctx.font =
+        "900 48px system-ui";
+
+
+      ctx.fillText(
+        brand.value.trim(),
+        540,
+        1050
+      );
+
+
+      ctx.globalAlpha =
+        1;
+
+    }
+
+
+    let text =
+      hook.value;
+
+
+    if(timeLeft <= 0){
+
+      text =
+        finalText.value;
+
+    }
+    else if(
+      timeLeft
+      <
+      7
+    ){
+
+      text =
+        "FINAL MERGE?";
+
+    }
+    else if(
+      elapsed
+      >
+      Number(duration.value)
+      *
+      0.72
+    ){
+
+      text =
+        "ONLY A FEW MERGES LEFT…";
+
+    }
+    else if(
+      elapsed
+      >
+      Number(duration.value)
+      *
+      0.48
+    ){
+
+      text =
+        "HALFWAY TO FINAL FORM…";
+
+    }
+
+
+    const fontSize =
+      fitText(
+        text,
+        930,
+        52
+      );
+
+
+    ctx.font =
+      `900 ${fontSize}px system-ui`;
+
+
+    ctx.shadowBlur =
+      18;
+
+
+    ctx.shadowColor =
+      "#000";
+
+
+    ctx.fillStyle =
+      "#fff";
+
+
+    ctx.fillText(
+      text,
+      540,
+      1740
+    );
+
+
+    ctx.shadowBlur =
+      0;
+
+  }
+
+}
+
+
+function gameLoop(now){
+
+  if(!running)
+    return;
+
+
+  const dt =
+    Math.min(
+      0.025,
+      (
+        now
+        -
+        lastTime
+      )
+      /
+      1000
+    );
+
+
+  lastTime =
+    now;
+
+
+  const elapsed =
+    (
+      now
+      -
+      startTime
+    )
+    /
+    1000;
+
+
+  const timeLeft =
+    Number(duration.value)
+    -
+    elapsed;
+
+
+  if(
+    elapsed
+    -
+    lastSpawn
+    >
+    Number(
+      spawnRate.value
+    )
+  ){
+
+    spawnBall();
+
+    lastSpawn =
+      elapsed;
+
+  }
+
+
+  physics(
+    dt
+  );
+
+
+  draw(
+    elapsed,
+    timeLeft
+  );
+
+
+  if(timeLeft <= 0){
+
+    running =
+      false;
+
+
+    draw(
+      Number(duration.value),
+      0
+    );
+
+
+    status.textContent =
+      "Spiel beendet.";
+
+
+    if(recording){
+
+      setTimeout(
+        stopRecording,
+        700
+      );
+
+    }
+
+
+    return;
+
+  }
+
+
+  animationFrame =
+    requestAnimationFrame(
+      gameLoop
+    );
+
+}
+
+
+function startRecording(){
+
+  if(recording){
+
+    stopRecording();
+
+    return;
+
+  }
+
+
+  if(
+    !canvas.captureStream
+    ||
+    typeof MediaRecorder
+    ===
+    "undefined"
+  ){
+
+    status.textContent =
+      "Dieser Browser unterstützt die Aufnahme nicht. Nutze Chrome oder Edge am Desktop.";
+
+    return;
+
+  }
+
+
+  const stream =
+    canvas.captureStream(
+      60
+    );
+
+
+  let mimeType =
+    "video/webm;codecs=vp9";
+
+
+  if(
+    MediaRecorder
+      .isTypeSupported(
+        "video/mp4"
+      )
+  ){
+
+    mimeType =
+      "video/mp4";
+
+  }
+  else if(
+    !MediaRecorder
+      .isTypeSupported(
+        mimeType
+      )
+  ){
+
+    mimeType =
+      "video/webm";
+
+  }
+
+
+  try{
+
+    recorder =
+      new MediaRecorder(
+        stream,
+        {
+          mimeType,
+          videoBitsPerSecond:
+            12000000
+        }
+      );
+
+  }
+  catch(error){
+
+    recorder =
+      new MediaRecorder(
+        stream
+      );
+
+  }
+
+
+  chunks =
+    [];
+
+
+  recorder.ondataavailable =
+    event => {
+
+      if(
+        event.data.size
+      ){
+
+        chunks.push(
+          event.data
+        );
+
+      }
+
+    };
+
+
+  recorder.onstop =
+    () => {
+
+      const type =
+        recorder.mimeType
+        ||
+        "video/webm";
+
+
+      const blob =
+        new Blob(
+          chunks,
+          {
+            type
+          }
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+
+      link.href =
+        url;
+
+
+      link.download =
+        "bounce-lab-"
+        +
+        Date.now()
+        +
+        "."
+        +
+        (
+          type.includes(
+            "mp4"
+          )
+          ?
+          "mp4"
+          :
+          "webm"
+        );
+
+
+      link.click();
+
+
+      setTimeout(
+        () =>
+          URL.revokeObjectURL(
+            url
+          ),
+        1500
+      );
+
+
+      status.textContent =
+        "Video gespeichert.";
+
+    };
+
+
+  recorder.start(
+    1000
+  );
+
+
+  recording =
+    true;
+
+
+  $("record").textContent =
+    "■ Aufnahme stoppen";
+
+
+  $("record")
+    .classList
+    .add(
+      "danger"
+    );
+
+
+  status.textContent =
+    "Aufnahme läuft. Starte jetzt das Spiel.";
+
+}
+
+
+function stopRecording(){
+
+  if(
+    recorder
+    &&
+    recorder.state
+    !==
+    "inactive"
+  ){
+
+    recorder.stop();
+
+  }
+
+
+  recording =
+    false;
+
+
+  $("record").textContent =
+    "● Aufnahme starten";
+
+
+  $("record")
+    .classList
+    .remove(
+      "danger"
+    );
+
+}
+
+
+$("record").onclick =
+  startRecording;
+
+
+durationValue.textContent =
+  duration.value
+  +
+  " s";
+
+
+resetGame();
+
+</script>
+
+</body>
+</html>
