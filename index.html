@@ -1,39 +1,23 @@
 <!doctype html>
 <html lang="de">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Bounce Lab</title>
 
 <style>
-
 :root{
   color-scheme:dark;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-*{
-  box-sizing:border-box
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   min-height:100vh;
   background:#07080c;
-  color:#f7f7fb
+  color:#f7f7fb;
 }
 
 .app{
@@ -42,7 +26,7 @@ body{
   padding:14px;
   display:grid;
   grid-template-columns:390px minmax(300px,1fr);
-  gap:20px
+  gap:20px;
 }
 
 .panel{
@@ -53,37 +37,37 @@ body{
   height:max-content;
   position:sticky;
   top:14px;
-  box-shadow:0 20px 70px #0009
+  box-shadow:0 20px 70px #0009;
 }
 
 h1{
   margin:0;
-  font-size:25px
+  font-size:25px;
 }
 
 .sub{
   margin:6px 0 16px;
   color:#929aab;
   font-size:12px;
-  line-height:1.5
+  line-height:1.5;
 }
 
 .section{
   border-top:1px solid #262b37;
   margin-top:13px;
-  padding-top:13px
+  padding-top:13px;
 }
 
 .section h2{
   margin:0 0 10px;
-  font-size:13px
+  font-size:13px;
 }
 
 label{
   display:block;
   font-size:11px;
   color:#aeb5c7;
-  margin-bottom:5px
+  margin-bottom:5px;
 }
 
 input[type=text],
@@ -95,29 +79,29 @@ select{
   border:1px solid #303647;
   border-radius:9px;
   padding:9px 10px;
-  outline:none
+  outline:none;
 }
 
 input[type=range]{
-  width:100%
+  width:100%;
 }
 
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:8px
+  gap:8px;
 }
 
 .row3{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:7px
+  gap:7px;
 }
 
 .levels{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:7px
+  gap:7px;
 }
 
 .level{
@@ -125,7 +109,7 @@ input[type=range]{
   border:1px solid #292f3c;
   border-radius:11px;
   padding:7px;
-  text-align:center
+  text-align:center;
 }
 
 .preview{
@@ -140,29 +124,29 @@ input[type=range]{
     drop-shadow(0 0 8px #155dff);
   background-size:contain;
   background-repeat:no-repeat;
-  background-position:center
+  background-position:center;
 }
 
 .level b{
   font-size:9px;
-  color:#cbd0df
+  color:#cbd0df;
 }
 
 .level input{
   width:100%;
   font-size:8px;
-  margin-top:5px
+  margin-top:5px;
 }
 
 .buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  margin-top:14px
+  margin-top:14px;
 }
 
 .buttons button:last-child{
-  grid-column:1/-1
+  grid-column:1/-1;
 }
 
 button{
@@ -172,39 +156,39 @@ button{
   font-weight:800;
   cursor:pointer;
   background:#292e3b;
-  color:#fff
+  color:#fff;
 }
 
 .primary{
-  background:linear-gradient(135deg,#6c3be9,#d846b5)
+  background:linear-gradient(135deg,#6c3be9,#d846b5);
 }
 
 .record{
-  background:linear-gradient(135deg,#087f62,#087b9a)
+  background:linear-gradient(135deg,#087f62,#087b9a);
 }
 
 .danger{
   background:#531925;
-  color:#ffd4dc
+  color:#ffd4dc;
 }
 
 .status{
   font-size:11px;
   color:#9098a9;
   margin-top:9px;
-  line-height:1.45
+  line-height:1.45;
 }
 
 .hint{
   font-size:10px;
   color:#737b8e;
-  line-height:1.45
+  line-height:1.45;
 }
 
 .stage{
   display:flex;
   justify-content:center;
-  align-items:flex-start
+  align-items:flex-start;
 }
 
 .phone{
@@ -216,35 +200,31 @@ button{
   overflow:hidden;
   box-shadow:
     0 22px 70px #000c,
-    0 0 35px rgba(90,150,255,.06)
+    0 0 35px rgba(90,150,255,.07);
 }
 
 canvas{
   width:100%;
   height:100%;
   display:block;
-  background:#000
+  background:#000;
 }
 
 @media(max-width:900px){
-
   .app{
     grid-template-columns:1fr;
-    padding:10px
+    padding:10px;
   }
 
   .panel{
-    position:static
+    position:static;
   }
 
   .levels{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
@@ -256,10 +236,9 @@ canvas{
 <h1>Bounce Lab</h1>
 
 <div class="sub">
-70-Sekunden-Standard, weiche Suika-Physik,
-echtes Jelly-Jiggle, Glow, Merge-Chimes und einstellbares Wasserzeichen.
+Satisfying-Version mit Jelly-Jiggle, Glow, Merge-Chimes,
+Anti-Stack-Physik und einstellbarem Wasserzeichen.
 </div>
-
 
 <div class="section">
 
@@ -268,7 +247,6 @@ echtes Jelly-Jiggle, Glow, Merge-Chimes und einstellbares Wasserzeichen.
 <div class="row">
 
 <div>
-
 <label>
 Laufzeit
 <span id="durationLabel">70 s</span>
@@ -281,37 +259,21 @@ Laufzeit
   max="100"
   value="70"
 >
-
 </div>
 
-
 <div>
-
 <label>Spawn-Abstand</label>
 
 <select id="spawnRate">
-
-<option value="0.34" selected>
-Original · 0,34 s
-</option>
-
-<option value="0.38">
-Ruhiger
-</option>
-
-<option value="0.30">
-Schneller
-</option>
-
+  <option value="0.34" selected>Original · 0,34 s</option>
+  <option value="0.38">Ruhiger</option>
+  <option value="0.30">Schneller</option>
 </select>
-
 </div>
 
 </div>
-
 
 <div style="margin-top:9px">
-
 <label>Start-Hook</label>
 
 <input
@@ -319,26 +281,26 @@ Schneller
   type="text"
   value="come closer..."
 >
-
 </div>
 
-
 <div style="margin-top:9px">
-
-<label>Text nach Final-Level</label>
+<label>Text bei Final-Level</label>
 
 <input
   id="finalText"
   type="text"
   value=""
 >
+</div>
 
 </div>
 
 
-<div style="margin-top:9px">
+<div class="section">
 
-<label>Wasserzeichen</label>
+<h2>Wasserzeichen</h2>
+
+<label>Text</label>
 
 <input
   id="watermark"
@@ -346,15 +308,11 @@ Schneller
   value="@BounceLab"
 >
 
-</div>
-
-
 <div class="row" style="margin-top:9px">
 
 <div>
-
 <label>
-Wasserzeichen-Stärke
+Stärke
 <span id="watermarkOpacityLabel">38%</span>
 </label>
 
@@ -365,37 +323,17 @@ Wasserzeichen-Stärke
   max="100"
   value="38"
 >
-
 </div>
 
-
 <div>
-
 <label>Position</label>
 
 <select id="watermarkPosition">
-
-<option
-  value="bottom-left"
-  selected
->
-Unten links
-</option>
-
-<option value="bottom-right">
-Unten rechts
-</option>
-
-<option value="top-left">
-Oben links
-</option>
-
-<option value="top-right">
-Oben rechts
-</option>
-
+  <option value="bottom-left" selected>Unten links</option>
+  <option value="bottom-right">Unten rechts</option>
+  <option value="top-left">Oben links</option>
+  <option value="top-right">Oben rechts</option>
 </select>
-
 </div>
 
 </div>
@@ -407,20 +345,14 @@ Oben rechts
 
 <h2>Eigene Bilder</h2>
 
-<div
-  class="hint"
-  style="margin-bottom:9px"
->
+<div class="hint" style="margin-bottom:9px">
 Blue Orb → Strawberry → Lemon → Grapes →
 Peach → Pear → Apple → Pineapple.
 <br><br>
-Transparente PNGs funktionieren am besten.
+Am besten transparente PNGs verwenden.
 </div>
 
-<div
-  id="levels"
-  class="levels"
-></div>
+<div id="levels" class="levels"></div>
 
 </div>
 
@@ -432,7 +364,6 @@ Transparente PNGs funktionieren am besten.
 <div class="row3">
 
 <div>
-
 <label>Gravity</label>
 
 <input
@@ -443,12 +374,9 @@ Transparente PNGs funktionieren am besten.
   step="5"
   value="225"
 >
-
 </div>
 
-
 <div>
-
 <label>Bounce</label>
 
 <input
@@ -459,12 +387,9 @@ Transparente PNGs funktionieren am besten.
   step="0.01"
   value="0.18"
 >
-
 </div>
 
-
 <div>
-
 <label>Damping</label>
 
 <input
@@ -475,11 +400,26 @@ Transparente PNGs funktionieren am besten.
   step="0.001"
   value="0.998"
 >
-
 </div>
 
 </div>
 
+<div style="margin-top:9px">
+
+<label>
+Jiggle
+<span id="jiggleLabel">100%</span>
+</label>
+
+<input
+  id="jiggle"
+  type="range"
+  min="0"
+  max="160"
+  value="100"
+>
+
+</div>
 
 <div style="margin-top:9px">
 
@@ -523,12 +463,8 @@ Sound
 
 </div>
 
-
-<div
-  id="status"
-  class="status"
->
-Bereit. Für ein Video zuerst Aufnahme starten,
+<div id="status" class="status">
+Bereit. Für ein fertiges Video zuerst Aufnahme starten,
 danach Spiel starten.
 </div>
 
@@ -559,13 +495,10 @@ danach Spiel starten.
 ===================================================== */
 
 const $ =
-  id =>
-    document.getElementById(id);
-
+  id => document.getElementById(id);
 
 const canvas =
   $("game");
-
 
 const ctx =
   canvas.getContext(
@@ -575,82 +508,68 @@ const ctx =
     }
   );
 
-
 ctx.imageSmoothingEnabled =
   true;
-
 
 ctx.imageSmoothingQuality =
   "high";
 
-
 const durationInput =
   $("duration");
-
 
 const durationLabel =
   $("durationLabel");
 
-
 const spawnRateInput =
   $("spawnRate");
-
 
 const hookInput =
   $("hook");
 
-
 const finalTextInput =
   $("finalText");
-
 
 const watermarkInput =
   $("watermark");
 
-
 const watermarkOpacityInput =
   $("watermarkOpacity");
-
 
 const watermarkOpacityLabel =
   $("watermarkOpacityLabel");
 
-
 const watermarkPositionInput =
   $("watermarkPosition");
-
 
 const gravityInput =
   $("gravity");
 
-
 const restitutionInput =
   $("restitution");
-
 
 const dampingInput =
   $("damping");
 
+const jiggleInput =
+  $("jiggle");
+
+const jiggleLabel =
+  $("jiggleLabel");
 
 const volumeInput =
   $("volume");
 
-
 const volumeLabel =
   $("volumeLabel");
-
 
 const statusEl =
   $("status");
 
-
 const startButton =
   $("startButton");
 
-
 const resetButton =
   $("resetButton");
-
 
 const recordButton =
   $("recordButton");
@@ -661,21 +580,13 @@ const recordButton =
 ===================================================== */
 
 const arena = {
-
   cx:288,
-
   cy:512,
-
   r:246,
-
   left:250,
-
   right:326,
-
   joinY:269,
-
   line:5.5
-
 };
 
 
@@ -686,9 +597,7 @@ const arena = {
 const LEVEL_COUNT =
   8;
 
-
 const radii = [
-
   19,
   24,
   29,
@@ -697,12 +606,9 @@ const radii = [
   50,
   57,
   66
-
 ];
 
-
 const fallbackEmoji = [
-
   "",
   "🍓",
   "🍋",
@@ -711,12 +617,9 @@ const fallbackEmoji = [
   "🍐",
   "🍎",
   "🍍"
-
 ];
 
-
 const glowColors = [
-
   "#1476ff",
   "#ff3355",
   "#ffe347",
@@ -725,19 +628,15 @@ const glowColors = [
   "#b7ef50",
   "#ff3340",
   "#ffb229"
-
 ];
-
 
 const levelImages =
   Array(
     LEVEL_COUNT
   ).fill(null);
 
-
 const levelWrap =
   $("levels");
-
 
 for(
   let level = 0;
@@ -750,19 +649,15 @@ for(
       "div"
     );
 
-
   element.className =
     "level";
 
-
   element.innerHTML =
     `
-
       <div
         class="preview"
         id="preview-${level}"
       >
-
         ${
           level === 0
           ?
@@ -770,7 +665,6 @@ for(
           :
           fallbackEmoji[level]
         }
-
       </div>
 
       <b>
@@ -781,19 +675,14 @@ for(
         type="file"
         accept="image/png,image/jpeg,image/webp"
       >
-
     `;
-
 
   levelWrap.appendChild(
     element
   );
 
-
   element
-    .querySelector(
-      "input"
-    )
+    .querySelector("input")
     .addEventListener(
       "change",
       event => {
@@ -801,17 +690,14 @@ for(
         const file =
           event.target.files[0];
 
-
         if(
           !file
         ){
           return;
         }
 
-
         const image =
           new Image();
-
 
         image.onload =
           () => {
@@ -819,22 +705,18 @@ for(
             levelImages[level] =
               image;
 
-
             const preview =
               $(
                 `preview-${level}`
               );
 
-
             preview.textContent =
               "";
-
 
             preview.style.backgroundImage =
               `url("${image.src}")`;
 
           };
-
 
         image.src =
           URL.createObjectURL(
@@ -854,49 +736,38 @@ for(
 let balls =
   [];
 
-
 let effects =
   [];
-
 
 let running =
   false;
 
-
 let animationFrame =
   null;
-
 
 let startTime =
   0;
 
-
 let lastTime =
   0;
-
 
 let spawnClock =
   0;
 
-
 let accumulator =
   0;
-
 
 let finalReachedAt =
   null;
 
-
 const STEP =
   1 / 120;
-
 
 const MAX_STEPS =
   6;
 
-
 const MAX_BALLS =
-  58;
+  64;
 
 
 /* =====================================================
@@ -904,17 +775,11 @@ const MAX_BALLS =
 ===================================================== */
 
 function makeBall(
-
   level,
-
   x = arena.cx,
-
   y = -25,
-
   vx = 0,
-
   vy = 172
-
 ){
 
   return {
@@ -943,18 +808,11 @@ function makeBall(
     squash:
       0,
 
-    stretch:
-      0,
-
     pop:
       0,
 
     glowBoost:
       0,
-
-    /*
-      TRUE JIGGLE STATE
-    */
 
     jiggle:
       0,
@@ -976,17 +834,21 @@ function makeBall(
 
 function seedInitialStream(){
 
+  /*
+    Im Referenzvideo ist der Schacht
+    beim Start bereits gefüllt.
+
+    Die Kugeln bleiben perfekt mittig.
+  */
+
   const spacing =
     59;
-
 
   const amount =
     10;
 
-
   const firstY =
     -5;
-
 
   for(
     let i = 0;
@@ -997,21 +859,11 @@ function seedInitialStream(){
     balls.push(
 
       makeBall(
-
         0,
-
         arena.cx,
-
-        firstY
-        +
-        i
-        *
-        spacing,
-
+        firstY + i * spacing,
         0,
-
         172
-
       )
 
     );
@@ -1028,28 +880,19 @@ function seedInitialStream(){
 function spawnBall(){
 
   if(
-    balls.length
-    >=
-    MAX_BALLS
+    balls.length >= MAX_BALLS
   ){
     return;
   }
 
-
   balls.push(
 
     makeBall(
-
       0,
-
       arena.cx,
-
       -25,
-
       0,
-
       172
-
     )
 
   );
@@ -1064,21 +907,16 @@ function spawnBall(){
 let audioContext =
   null;
 
-
 let masterGain =
   null;
-
 
 let compressor =
   null;
 
-
 let audioDestination =
   null;
 
-
 const mergeNotes = [
-
   329.63,
   440.00,
   587.33,
@@ -1086,7 +924,6 @@ const mergeNotes = [
   1046.50,
   1318.51,
   1760.00
-
 ];
 
 
@@ -1097,20 +934,16 @@ function ensureAudio(){
   ){
 
     if(
-      audioContext.state
-      ===
-      "suspended"
+      audioContext.state === "suspended"
     ){
 
       audioContext.resume();
 
     }
 
-
     return;
 
   }
-
 
   audioContext =
     new(
@@ -1119,56 +952,43 @@ function ensureAudio(){
       window.webkitAudioContext
     )();
 
-
   masterGain =
-    audioContext
-      .createGain();
-
+    audioContext.createGain();
 
   compressor =
     audioContext
       .createDynamicsCompressor();
 
-
   audioDestination =
     audioContext
       .createMediaStreamDestination();
 
-
   compressor.threshold.value =
     -18;
-
 
   compressor.knee.value =
     10;
 
-
   compressor.ratio.value =
     3;
-
 
   compressor.attack.value =
     0.002;
 
-
   compressor.release.value =
     0.12;
-
 
   masterGain.connect(
     compressor
   );
 
-
   compressor.connect(
     audioContext.destination
   );
 
-
   compressor.connect(
     audioDestination
   );
-
 
   updateVolume();
 
@@ -1181,7 +1001,6 @@ function updateVolume(){
     volumeInput.value
     +
     "%";
-
 
   if(
     masterGain
@@ -1222,26 +1041,21 @@ function playMergeSound(
     return;
   }
 
-
   const index =
     Math.min(
       newLevel - 1,
       mergeNotes.length - 1
     );
 
-
   const frequency =
     mergeNotes[index];
-
 
   const now =
     audioContext.currentTime;
 
-
   const pan =
     audioContext
       .createStereoPanner();
-
 
   pan.pan.value =
     Math.max(
@@ -1249,32 +1063,30 @@ function playMergeSound(
       Math.min(
         0.45,
         (
-          x - 288
+          x - arena.cx
         )
         /
-        288
+        arena.cx
       )
     );
-
 
   pan.connect(
     masterGain
   );
 
 
+  /* MAIN PLING */
+
   const osc =
     audioContext
       .createOscillator();
-
 
   const gain =
     audioContext
       .createGain();
 
-
   osc.type =
     "sine";
-
 
   osc.frequency
     .setValueAtTime(
@@ -1282,20 +1094,17 @@ function playMergeSound(
       now
     );
 
-
   osc.frequency
     .exponentialRampToValueAtTime(
       frequency,
       now + 0.055
     );
 
-
   gain.gain
     .setValueAtTime(
       0.0001,
       now
     );
-
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1303,49 +1112,42 @@ function playMergeSound(
       now + 0.003
     );
 
-
   gain.gain
     .exponentialRampToValueAtTime(
       0.0001,
       now + 0.285
     );
 
-
   osc.connect(
     gain
   );
-
 
   gain.connect(
     pan
   );
 
-
   osc.start(now);
-
 
   osc.stop(
     now + 0.30
   );
 
 
+  /* SPARKLE */
+
   const sparkle =
     audioContext
       .createOscillator();
-
 
   const sparkleGain =
     audioContext
       .createGain();
 
-
   sparkle.type =
     "sine";
 
-
   sparkle.frequency.value =
     frequency * 4;
-
 
   sparkleGain.gain
     .setValueAtTime(
@@ -1353,13 +1155,11 @@ function playMergeSound(
       now
     );
 
-
   sparkleGain.gain
     .exponentialRampToValueAtTime(
       0.017,
       now + 0.002
     );
-
 
   sparkleGain.gain
     .exponentialRampToValueAtTime(
@@ -1367,29 +1167,80 @@ function playMergeSound(
       now + 0.17
     );
 
-
   sparkle.connect(
     sparkleGain
   );
-
 
   sparkleGain.connect(
     pan
   );
 
-
   sparkle.start(now);
-
 
   sparkle.stop(
     now + 0.19
   );
 
+
+  /* BIG FRUIT BODY */
+
+  if(
+    newLevel >= 5
+  ){
+
+    const low =
+      audioContext
+        .createOscillator();
+
+    const lowGain =
+      audioContext
+        .createGain();
+
+    low.type =
+      "sine";
+
+    low.frequency.value =
+      105;
+
+    lowGain.gain
+      .setValueAtTime(
+        0.0001,
+        now
+      );
+
+    lowGain.gain
+      .exponentialRampToValueAtTime(
+        0.025,
+        now + 0.003
+      );
+
+    lowGain.gain
+      .exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.095
+      );
+
+    low.connect(
+      lowGain
+    );
+
+    lowGain.connect(
+      pan
+    );
+
+    low.start(now);
+
+    low.stop(
+      now + 0.11
+    );
+
+  }
+
 }
 
 
 /* =====================================================
-   MERGE EFFECT
+   EFFECTS
 ===================================================== */
 
 function addMergeEffect(
@@ -1400,7 +1251,6 @@ function addMergeEffect(
 
   const sparks =
     [];
-
 
   for(
     let i = 0;
@@ -1422,19 +1272,18 @@ function addMergeEffect(
         +
         Math.random()
         *
-        32,
+        34,
 
       size:
         1
         +
         Math.random()
         *
-        1.5
+        1.6
 
     });
 
   }
-
 
   effects.push({
 
@@ -1453,7 +1302,6 @@ function addMergeEffect(
     sparks
 
   });
-
 
   if(
     effects.length > 20
@@ -1490,9 +1338,7 @@ function nearOpening(
     >
     arena.left
     -
-    ball.r
-    *
-    0.15
+    ball.r * 0.15
 
     &&
 
@@ -1500,9 +1346,7 @@ function nearOpening(
     <
     arena.right
     +
-    ball.r
-    *
-    0.15
+    ball.r * 0.15
 
   );
 
@@ -1519,29 +1363,26 @@ function solveArena(
   damping
 ){
 
+  /*
+    SCHACHT
+  */
+
   if(
     ball.y
     -
     ball.r
     <
-    arena.joinY
-    +
-    2
+    arena.joinY + 2
   ){
 
     if(
-      ball.x
-      -
-      ball.r
-      <
-      arena.left
+      ball.x - ball.r < arena.left
     ){
 
       ball.x =
         arena.left
         +
         ball.r;
-
 
       if(
         ball.vx < 0
@@ -1556,20 +1397,14 @@ function solveArena(
 
     }
 
-
     if(
-      ball.x
-      +
-      ball.r
-      >
-      arena.right
+      ball.x + ball.r > arena.right
     ){
 
       ball.x =
         arena.right
         -
         ball.r;
-
 
       if(
         ball.vx > 0
@@ -1587,17 +1422,15 @@ function solveArena(
   }
 
 
-  const dx =
-    ball.x
-    -
-    arena.cx;
+  /*
+    KREIS
+  */
 
+  const dx =
+    ball.x - arena.cx;
 
   const dy =
-    ball.y
-    -
-    arena.cy;
-
+    ball.y - arena.cy;
 
   const distance =
     Math.hypot(
@@ -1607,9 +1440,7 @@ function solveArena(
     ||
     1;
 
-
   if(
-
     distance
     +
     ball.r
@@ -1619,20 +1450,13 @@ function solveArena(
     &&
 
     !nearOpening(ball)
-
   ){
 
     const nx =
-      dx
-      /
-      distance;
-
+      dx / distance;
 
     const ny =
-      dy
-      /
-      distance;
-
+      dy / distance;
 
     ball.x =
       arena.cx
@@ -1645,7 +1469,6 @@ function solveArena(
         ball.r
       );
 
-
     ball.y =
       arena.cy
       +
@@ -1657,12 +1480,10 @@ function solveArena(
         ball.r
       );
 
-
     const normalVelocity =
       ball.vx * nx
       +
       ball.vy * ny;
-
 
     if(
       normalVelocity > 0
@@ -1678,13 +1499,11 @@ function solveArena(
           500
         );
 
-
       ball.squash =
         Math.max(
           ball.squash,
-          impact * 0.04
+          impact * 0.035
         );
-
 
       ball.glowBoost =
         Math.max(
@@ -1694,33 +1513,43 @@ function solveArena(
 
 
       /*
-        REAL JIGGLE IMPULSE
+        JIGGLE IMPULSE
       */
 
-      ball.jiggle =
-        Math.min(
-          0.085,
-          ball.jiggle
-          +
-          impact
-          *
-          0.038
-        );
+      const jiggleStrength =
+        Number(
+          jiggleInput.value
+        )
+        /
+        100;
 
+      ball.jiggle +=
+        impact
+        *
+        0.038
+        *
+        jiggleStrength;
 
       ball.jiggleVelocity -=
         impact
         *
-        0.62;
-
+        0.62
+        *
+        jiggleStrength;
 
       ball.jiggleTwist +=
         -nx
         *
         impact
         *
-        0.018;
+        0.018
+        *
+        jiggleStrength;
 
+
+      /*
+        BOUNCE
+      */
 
       ball.vx -=
         (
@@ -1732,7 +1561,6 @@ function solveArena(
         normalVelocity
         *
         nx;
-
 
       ball.vy -=
         (
@@ -1746,19 +1574,20 @@ function solveArena(
         ny;
 
 
+      /*
+        TANGENTIAL MOVEMENT
+      */
+
       const tangentX =
         -ny;
 
-
       const tangentY =
         nx;
-
 
       const tangentVelocity =
         ball.vx * tangentX
         +
         ball.vy * tangentY;
-
 
       ball.vx -=
         tangentVelocity
@@ -1766,9 +1595,10 @@ function solveArena(
         tangentX
         *
         (
-          1 - damping
+          1
+          -
+          damping
         );
-
 
       ball.vy -=
         tangentVelocity
@@ -1776,22 +1606,31 @@ function solveArena(
         tangentY
         *
         (
-          1 - damping
+          1
+          -
+          damping
         );
 
 
+      /*
+        ANTI-STACK
+
+        Wenn eine Frucht unten fast
+        still steht, rollt sie leicht
+        aus der Mitte heraus.
+      */
+
       if(
-        ny > 0.55
+        ny > 0.50
         &&
         Math.abs(
           ball.vx
         )
         <
-        11
+        14
       ){
 
         let direction;
-
 
         if(
           Math.abs(
@@ -1819,7 +1658,6 @@ function solveArena(
 
         }
 
-
         ball.vx +=
           direction
           *
@@ -1828,7 +1666,7 @@ function solveArena(
             +
             Math.random()
             *
-            6
+            7
           );
 
       }
@@ -1841,7 +1679,7 @@ function solveArena(
 
 
 /* =====================================================
-   PAIRS
+   COLLISION PAIRS
 ===================================================== */
 
 function getPairs(){
@@ -1849,10 +1687,8 @@ function getPairs(){
   const cellSize =
     82;
 
-
   const grid =
     new Map();
-
 
   for(
     let i = 0;
@@ -1863,22 +1699,18 @@ function getPairs(){
     const ball =
       balls[i];
 
-
     const gx =
       Math.floor(
         ball.x / cellSize
       );
-
 
     const gy =
       Math.floor(
         ball.y / cellSize
       );
 
-
     const key =
       gx + "," + gy;
-
 
     if(
       !grid.has(key)
@@ -1891,21 +1723,17 @@ function getPairs(){
 
     }
 
-
     grid
       .get(key)
       .push(i);
 
   }
 
-
   const pairs =
     [];
 
-
   const seen =
     new Set();
-
 
   for(
     const [
@@ -1922,7 +1750,6 @@ function getPairs(){
       key
         .split(",")
         .map(Number);
-
 
     for(
       let ox = -1;
@@ -1949,13 +1776,11 @@ function getPairs(){
             )
           );
 
-
         if(
           !other
         ){
           continue;
         }
-
 
         for(
           const i
@@ -1973,10 +1798,8 @@ function getPairs(){
               continue;
             }
 
-
             const pairKey =
               i + ":" + j;
-
 
             if(
               seen.has(pairKey)
@@ -1984,9 +1807,9 @@ function getPairs(){
               continue;
             }
 
-
-            seen.add(pairKey);
-
+            seen.add(
+              pairKey
+            );
 
             pairs.push(
               [
@@ -2004,7 +1827,6 @@ function getPairs(){
     }
 
   }
-
 
   return pairs;
 
@@ -2024,17 +1846,22 @@ function physicsStep(
       gravityInput.value
     );
 
-
   const restitution =
     Number(
       restitutionInput.value
     );
 
-
   const damping =
     Number(
       dampingInput.value
     );
+
+  const jiggleStrength =
+    Number(
+      jiggleInput.value
+    )
+    /
+    100;
 
 
   for(
@@ -2046,26 +1873,21 @@ function physicsStep(
       dt;
 
 
+    /*
+      OLD POP / SQUASH DECAY
+    */
+
     ball.squash *=
       Math.pow(
         0.80,
         dt * 60
       );
 
-
-    ball.stretch *=
-      Math.pow(
-        0.80,
-        dt * 60
-      );
-
-
     ball.pop *=
       Math.pow(
         0.76,
         dt * 60
       );
-
 
     ball.glowBoost *=
       Math.pow(
@@ -2075,19 +1897,17 @@ function physicsStep(
 
 
     /*
-      TRUE JELLY SPRING
+      REAL JELLY SPRING
 
-      Mehrere kleine Überschwinger,
-      statt nur einmaliges Squash.
+      Das ist das eigentliche Jiggle:
+      breit -> schmal -> breit -> Ruhe.
     */
 
     const jiggleStiffness =
       205;
 
-
     const jiggleDamping =
       14.5;
-
 
     ball.jiggleVelocity +=
       (
@@ -2104,22 +1924,27 @@ function physicsStep(
       *
       dt;
 
-
     ball.jiggle +=
       ball.jiggleVelocity
       *
       dt;
 
+    const maxJiggle =
+      0.085
+      *
+      Math.max(
+        0.4,
+        jiggleStrength
+      );
 
     ball.jiggle =
       Math.max(
-        -0.085,
+        -maxJiggle,
         Math.min(
-          0.085,
+          maxJiggle,
           ball.jiggle
         )
       );
-
 
     ball.jiggleTwist *=
       Math.pow(
@@ -2128,12 +1953,15 @@ function physicsStep(
       );
 
 
+    /*
+      GRAVITY
+
+      Im Schacht nur leicht,
+      damit die Abstände gleichmäßig bleiben.
+    */
+
     if(
-      ball.y
-      <
-      arena.joinY
-      +
-      6
+      ball.y < arena.joinY + 6
     ){
 
       ball.vy +=
@@ -2155,12 +1983,15 @@ function physicsStep(
     }
 
 
+    /*
+      DAMPING
+    */
+
     ball.vx *=
       Math.pow(
         damping,
         dt * 60
       );
-
 
     ball.vy *=
       Math.pow(
@@ -2173,7 +2004,6 @@ function physicsStep(
       ball.vx
       *
       dt;
-
 
     ball.y +=
       ball.vy
@@ -2193,10 +2023,8 @@ function physicsStep(
   const pairs =
     getPairs();
 
-
   const removed =
     new Set();
-
 
   const created =
     [];
@@ -2213,10 +2041,8 @@ function physicsStep(
     const a =
       balls[i];
 
-
     const b =
       balls[j];
-
 
     if(
       !a
@@ -2230,14 +2056,11 @@ function physicsStep(
       continue;
     }
 
-
     const dx =
       b.x - a.x;
 
-
     const dy =
       b.y - a.y;
-
 
     const distance =
       Math.hypot(
@@ -2247,10 +2070,8 @@ function physicsStep(
       ||
       0.001;
 
-
     const minDistance =
       a.r + b.r;
-
 
     if(
       distance >= minDistance
@@ -2258,22 +2079,19 @@ function physicsStep(
       continue;
     }
 
-
     const nx =
       dx / distance;
 
-
     const ny =
       dy / distance;
-
 
     const overlap =
       minDistance - distance;
 
 
-    /*
-      MERGE
-    */
+    /* =================================================
+       MERGE
+    ================================================= */
 
     if(
       a.level === b.level
@@ -2292,10 +2110,8 @@ function physicsStep(
       const newLevel =
         a.level + 1;
 
-
       const totalMass =
         a.mass + b.mass;
-
 
       const x =
         (
@@ -2306,7 +2122,6 @@ function physicsStep(
         /
         totalMass;
 
-
       const y =
         (
           a.y * a.mass
@@ -2316,6 +2131,10 @@ function physicsStep(
         /
         totalMass;
 
+      /*
+        Kleine seitliche Bewegung,
+        damit keine perfekte Säule entsteht.
+      */
 
       const vx =
         (
@@ -2334,6 +2153,9 @@ function physicsStep(
         *
         20;
 
+      /*
+        Nur kleiner echter Hop.
+      */
 
       const vy =
         (
@@ -2346,12 +2168,9 @@ function physicsStep(
         -
         7;
 
-
       removed.add(a);
 
-
       removed.add(b);
-
 
       const newBall =
         makeBall(
@@ -2362,26 +2181,30 @@ function physicsStep(
           vy
         );
 
+      /*
+        MERGE POP
+      */
 
       newBall.pop =
-        0.11;
-
+        0.08;
 
       newBall.glowBoost =
-        0.58;
+        0.62;
 
 
       /*
-        STRONG MERGE JIGGLE
+        BIG JELLY JIGGLE
       */
 
       newBall.jiggle =
-        0.082;
-
+        0.075
+        *
+        jiggleStrength;
 
       newBall.jiggleVelocity =
-        -1.05;
-
+        -1.05
+        *
+        jiggleStrength;
 
       newBall.jiggleTwist =
         (
@@ -2390,13 +2213,13 @@ function physicsStep(
           0.5
         )
         *
-        0.045;
-
+        0.05
+        *
+        jiggleStrength;
 
       created.push(
         newBall
       );
-
 
       addMergeEffect(
         x,
@@ -2404,12 +2227,10 @@ function physicsStep(
         newLevel
       );
 
-
       playMergeSound(
         newLevel,
         x
       );
-
 
       if(
         newLevel === 7
@@ -2422,29 +2243,30 @@ function physicsStep(
 
       }
 
-
       continue;
 
     }
 
 
-    /*
-      NORMAL COLLISION
-    */
+    /* =================================================
+       NORMAL COLLISION
+    ================================================= */
 
     const invMassA =
       1 / a.mass;
 
-
     const invMassB =
       1 / b.mass;
-
 
     const totalInverseMass =
       invMassA
       +
       invMassB;
 
+
+    /*
+      OVERLAP ENTFERNEN
+    */
 
     a.x -=
       nx
@@ -2457,7 +2279,6 @@ function physicsStep(
         totalInverseMass
       );
 
-
     a.y -=
       ny
       *
@@ -2469,7 +2290,6 @@ function physicsStep(
         totalInverseMass
       );
 
-
     b.x +=
       nx
       *
@@ -2480,7 +2300,6 @@ function physicsStep(
         /
         totalInverseMass
       );
-
 
     b.y +=
       ny
@@ -2497,10 +2316,8 @@ function physicsStep(
     const relativeX =
       b.vx - a.vx;
 
-
     const relativeY =
       b.vy - a.vy;
-
 
     const normalVelocity =
       relativeX * nx
@@ -2515,7 +2332,6 @@ function physicsStep(
       const collisionRestitution =
         0.16;
 
-
       const impulse =
         -
         (
@@ -2528,38 +2344,67 @@ function physicsStep(
         /
         totalInverseMass;
 
-
       const impulseX =
         impulse * nx;
 
-
       const impulseY =
         impulse * ny;
-
 
       a.vx -=
         impulseX
         *
         invMassA;
 
-
       a.vy -=
         impulseY
         *
         invMassA;
-
 
       b.vx +=
         impulseX
         *
         invMassB;
 
-
       b.vy +=
         impulseY
         *
         invMassB;
 
+
+      /*
+        KLEINER SIDE-KICK
+
+        Verhindert, dass alle Früchte
+        exakt übereinander stehen.
+      */
+
+      if(
+        a.y > arena.joinY
+        &&
+        b.y > arena.joinY
+      ){
+
+        const sideKick =
+          (
+            Math.random()
+            -
+            0.5
+          )
+          *
+          6;
+
+        a.vx +=
+          sideKick;
+
+        b.vx -=
+          sideKick;
+
+      }
+
+
+      /*
+        CONTACT JIGGLE
+      */
 
       const impact =
         Math.min(
@@ -2571,59 +2416,51 @@ function physicsStep(
           350
         );
 
+      a.jiggle +=
+        impact
+        *
+        0.026
+        *
+        jiggleStrength;
 
-      /*
-        JIGGLE BEI FRUCHT-FRUCHT KONTAKT
-      */
-
-      a.jiggle =
-        Math.min(
-          0.085,
-          a.jiggle
-          +
-          impact
-          *
-          0.026
-        );
-
-
-      b.jiggle =
-        Math.min(
-          0.085,
-          b.jiggle
-          +
-          impact
-          *
-          0.026
-        );
-
+      b.jiggle +=
+        impact
+        *
+        0.026
+        *
+        jiggleStrength;
 
       a.jiggleVelocity +=
         impact
         *
-        0.38;
-
+        0.38
+        *
+        jiggleStrength;
 
       b.jiggleVelocity -=
         impact
         *
-        0.38;
-
+        0.38
+        *
+        jiggleStrength;
 
       a.jiggleTwist +=
         -ny
         *
         impact
         *
-        0.012;
-
+        0.012
+        *
+        jiggleStrength;
 
       b.jiggleTwist +=
         ny
         *
         impact
         *
-        0.012;
+        0.012
+        *
+        jiggleStrength;
 
     }
 
@@ -2636,11 +2473,9 @@ function physicsStep(
         !removed.has(ball)
     );
 
-
   balls.push(
     ...created
   );
-
 
   if(
     balls.length > MAX_BALLS
@@ -2664,13 +2499,10 @@ function physicsStep(
 
   }
 
-
   effects =
     effects.filter(
       effect =>
-        effect.age
-        <
-        effect.life
+        effect.age < effect.life
     );
 
 }
@@ -2685,14 +2517,12 @@ function drawArena(){
   ctx.fillStyle =
     "#000";
 
-
   ctx.fillRect(
     0,
     0,
     576,
     1024
   );
-
 
   const half =
     (
@@ -2703,42 +2533,37 @@ function drawArena(){
     /
     2;
 
-
   const angle =
     Math.asin(
       half / arena.r
     );
 
-
   ctx.save();
-
 
   ctx.lineCap =
     "round";
-
 
   ctx.lineJoin =
     "round";
 
 
+  /*
+    SOFT GLOW
+  */
+
   ctx.strokeStyle =
     "rgba(145,205,255,.18)";
-
 
   ctx.shadowColor =
     "#7ec4ff";
 
-
   ctx.shadowBlur =
     10;
-
 
   ctx.lineWidth =
     arena.line + 2.5;
 
-
   ctx.beginPath();
-
 
   ctx.arc(
     arena.cx,
@@ -2748,58 +2573,50 @@ function drawArena(){
     Math.PI * 1.5 - angle
   );
 
-
   ctx.stroke();
-
 
   ctx.beginPath();
 
-
   ctx.moveTo(
     arena.left,
     -10
   );
-
 
   ctx.lineTo(
     arena.left,
     arena.joinY
   );
 
-
   ctx.moveTo(
     arena.right,
     -10
   );
 
-
   ctx.lineTo(
     arena.right,
     arena.joinY
   );
-
 
   ctx.stroke();
 
+
+  /*
+    WHITE CORE
+  */
 
   ctx.shadowColor =
     "#fff";
 
-
   ctx.shadowBlur =
     3;
-
 
   ctx.strokeStyle =
     "#fff";
 
-
   ctx.lineWidth =
     arena.line;
 
-
   ctx.beginPath();
-
 
   ctx.arc(
     arena.cx,
@@ -2809,39 +2626,31 @@ function drawArena(){
     Math.PI * 1.5 - angle
   );
 
-
   ctx.stroke();
-
 
   ctx.beginPath();
 
-
   ctx.moveTo(
     arena.left,
     -10
   );
-
 
   ctx.lineTo(
     arena.left,
     arena.joinY
   );
 
-
   ctx.moveTo(
     arena.right,
     -10
   );
 
-
   ctx.lineTo(
     arena.right,
     arena.joinY
   );
-
 
   ctx.stroke();
-
 
   ctx.restore();
 
@@ -2849,29 +2658,33 @@ function drawArena(){
 
 
 /* =====================================================
-   DRAW BALL
+   JIGGLE TRANSFORM
 ===================================================== */
 
 function drawBallShape(
   ball,
-  drawContent
+  callback
 ){
 
   const squash =
     ball.squash || 0;
 
-
   const pop =
     ball.pop || 0;
-
-
-  const stretch =
-    ball.stretch || 0;
-
 
   const jiggle =
     ball.jiggle || 0;
 
+
+  /*
+    Richtiges Jelly:
+
+    positiver Jiggle:
+    breiter + flacher
+
+    negativer Jiggle:
+    schmaler + höher
+  */
 
   const scaleX =
     1
@@ -2880,10 +2693,7 @@ function drawBallShape(
     +
     pop
     +
-    jiggle
-    -
-    stretch * 0.4;
-
+    jiggle;
 
   const scaleY =
     1
@@ -2892,41 +2702,30 @@ function drawBallShape(
     +
     pop
     -
-    jiggle * 0.78
-    +
-    stretch;
+    jiggle * 0.78;
 
 
   ctx.save();
-
 
   ctx.translate(
     ball.x,
     ball.y
   );
 
-
   ctx.rotate(
     (
-      ball.jiggleTwist
-      ||
-      0
+      ball.jiggleTwist || 0
     )
     +
-    jiggle
-    *
-    0.12
+    jiggle * 0.12
   );
-
 
   ctx.scale(
     scaleX,
     scaleY
   );
 
-
-  drawContent();
-
+  callback();
 
   ctx.restore();
 
@@ -2934,7 +2733,7 @@ function drawBallShape(
 
 
 /* =====================================================
-   ORB
+   BLUE ORB
 ===================================================== */
 
 function drawOrb(
@@ -2944,7 +2743,6 @@ function drawOrb(
   const r =
     ball.r;
 
-
   drawBallShape(
     ball,
     () => {
@@ -2952,14 +2750,12 @@ function drawOrb(
       ctx.shadowColor =
         "#086cff";
 
-
       ctx.shadowBlur =
         11
         +
         ball.glowBoost
         *
         24;
-
 
       const gradient =
         ctx.createRadialGradient(
@@ -2971,39 +2767,32 @@ function drawOrb(
           r
         );
 
-
       gradient.addColorStop(
         0,
         "#ecfcff"
       );
-
 
       gradient.addColorStop(
         0.12,
         "#5edcff"
       );
 
-
       gradient.addColorStop(
         0.36,
         "#076aff"
       );
-
 
       gradient.addColorStop(
         0.68,
         "#002ca8"
       );
 
-
       gradient.addColorStop(
         1,
         "#000728"
       );
 
-
       ctx.beginPath();
-
 
       ctx.arc(
         0,
@@ -3013,25 +2802,19 @@ function drawOrb(
         Math.PI * 2
       );
 
-
       ctx.fillStyle =
         gradient;
 
-
       ctx.fill();
-
 
       ctx.shadowBlur =
         0;
 
-
       ctx.strokeStyle =
         "rgba(120,205,255,.88)";
 
-
       ctx.lineWidth =
         1.3;
-
 
       ctx.stroke();
 
@@ -3054,14 +2837,15 @@ function drawSprite(
       ball.level
     ];
 
-
   if(
     ball.level === 0
     &&
     !image
   ){
 
-    drawOrb(ball);
+    drawOrb(
+      ball
+    );
 
     return;
 
@@ -3077,17 +2861,12 @@ function drawSprite(
           ball.level
         ];
 
-
       ctx.shadowBlur =
         10
         +
-        ball.level
-        *
-        0.65
+        ball.level * 0.65
         +
-        ball.glowBoost
-        *
-        24;
+        ball.glowBoost * 24;
 
 
       if(
@@ -3095,10 +2874,7 @@ function drawSprite(
       ){
 
         const target =
-          ball.r
-          *
-          2.35;
-
+          ball.r * 2.35;
 
         const scale =
           Math.min(
@@ -3106,18 +2882,15 @@ function drawSprite(
             target / image.height
           );
 
-
         const width =
           image.width
           *
           scale;
 
-
         const height =
           image.height
           *
           scale;
-
 
         ctx.drawImage(
           image,
@@ -3134,20 +2907,15 @@ function drawSprite(
         ctx.font =
           `${
             Math.round(
-              ball.r
-              *
-              2.05
+              ball.r * 2.05
             )
           }px Apple Color Emoji,Segoe UI Emoji,sans-serif`;
-
 
         ctx.textAlign =
           "center";
 
-
         ctx.textBaseline =
           "middle";
-
 
         ctx.fillText(
           fallbackEmoji[
@@ -3166,7 +2934,7 @@ function drawSprite(
 
 
 /* =====================================================
-   EFFECTS
+   MERGE EFFECTS
 ===================================================== */
 
 function drawEffects(){
@@ -3181,10 +2949,8 @@ function drawEffects(){
       /
       effect.life;
 
-
     const alpha =
       1 - progress;
-
 
     const radius =
       radii[
@@ -3194,34 +2960,26 @@ function drawEffects(){
       (
         1
         +
-        progress
-        *
-        0.9
+        progress * 0.9
       );
-
 
     ctx.save();
 
-
     ctx.globalAlpha =
-      alpha * 0.72;
-
+      alpha * 0.75;
 
     ctx.strokeStyle =
       glowColors[
         effect.level
       ];
 
-
     ctx.shadowColor =
       glowColors[
         effect.level
       ];
 
-
     ctx.shadowBlur =
-      17;
-
+      18;
 
     ctx.lineWidth =
       2
@@ -3232,9 +2990,7 @@ function drawEffects(){
       +
       0.4;
 
-
     ctx.beginPath();
-
 
     ctx.arc(
       effect.x,
@@ -3244,9 +3000,80 @@ function drawEffects(){
       Math.PI * 2
     );
 
+    ctx.stroke();
+
+
+    ctx.globalAlpha =
+      alpha * 0.25;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      effect.x,
+      effect.y,
+      radius * 1.22,
+      0,
+      Math.PI * 2
+    );
 
     ctx.stroke();
 
+
+    ctx.globalAlpha =
+      alpha * 0.70;
+
+    ctx.fillStyle =
+      glowColors[
+        effect.level
+      ];
+
+    for(
+      const spark
+      of effect.sparks
+    ){
+
+      const distance =
+        spark.speed
+        *
+        progress;
+
+      const x =
+        effect.x
+        +
+        Math.cos(
+          spark.angle
+        )
+        *
+        distance;
+
+      const y =
+        effect.y
+        +
+        Math.sin(
+          spark.angle
+        )
+        *
+        distance;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        x,
+        y,
+        spark.size
+        *
+        (
+          1
+          -
+          progress * 0.5
+        ),
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fill();
+
+    }
 
     ctx.restore();
 
@@ -3268,39 +3095,53 @@ function drawText(
       .value
       .trim();
 
-
   if(
     hook
     &&
     elapsed < 4.6
   ){
 
+    const fadeIn =
+      Math.min(
+        1,
+        elapsed / 0.35
+      );
+
+    const fadeOut =
+      Math.min(
+        1,
+        (
+          4.6 - elapsed
+        )
+        /
+        0.45
+      );
+
     ctx.save();
 
+    ctx.globalAlpha =
+      Math.min(
+        fadeIn,
+        fadeOut
+      );
 
     ctx.font =
       "700 29px ui-monospace,SFMono-Regular,Menlo,monospace";
 
-
     ctx.textAlign =
       "center";
-
 
     ctx.textBaseline =
       "middle";
 
-
     ctx.fillStyle =
       "#fff";
-
 
     ctx.shadowColor =
       "#90c8ff";
 
-
     ctx.shadowBlur =
       6;
-
 
     ctx.fillText(
       hook,
@@ -3308,6 +3149,53 @@ function drawText(
       350
     );
 
+    ctx.restore();
+
+  }
+
+
+  const finalText =
+    finalTextInput
+      .value
+      .trim();
+
+  if(
+    finalReachedAt !== null
+    &&
+    finalText
+    &&
+    performance.now()
+    -
+    finalReachedAt
+    <
+    4000
+  ){
+
+    ctx.save();
+
+    ctx.font =
+      "800 28px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.textBaseline =
+      "middle";
+
+    ctx.fillStyle =
+      "#fff";
+
+    ctx.shadowColor =
+      "#8ec6ff";
+
+    ctx.shadowBlur =
+      8;
+
+    ctx.fillText(
+      finalText,
+      288,
+      368
+    );
 
     ctx.restore();
 
@@ -3327,13 +3215,11 @@ function drawWatermark(){
       .value
       .trim();
 
-
   if(
     !text
   ){
     return;
   }
-
 
   const opacity =
     Number(
@@ -3342,26 +3228,21 @@ function drawWatermark(){
     /
     100;
 
-
   const position =
     watermarkPositionInput.value;
-
 
   let x =
     18;
 
-
   let y =
     988;
-
 
   let align =
     "left";
 
 
   if(
-    position ===
-    "bottom-right"
+    position === "bottom-right"
   ){
 
     x =
@@ -3376,8 +3257,7 @@ function drawWatermark(){
   }
 
   else if(
-    position ===
-    "top-left"
+    position === "top-left"
   ){
 
     x =
@@ -3389,8 +3269,7 @@ function drawWatermark(){
   }
 
   else if(
-    position ===
-    "top-right"
+    position === "top-right"
   ){
 
     x =
@@ -3407,41 +3286,32 @@ function drawWatermark(){
 
   ctx.save();
 
-
   ctx.globalAlpha =
     opacity;
-
 
   ctx.font =
     "700 16px system-ui,-apple-system,sans-serif";
 
-
   ctx.textAlign =
     align;
-
 
   ctx.textBaseline =
     "middle";
 
-
   ctx.fillStyle =
-    "#ffffff";
-
+    "#fff";
 
   ctx.shadowColor =
-    "#000000";
-
+    "#000";
 
   ctx.shadowBlur =
     5;
-
 
   ctx.fillText(
     text,
     x,
     y
   );
-
 
   ctx.restore();
 
@@ -3458,22 +3328,22 @@ function draw(
 
   drawArena();
 
-
   for(
     const ball
     of balls
   ){
 
-    drawSprite(ball);
+    drawSprite(
+      ball
+    );
 
   }
 
-
   drawEffects();
 
-
-  drawText(elapsed);
-
+  drawText(
+    elapsed
+  );
 
   drawWatermark();
 
@@ -3490,33 +3360,27 @@ function resetGame(){
     animationFrame
   );
 
-
   running =
     false;
-
 
   balls =
     [];
 
-
   effects =
     [];
-
 
   accumulator =
     0;
 
-
   spawnClock =
     0;
-
 
   finalReachedAt =
     null;
 
-
-  draw(0);
-
+  draw(
+    0
+  );
 
   statusEl.textContent =
     "Bereit.";
@@ -3532,50 +3396,38 @@ function startGame(){
 
   ensureAudio();
 
-
   cancelAnimationFrame(
     animationFrame
   );
 
-
   balls =
     [];
-
 
   effects =
     [];
 
-
   accumulator =
     0;
-
 
   spawnClock =
     0;
 
-
   finalReachedAt =
     null;
-
 
   running =
     true;
 
-
   startTime =
     performance.now();
-
 
   lastTime =
     startTime;
 
-
   seedInitialStream();
-
 
   statusEl.textContent =
     "Spiel läuft…";
-
 
   animationFrame =
     requestAnimationFrame(
@@ -3599,7 +3451,6 @@ function gameLoop(
     return;
   }
 
-
   const delta =
     Math.min(
       0.05,
@@ -3610,18 +3461,14 @@ function gameLoop(
       1000
     );
 
-
   lastTime =
     now;
-
 
   accumulator +=
     delta;
 
-
   spawnClock +=
     delta;
-
 
   const spawnInterval =
     Number(
@@ -3636,7 +3483,6 @@ function gameLoop(
     spawnClock -=
       spawnInterval;
 
-
     spawnBall();
 
   }
@@ -3645,24 +3491,22 @@ function gameLoop(
   let steps =
     0;
 
-
   while(
     accumulator >= STEP
     &&
     steps < MAX_STEPS
   ){
 
-    physicsStep(STEP);
-
+    physicsStep(
+      STEP
+    );
 
     accumulator -=
       STEP;
 
-
     steps++;
 
   }
-
 
   if(
     steps === MAX_STEPS
@@ -3681,15 +3525,15 @@ function gameLoop(
     /
     1000;
 
-
-  draw(elapsed);
+  draw(
+    elapsed
+  );
 
 
   const maxDuration =
     Number(
       durationInput.value
     );
-
 
   if(
     elapsed >= maxDuration
@@ -3698,10 +3542,8 @@ function gameLoop(
     running =
       false;
 
-
     statusEl.textContent =
       "Laufzeit beendet.";
-
 
     if(
       recording
@@ -3713,7 +3555,6 @@ function gameLoop(
       );
 
     }
-
 
     return;
 
@@ -3735,10 +3576,8 @@ function gameLoop(
 let recorder =
   null;
 
-
 let recordedChunks =
   [];
-
 
 let recording =
   false;
@@ -3763,13 +3602,11 @@ function startRecording(){
   if(
     !canvas.captureStream
     ||
-    typeof MediaRecorder ===
-    "undefined"
+    typeof MediaRecorder === "undefined"
   ){
 
     statusEl.textContent =
       "Aufnahme wird hier nicht unterstützt. Nutze Chrome am MacBook.";
-
 
     return;
 
@@ -3835,17 +3672,30 @@ function startRecording(){
   }
 
 
-  recorder =
-    new MediaRecorder(
-      stream,
-      {
-        mimeType,
-        videoBitsPerSecond:
-          6500000,
-        audioBitsPerSecond:
-          160000
-      }
-    );
+  try{
+
+    recorder =
+      new MediaRecorder(
+        stream,
+        {
+          mimeType,
+          videoBitsPerSecond:
+            6500000,
+          audioBitsPerSecond:
+            160000
+        }
+      );
+
+  }
+
+  catch{
+
+    recorder =
+      new MediaRecorder(
+        stream
+      );
+
+  }
 
 
   recordedChunks =
@@ -3923,7 +3773,9 @@ function startRecording(){
 
       setTimeout(
         () =>
-          URL.revokeObjectURL(url),
+          URL.revokeObjectURL(
+            url
+          ),
         2000
       );
 
@@ -3963,8 +3815,7 @@ function stopRecording(){
   if(
     recorder
     &&
-    recorder.state !==
-    "inactive"
+    recorder.state !== "inactive"
   ){
 
     recorder.stop();
@@ -3988,26 +3839,8 @@ function stopRecording(){
 
 
 /* =====================================================
-   EVENTS
+   UI EVENTS
 ===================================================== */
-
-startButton.addEventListener(
-  "click",
-  startGame
-);
-
-
-resetButton.addEventListener(
-  "click",
-  resetGame
-);
-
-
-recordButton.addEventListener(
-  "click",
-  startRecording
-);
-
 
 durationInput.addEventListener(
   "input",
@@ -4035,10 +3868,53 @@ watermarkOpacityInput.addEventListener(
 );
 
 
+jiggleInput.addEventListener(
+  "input",
+  () => {
+
+    jiggleLabel.textContent =
+      jiggleInput.value
+      +
+      "%";
+
+  }
+);
+
+
+startButton.addEventListener(
+  "click",
+  startGame
+);
+
+
+resetButton.addEventListener(
+  "click",
+  resetGame
+);
+
+
+recordButton.addEventListener(
+  "click",
+  startRecording
+);
+
+
 durationLabel.textContent =
   durationInput.value
   +
   " s";
+
+
+watermarkOpacityLabel.textContent =
+  watermarkOpacityInput.value
+  +
+  "%";
+
+
+jiggleLabel.textContent =
+  jiggleInput.value
+  +
+  "%";
 
 
 resetGame();
@@ -4046,5 +3922,4 @@ resetGame();
 </script>
 
 </body>
-
 </html>
