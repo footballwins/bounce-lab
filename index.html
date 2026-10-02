@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>Bounce Lab</title>
 
 <style>
@@ -11,75 +12,75 @@
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
 
 body{
   margin:0;
   min-height:100vh;
-  background:#07080d;
+  background:#08090d;
   color:#f7f7fb
 }
 
 .app{
-  max-width:1320px;
+  max-width:1240px;
   margin:auto;
-  padding:16px;
+  padding:14px;
   display:grid;
-  grid-template-columns:420px minmax(340px,1fr);
-  gap:22px
+  grid-template-columns:390px minmax(300px,1fr);
+  gap:20px
 }
 
 .panel{
   background:#11131a;
-  border:1px solid #272b38;
-  border-radius:20px;
-  padding:18px;
+  border:1px solid #282c38;
+  border-radius:18px;
+  padding:16px;
   height:max-content;
   position:sticky;
-  top:16px;
-  box-shadow:0 18px 60px #0007
+  top:14px
 }
 
 h1{
   margin:0;
-  font-size:26px
+  font-size:25px
 }
 
 .sub{
-  margin:6px 0 18px;
-  color:#939bad;
-  font-size:13px;
-  line-height:1.45
+  margin:6px 0 16px;
+  color:#929aab;
+  font-size:12px;
+  line-height:1.5
 }
 
 .section{
-  border-top:1px solid #272b38;
-  padding-top:14px;
-  margin-top:14px
+  border-top:1px solid #262b37;
+  margin-top:13px;
+  padding-top:13px
 }
 
 .section h2{
-  font-size:13px;
-  margin:0 0 11px;
-  color:#d8dce9
+  margin:0 0 10px;
+  font-size:13px
 }
 
 label{
   display:block;
   font-size:11px;
   color:#aeb5c7;
-  margin:0 0 6px
+  margin-bottom:5px
 }
 
 input[type=text],
 input[type=number],
 select{
   width:100%;
-  background:#0b0d13;
+  background:#090b10;
   color:#fff;
   border:1px solid #303647;
-  border-radius:10px;
-  padding:10px 11px;
+  border-radius:9px;
+  padding:9px 10px;
   outline:none
 }
 
@@ -90,63 +91,61 @@ input[type=range]{
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px
+  gap:8px
 }
 
 .row3{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px
+  gap:7px
 }
 
 .levels{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px
+  gap:7px
 }
 
 .level{
-  border:1px solid #2b3040;
-  background:#0b0d13;
-  border-radius:13px;
-  padding:8px;
+  background:#090b10;
+  border:1px solid #292f3c;
+  border-radius:11px;
+  padding:7px;
   text-align:center
 }
 
 .preview{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  margin:0 auto 7px;
-  background:
-    radial-gradient(
-      circle at 34% 26%,
-      #fff 0 8%,
-      #c8c4ff 18%,
-      #7b61ff 50%,
-      #24263c 100%
-    );
-  background-size:cover;
-  background-position:center;
-  border:3px solid #ffffff22;
-  box-shadow:0 6px 18px #0008
+  width:50px;
+  height:50px;
+  margin:0 auto 6px;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+
+  filter:
+    drop-shadow(0 0 5px #155dff);
+
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center
 }
 
 .level b{
-  font-size:10px;
+  font-size:9px;
   color:#cbd0df
 }
 
 .level input{
-  font-size:9px;
-  width:100%
+  width:100%;
+  font-size:8px;
+  margin-top:5px
 }
 
 .buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:15px
+  gap:8px;
+  margin-top:14px
 }
 
 .buttons button:last-child{
@@ -155,8 +154,8 @@ input[type=range]{
 
 button{
   border:0;
-  border-radius:12px;
-  padding:11px 13px;
+  border-radius:11px;
+  padding:11px;
   font-weight:800;
   cursor:pointer;
   background:#292e3b;
@@ -164,45 +163,53 @@ button{
 }
 
 .primary{
-  background:linear-gradient(135deg,#7c3aed,#ec4899)
+  background:linear-gradient(
+    135deg,
+    #6c3be9,
+    #d846b5
+  )
 }
 
 .record{
-  background:linear-gradient(135deg,#059669,#0891b2)
+  background:linear-gradient(
+    135deg,
+    #087f62,
+    #087b9a
+  )
 }
 
 .danger{
-  background:#3a1823;
-  color:#ffb8c8
+  background:#531925;
+  color:#ffd4dc
 }
 
 .status{
   font-size:11px;
-  color:#9da4b6;
-  margin-top:10px;
+  color:#9098a9;
+  margin-top:9px;
   line-height:1.45
 }
 
-.tip{
+.hint{
   font-size:10px;
-  color:#737c91
+  color:#737b8e;
+  line-height:1.45
 }
 
 .stage{
   display:flex;
-  align-items:flex-start;
   justify-content:center;
-  min-height:calc(100vh - 32px)
+  align-items:flex-start
 }
 
 .phone{
   width:min(520px,100%);
   aspect-ratio:9/16;
-  border-radius:24px;
-  overflow:hidden;
   background:#000;
-  border:1px solid #242936;
-  box-shadow:0 22px 70px #000a
+  border:1px solid #252a35;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 22px 70px #000b
 }
 
 canvas{
@@ -212,38 +219,15 @@ canvas{
   background:#000
 }
 
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  font-size:10px;
-  color:#d7dbeb;
-  background:#191c26;
-  border:1px solid #2a3040;
-  border-radius:999px;
-  padding:6px 9px;
-  margin-top:8px
-}
+@media(max-width:900px){
 
-.dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#4ade80
-}
-
-@media(max-width:930px){
   .app{
     grid-template-columns:1fr;
-    padding:12px
+    padding:10px
   }
 
   .panel{
     position:static
-  }
-
-  .stage{
-    min-height:auto
   }
 
   .levels{
@@ -262,13 +246,9 @@ canvas{
 <h1>Bounce Lab</h1>
 
 <div class="sub">
-Flüssigeres 9:16 Merge-Gameplay mit stärkeren Ball-Visuals und kurzen Merge-Pop-Effekten.
-Kein Timer, kein Merge-Zähler.
-</div>
-
-<div class="pill">
-  <span class="dot"></span>
-  Performance-Modus aktiv
+Auf das Referenzvideo abgestimmt:
+gleiche Geometrie, ruhige Suika-Physik,
+0,34-s-Spawn und gestufte Merge-Chimes.
 </div>
 
 <div class="section">
@@ -278,122 +258,194 @@ Kein Timer, kein Merge-Zähler.
 <div class="row">
 
 <div>
+
 <label>
-Dauer
-<span id="durationValue">65 s</span>
+Max. Laufzeit
+<span id="durationLabel">
+82 s
+</span>
 </label>
 
 <input
   id="duration"
   type="range"
   min="60"
-  max="120"
-  value="65"
+  max="100"
+  value="82"
 >
+
 </div>
 
 <div>
-<label>Spawn-Tempo</label>
+
+<label>
+Spawn-Abstand
+</label>
 
 <select id="spawnRate">
-  <option value="0.46">Sehr schnell</option>
-  <option value="0.62" selected>Viral / Balanced</option>
-  <option value="0.82">Ruhig</option>
+
+<option
+  value="0.34"
+  selected
+>
+Original · 0,34 s
+</option>
+
+<option value="0.38">
+Etwas ruhiger
+</option>
+
+<option value="0.30">
+Schneller
+</option>
+
 </select>
-</div>
 
 </div>
 
-<div style="margin-top:10px">
-<label>Hook-Text</label>
+</div>
+
+<div style="margin-top:9px">
+
+<label>
+Start-Hook
+</label>
+
 <input
   id="hook"
   type="text"
-  value="WILL IT REACH THE FINAL FORM?"
+  value="come closer..."
 >
+
 </div>
 
-<div style="margin-top:10px">
-<label>Final-Text</label>
+<div style="margin-top:9px">
+
+<label>
+Text nach Final-Level (optional)
+</label>
+
 <input
   id="finalText"
   type="text"
-  value="FINAL FORM"
+  value=""
 >
-</div>
 
-<div style="margin-top:10px">
-<label>Wasserzeichen / Name</label>
-<input
-  id="brand"
-  type="text"
-  value="@BounceLab"
->
 </div>
 
 </div>
+
 
 <div class="section">
 
-<h2>Eigene Ball-Bilder</h2>
+<h2>
+Eigene Bilder
+</h2>
 
 <div
-  class="tip"
-  style="margin-bottom:10px"
+  class="hint"
+  style="margin-bottom:9px"
 >
-Am besten quadratische PNGs mit transparentem Hintergrund.
-Die Bilder werden nicht mehr hart abgeschnitten, sondern wie Sticker in einer Kugel dargestellt.
+
+Reihenfolge wie im Video:
+
+Blue Orb → Strawberry → Lemon → Grapes →
+Peach → Pear → Apple → Pineapple.
+
+Transparente PNGs funktionieren am besten.
+
 </div>
 
-<div id="levels" class="levels"></div>
+<div
+  id="levels"
+  class="levels"
+></div>
 
 </div>
+
 
 <div class="section">
 
-<h2>Physik</h2>
+<h2>
+Feintuning
+</h2>
 
 <div class="row3">
 
 <div>
-<label>Gravitation</label>
+
+<label>
+Gravity
+</label>
+
 <input
   id="gravity"
   type="number"
-  min="0.10"
-  max="1.30"
-  step="0.01"
-  value="0.36"
+  min="80"
+  max="400"
+  step="10"
+  value="210"
 >
+
 </div>
 
 <div>
-<label>Bounce</label>
-<input
-  id="bounce"
-  type="number"
-  min="0.72"
-  max="1.03"
-  step="0.01"
-  value="0.92"
->
-</div>
 
-<div>
-<label>Chaos</label>
+<label>
+Restitution
+</label>
+
 <input
-  id="chaos"
+  id="restitution"
   type="number"
   min="0"
-  max="1"
+  max="0.5"
   step="0.01"
-  value="0.14"
+  value="0.12"
 >
+
 </div>
+
+<div>
+
+<label>
+Damping
+</label>
+
+<input
+  id="damping"
+  type="number"
+  min="0.97"
+  max="1"
+  step="0.001"
+  value="0.996"
+>
 
 </div>
 
 </div>
+
+<div style="margin-top:9px">
+
+<label>
+Sound
+<span id="volumeLabel">
+62%
+</span>
+</label>
+
+<input
+  id="volume"
+  type="range"
+  min="0"
+  max="100"
+  value="62"
+>
+
+</div>
+
+</div>
+
 
 <div class="buttons">
 
@@ -417,49 +469,38 @@ Die Bilder werden nicht mehr hart abgeschnitten, sondern wie Sticker in einer Ku
 
 </div>
 
+
 <div
   id="status"
   class="status"
 >
-Bereit. Empfohlen: zuerst Aufnahme starten, dann Spiel starten.
+
+Bereit. Für ein fertiges Video zuerst
+Aufnahme starten, danach Spiel starten.
+
 </div>
 
 </section>
+
 
 <section class="stage">
 
 <div class="phone">
+
 <canvas
   id="game"
-  width="1080"
-  height="1920"
+  width="576"
+  height="1024"
 ></canvas>
+
 </div>
 
 </section>
 
 </div>
 
+
 <script>
-
-const canvas =
-  document.getElementById(
-    'game'
-  );
-
-const ctx =
-  canvas.getContext(
-    '2d',
-    {
-      alpha:false
-    }
-  );
-
-ctx.imageSmoothingEnabled =
-  true;
-
-ctx.imageSmoothingQuality =
-  'high';
 
 const $ =
   id =>
@@ -467,48 +508,178 @@ const $ =
       id
     );
 
-const durationInput =
-  $('duration');
 
-const durationValue =
-  $('durationValue');
+const canvas =
+  $("game");
+
+
+const ctx =
+  canvas.getContext(
+    "2d",
+    {
+      alpha:false
+    }
+  );
+
+
+ctx.imageSmoothingEnabled =
+  true;
+
+
+ctx.imageSmoothingQuality =
+  "high";
+
+
+const durationInput =
+  $("duration");
+
+
+const durationLabel =
+  $("durationLabel");
+
 
 const spawnRateInput =
-  $('spawnRate');
+  $("spawnRate");
+
 
 const hookInput =
-  $('hook');
+  $("hook");
+
 
 const finalTextInput =
-  $('finalText');
+  $("finalText");
 
-const brandInput =
-  $('brand');
 
 const gravityInput =
-  $('gravity');
+  $("gravity");
 
-const bounceInput =
-  $('bounce');
 
-const chaosInput =
-  $('chaos');
+const restitutionInput =
+  $("restitution");
 
-const statusElement =
-  $('status');
+
+const dampingInput =
+  $("damping");
+
+
+const volumeInput =
+  $("volume");
+
+
+const volumeLabel =
+  $("volumeLabel");
+
+
+const statusEl =
+  $("status");
+
 
 const startButton =
-  $('startButton');
+  $("startButton");
+
 
 const resetButton =
-  $('resetButton');
+  $("resetButton");
+
 
 const recordButton =
-  $('recordButton');
+  $("recordButton");
 
+
+
+/* =====================================
+   ARENA
+===================================== */
+
+const arena = {
+
+  cx:288,
+
+  cy:512,
+
+  r:246,
+
+  left:250,
+
+  right:326,
+
+  joinY:269,
+
+  line:6
+
+};
+
+
+
+/* =====================================
+   LEVELS
+===================================== */
 
 const LEVEL_COUNT =
   8;
+
+
+const radii = [
+
+  19,
+
+  24,
+
+  29,
+
+  36,
+
+  44,
+
+  50,
+
+  57,
+
+  66
+
+];
+
+
+const fallbackEmoji = [
+
+  "",
+
+  "🍓",
+
+  "🍋",
+
+  "🍇",
+
+  "🍑",
+
+  "🍐",
+
+  "🍎",
+
+  "🍍"
+
+];
+
+
+const glowColors = [
+
+  "#075fff",
+
+  "#ff263f",
+
+  "#ffe72f",
+
+  "#9b28ff",
+
+  "#ff5a20",
+
+  "#b9ef31",
+
+  "#ff161f",
+
+  "#ff9d19"
+
+];
 
 
 const levelImages =
@@ -519,20 +690,8 @@ const levelImages =
   );
 
 
-const fallbackColors = [
-  '#55e8ff',
-  '#7b7cff',
-  '#ad6cff',
-  '#ff5ebd',
-  '#ff7b61',
-  '#ffc84f',
-  '#8cf06d',
-  '#ffffff'
-];
-
-
-const levelContainer =
-  $('levels');
+const levelWrap =
+  $("levels");
 
 
 for(
@@ -543,47 +702,59 @@ for(
 
   const element =
     document.createElement(
-      'div'
+      "div"
     );
 
+
   element.className =
-    'level';
+    "level";
 
 
   element.innerHTML =
     `
-    <div
-      class="preview"
-      id="preview-${level}"
-    ></div>
 
-    <b>
-      LEVEL ${level + 1}
-    </b>
+      <div
+        class="preview"
+        id="preview-${level}"
+      >
+        ${
+          level === 0
+          ?
+          "🔵"
+          :
+          fallbackEmoji[level]
+        }
+      </div>
 
-    <input
-      type="file"
-      accept="image/png,image/jpeg,image/webp"
-      style="margin-top:7px"
-    >
+      <b>
+        LEVEL ${level + 1}
+      </b>
+
+      <input
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+      >
+
     `;
 
 
-  levelContainer.appendChild(
+  levelWrap.appendChild(
     element
   );
 
 
   element
     .querySelector(
-      'input'
+      "input"
     )
     .addEventListener(
-      'change',
+      "change",
       event => {
 
         const file =
-          event.target.files[0];
+          event
+            .target
+            .files[0];
 
 
         if(
@@ -606,12 +777,20 @@ for(
               image;
 
 
-            $(
-              `preview-${level}`
-            )
-            .style
-            .backgroundImage =
-              `url("${image.src}")`;
+            const preview =
+              $(
+                `preview-${level}`
+              );
+
+
+            preview.textContent =
+              "";
+
+
+            preview
+              .style
+              .backgroundImage =
+                `url("${image.src}")`;
 
           };
 
@@ -627,327 +806,611 @@ for(
 }
 
 
-durationInput.addEventListener(
-  'input',
-  () =>
-    durationValue.textContent =
-      durationInput.value
-      +
-      ' s'
-);
 
-
-const arena = {
-  centerX:540,
-  centerY:1010,
-  radius:505,
-  gap:220
-};
-
+/* =====================================
+   STATE
+===================================== */
 
 let balls =
   [];
 
+
 let effects =
   [];
+
 
 let running =
   false;
 
-let finalMode =
-  false;
-
-let gameStartTime =
-  0;
-
-let lastFrameTime =
-  0;
-
-let lastSpawnTime =
-  -999;
 
 let animationFrame =
   null;
 
+
+let startTime =
+  0;
+
+
+let lastTime =
+  0;
+
+
+let spawnClock =
+  0;
+
+
 let accumulator =
   0;
 
-let finalStart =
-  0;
 
-
-let mediaRecorder =
+let finalReachedAt =
   null;
 
-let recordedChunks =
-  [];
 
-let recording =
-  false;
+const STEP =
+  1 / 120;
 
 
-const FIXED_STEP =
-  1 / 60;
+const MAX_STEPS =
+  6;
+
 
 const MAX_BALLS =
-  64;
-
-const CELL_SIZE =
-  380;
+  58;
 
 
-function getBallRadius(
-  level
+
+/* =====================================
+   BALL CREATION
+===================================== */
+
+function makeBall(
+  level,
+  x = arena.cx,
+  y = -25,
+  vx = 0,
+  vy = 172
 ){
 
-  return [
-    34,
-    46,
-    60,
-    77,
-    98,
-    121,
-    148,
-    180
-  ][
-    level
-  ];
-
-}
-
-
-function spawnBall(
-  elapsed = 0
-){
-
-  let level =
-    0;
-
-
-  const random =
-    Math.random();
-
-
-  if(
-    elapsed > 42
-    &&
-    random < 0.10
-  ){
-
-    level =
-      2;
-
-  }
-
-  else if(
-    elapsed > 20
-    &&
-    random < 0.18
-  ){
-
-    level =
-      1;
-
-  }
-
-
-  const radius =
-    getBallRadius(
-      level
-    );
-
-
-  balls.push({
-
-    x:
-      arena.centerX
-      +
-      (
-        Math.random()
-        -
-        0.5
-      )
-      *
-      42,
-
-    y:
-      260
-      +
-      Math.random()
-      *
-      25,
-
-    vx:
-      (
-        Math.random()
-        -
-        0.5
-      )
-      *
-      70,
-
-    vy:
-      110
-      +
-      Math.random()
-      *
-      35,
-
-    radius,
+  return {
 
     level,
+
+    x,
+
+    y,
+
+    vx,
+
+    vy,
+
+    r:
+      radii[
+        level
+      ],
 
     age:
       0,
 
-    angle:
-      (
-        Math.random()
-        -
-        0.5
-      )
+    mass:
+      radii[level]
       *
-      0.08,
+      radii[level]
 
-    spin:
-      (
-        Math.random()
-        -
-        0.5
-      )
-      *
-      0.25
-
-  });
+  };
 
 }
 
 
-function startGame(){
+function spawnBall(){
 
-  cancelAnimationFrame(
-    animationFrame
-  );
-
-
-  balls =
-    [];
-
-
-  effects =
-    [];
+  if(
+    balls.length
+    >=
+    MAX_BALLS
+  ){
+    return;
+  }
 
 
-  finalMode =
-    false;
-
-
-  running =
-    true;
-
-
-  gameStartTime =
-    performance.now();
-
-
-  lastFrameTime =
-    gameStartTime;
-
-
-  lastSpawnTime =
-    -999;
-
-
-  accumulator =
-    0;
-
-
-  statusElement.textContent =
-    'Spiel läuft…';
-
-
-  gameLoop(
-    gameStartTime
-  );
-
-}
-
-
-function resetGame(){
-
-  running =
-    false;
-
-
-  finalMode =
-    false;
-
-
-  cancelAnimationFrame(
-    animationFrame
-  );
-
-
-  balls =
-    [];
-
-
-  effects =
-    [];
-
-
-  statusElement.textContent =
-    'Zurückgesetzt.';
-
-
-  drawScene(
-    0,
-    Number(
-      durationInput.value
+  balls.push(
+    makeBall(
+      0
     )
   );
 
 }
 
 
-function clampSpeed(
-  ball
-){
 
-  const speed =
-    Math.hypot(
-      ball.vx,
-      ball.vy
-    );
+/* =====================================
+   AUDIO
+===================================== */
+
+let audioContext =
+  null;
 
 
-  const max =
-    1450;
+let masterGain =
+  null;
+
+
+let compressor =
+  null;
+
+
+let audioDestination =
+  null;
+
+
+/*
+
+Aus der Audiospur des Referenzvideos:
+
+Blue -> Strawberry = E4
+Strawberry -> Lemon = A4
+Lemon -> Grapes = D5
+Grapes -> Peach = G5
+Peach -> Pear = C6
+Pear -> Apple = E6
+Apple -> Pineapple = A6
+
+*/
+
+const mergeNotes = [
+
+  329.63,
+
+  440.00,
+
+  587.33,
+
+  783.99,
+
+  1046.50,
+
+  1318.51,
+
+  1760.00
+
+];
+
+
+function ensureAudio(){
+
+  if(
+    audioContext
+  ){
+
+    if(
+      audioContext.state
+      ===
+      "suspended"
+    ){
+
+      audioContext.resume();
+
+    }
+
+
+    return;
+
+  }
+
+
+  audioContext =
+    new(
+      window.AudioContext
+      ||
+      window.webkitAudioContext
+    )();
+
+
+  masterGain =
+    audioContext
+      .createGain();
+
+
+  compressor =
+    audioContext
+      .createDynamicsCompressor();
+
+
+  audioDestination =
+    audioContext
+      .createMediaStreamDestination();
+
+
+  compressor.threshold.value =
+    -18;
+
+
+  compressor.knee.value =
+    10;
+
+
+  compressor.ratio.value =
+    3;
+
+
+  compressor.attack.value =
+    0.002;
+
+
+  compressor.release.value =
+    0.12;
+
+
+  masterGain.connect(
+    compressor
+  );
+
+
+  compressor.connect(
+    audioContext.destination
+  );
+
+
+  compressor.connect(
+    audioDestination
+  );
+
+
+  updateVolume();
+
+}
+
+
+function updateVolume(){
+
+  volumeLabel.textContent =
+    volumeInput.value
+    +
+    "%";
 
 
   if(
-    speed > max
+    masterGain
   ){
 
-    ball.vx =
-      ball.vx
+    masterGain.gain.value =
+      Number(
+        volumeInput.value
+      )
       /
-      speed
-      *
-      max;
-
-
-    ball.vy =
-      ball.vy
-      /
-      speed
-      *
-      max;
+      100;
 
   }
 
 }
 
+
+volumeInput.addEventListener(
+  "input",
+  updateVolume
+);
+
+
+
+/* =====================================
+   MERGE SOUND
+===================================== */
+
+function playMergeSound(
+  newLevel,
+  x
+){
+
+  if(
+    !audioContext
+    ||
+    newLevel < 1
+  ){
+    return;
+  }
+
+
+  const index =
+    Math.min(
+
+      newLevel
+      -
+      1,
+
+      mergeNotes.length
+      -
+      1
+
+    );
+
+
+  const frequency =
+    mergeNotes[
+      index
+    ];
+
+
+  const now =
+    audioContext.currentTime;
+
+
+  const pan =
+    audioContext
+      .createStereoPanner();
+
+
+  pan.pan.value =
+    Math.max(
+
+      -0.45,
+
+      Math.min(
+
+        0.45,
+
+        (
+          x
+          -
+          288
+        )
+        /
+        288
+
+      )
+
+    );
+
+
+  pan.connect(
+    masterGain
+  );
+
+
+  /* MAIN NOTE */
+
+  const osc =
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  osc.type =
+    "sine";
+
+
+  osc.frequency.value =
+    frequency;
+
+
+  gain.gain
+    .setValueAtTime(
+      0.0001,
+      now
+    );
+
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+
+      0.12,
+
+      now
+      +
+      0.0025
+
+    );
+
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+
+      0.0001,
+
+      now
+      +
+      0.285
+
+    );
+
+
+  osc.connect(
+    gain
+  );
+
+
+  gain.connect(
+    pan
+  );
+
+
+  osc.start(
+    now
+  );
+
+
+  osc.stop(
+    now
+    +
+    0.30
+  );
+
+
+  /* 4TH HARMONIC */
+
+  const harmonic =
+    audioContext
+      .createOscillator();
+
+
+  const harmonicGain =
+    audioContext
+      .createGain();
+
+
+  harmonic.type =
+    "sine";
+
+
+  harmonic.frequency.value =
+    frequency
+    *
+    4;
+
+
+  harmonicGain.gain
+    .setValueAtTime(
+      0.0001,
+      now
+    );
+
+
+  harmonicGain.gain
+    .exponentialRampToValueAtTime(
+
+      0.017
+      +
+      index
+      *
+      0.0015,
+
+      now
+      +
+      0.0015
+
+    );
+
+
+  harmonicGain.gain
+    .exponentialRampToValueAtTime(
+
+      0.0001,
+
+      now
+      +
+      0.17
+
+    );
+
+
+  harmonic.connect(
+    harmonicGain
+  );
+
+
+  harmonicGain.connect(
+    pan
+  );
+
+
+  harmonic.start(
+    now
+  );
+
+
+  harmonic.stop(
+    now
+    +
+    0.19
+  );
+
+
+  /* LOW BODY FOR LARGE MERGES */
+
+  if(
+    index >= 4
+  ){
+
+    const low =
+      audioContext
+        .createOscillator();
+
+
+    const lowGain =
+      audioContext
+        .createGain();
+
+
+    low.type =
+      "sine";
+
+
+    low.frequency.value =
+      110;
+
+
+    lowGain.gain
+      .setValueAtTime(
+        0.0001,
+        now
+      );
+
+
+    lowGain.gain
+      .exponentialRampToValueAtTime(
+
+        0.025
+        +
+        (
+          index
+          -
+          4
+        )
+        *
+        0.006,
+
+        now
+        +
+        0.003
+
+      );
+
+
+    lowGain.gain
+      .exponentialRampToValueAtTime(
+
+        0.0001,
+
+        now
+        +
+        0.09
+
+      );
+
+
+    low.connect(
+      lowGain
+    );
+
+
+    lowGain.connect(
+      pan
+    );
+
+
+    low.start(
+      now
+    );
+
+
+    low.stop(
+      now
+      +
+      0.10
+    );
+
+  }
+
+}
+
+
+
+/* =====================================
+   MERGE EFFECT
+===================================== */
 
 function addMergeEffect(
   x,
@@ -955,26 +1418,59 @@ function addMergeEffect(
   level
 ){
 
+  const sparks =
+    [];
+
+
+  for(
+    let i = 0;
+    i < 9;
+    i++
+  ){
+
+    sparks.push({
+
+      angle:
+        Math.random()
+        *
+        Math.PI
+        *
+        2,
+
+      speed:
+        18
+        +
+        Math.random()
+        *
+        38,
+
+      size:
+        1
+        +
+        Math.random()
+        *
+        2
+
+    });
+
+  }
+
+
   effects.push({
 
     x,
 
     y,
 
+    level,
+
     age:
       0,
 
     life:
-      0.38,
+      0.48,
 
-    r:
-      20
-      +
-      level
-      *
-      9,
-
-    level
+    sparks
 
   });
 
@@ -982,22 +1478,321 @@ function addMergeEffect(
   if(
     effects.length
     >
-    22
+    20
   ){
 
-    effects.splice(
-      0,
-      effects.length
-      -
-      22
-    );
+    effects.shift();
 
   }
 
 }
 
 
-function buildGrid(){
+
+/* =====================================
+   ARENA PHYSICS
+===================================== */
+
+function nearOpening(
+  ball
+){
+
+  return (
+
+    ball.y
+    <
+    arena.joinY
+    +
+    ball.r
+    +
+    5
+
+    &&
+
+    ball.x
+    >
+    arena.left
+    -
+    ball.r
+    *
+    0.15
+
+    &&
+
+    ball.x
+    <
+    arena.right
+    +
+    ball.r
+    *
+    0.15
+
+  );
+
+}
+
+
+function solveArena(
+  ball,
+  restitution,
+  damping
+){
+
+  /* CHUTE */
+
+  if(
+    ball.y
+    -
+    ball.r
+    <
+    arena.joinY
+    +
+    2
+  ){
+
+    if(
+      ball.x
+      -
+      ball.r
+      <
+      arena.left
+    ){
+
+      ball.x =
+        arena.left
+        +
+        ball.r;
+
+
+      if(
+        ball.vx < 0
+      ){
+
+        ball.vx =
+          -ball.vx
+          *
+          0.08;
+
+      }
+
+    }
+
+
+    if(
+      ball.x
+      +
+      ball.r
+      >
+      arena.right
+    ){
+
+      ball.x =
+        arena.right
+        -
+        ball.r;
+
+
+      if(
+        ball.vx > 0
+      ){
+
+        ball.vx =
+          -ball.vx
+          *
+          0.08;
+
+      }
+
+    }
+
+  }
+
+
+  /* CIRCLE */
+
+  const dx =
+    ball.x
+    -
+    arena.cx;
+
+
+  const dy =
+    ball.y
+    -
+    arena.cy;
+
+
+  const distance =
+    Math.hypot(
+      dx,
+      dy
+    )
+    ||
+    1;
+
+
+  if(
+    distance
+    +
+    ball.r
+    >
+    arena.r
+    &&
+    !nearOpening(
+      ball
+    )
+  ){
+
+    const nx =
+      dx
+      /
+      distance;
+
+
+    const ny =
+      dy
+      /
+      distance;
+
+
+    ball.x =
+      arena.cx
+      +
+      nx
+      *
+      (
+        arena.r
+        -
+        ball.r
+      );
+
+
+    ball.y =
+      arena.cy
+      +
+      ny
+      *
+      (
+        arena.r
+        -
+        ball.r
+      );
+
+
+    const normalVelocity =
+      ball.vx
+      *
+      nx
+      +
+      ball.vy
+      *
+      ny;
+
+
+    if(
+      normalVelocity
+      >
+      0
+    ){
+
+      ball.vx -=
+        (
+          1
+          +
+          restitution
+        )
+        *
+        normalVelocity
+        *
+        nx;
+
+
+      ball.vy -=
+        (
+          1
+          +
+          restitution
+        )
+        *
+        normalVelocity
+        *
+        ny;
+
+
+      const tangentX =
+        -ny;
+
+
+      const tangentY =
+        nx;
+
+
+      const tangentVelocity =
+        ball.vx
+        *
+        tangentX
+        +
+        ball.vy
+        *
+        tangentY;
+
+
+      ball.vx -=
+        tangentVelocity
+        *
+        tangentX
+        *
+        (
+          1
+          -
+          damping
+        );
+
+
+      ball.vy -=
+        tangentVelocity
+        *
+        tangentY
+        *
+        (
+          1
+          -
+          damping
+        );
+
+
+      if(
+        Math.abs(
+          ball.vy
+        )
+        <
+        7
+        &&
+        ny > 0.65
+      ){
+
+        ball.vy =
+          0;
+
+      }
+
+    }
+
+  }
+
+}
+
+
+
+/* =====================================
+   SPATIAL GRID
+===================================== */
+
+function getPairs(){
+
+  const cellSize =
+    82;
+
 
   const grid =
     new Map();
@@ -1013,28 +1808,28 @@ function buildGrid(){
       balls[i];
 
 
-    const cellX =
+    const x =
       Math.floor(
         ball.x
         /
-        CELL_SIZE
+        cellSize
       );
 
 
-    const cellY =
+    const y =
       Math.floor(
         ball.y
         /
-        CELL_SIZE
+        cellSize
       );
 
 
     const key =
-      cellX
+      x
       +
-      ','
+      ","
       +
-      cellY;
+      y;
 
 
     if(
@@ -1062,343 +1857,29 @@ function buildGrid(){
   }
 
 
-  return grid;
-
-}
-
-
-function updatePhysics(
-  dt
-){
-
-  const gravity =
-    Number(
-      gravityInput.value
-    )
-    *
-    1700;
-
-
-  const bounce =
-    Number(
-      bounceInput.value
-    );
-
-
-  const chaos =
-    Number(
-      chaosInput.value
-    );
-
-
-  const tubeBottom =
-    arena.centerY
-    -
-    arena.radius
-    +
-    34;
-
-
-  const leftWall =
-    arena.centerX
-    -
-    arena.gap
-    /
-    2;
-
-
-  const rightWall =
-    arena.centerX
-    +
-    arena.gap
-    /
-    2;
-
-
-  for(
-    const ball
-    of balls
-  ){
-
-    ball.age +=
-      dt;
-
-
-    ball.vy +=
-      gravity
-      *
-      dt;
-
-
-    ball.vx *=
-      0.9992;
-
-
-    ball.vy *=
-      0.9995;
-
-
-    ball.x +=
-      ball.vx
-      *
-      dt;
-
-
-    ball.y +=
-      ball.vy
-      *
-      dt;
-
-
-    ball.angle +=
-      ball.spin
-      *
-      dt;
-
-
-    if(
-      ball.y
-      <
-      tubeBottom
-    ){
-
-      if(
-        ball.x
-        -
-        ball.radius
-        <
-        leftWall
-      ){
-
-        ball.x =
-          leftWall
-          +
-          ball.radius;
-
-
-        ball.vx =
-          Math.abs(
-            ball.vx
-          )
-          *
-          bounce;
-
-      }
-
-
-      if(
-        ball.x
-        +
-        ball.radius
-        >
-        rightWall
-      ){
-
-        ball.x =
-          rightWall
-          -
-          ball.radius;
-
-
-        ball.vx =
-          -Math.abs(
-            ball.vx
-          )
-          *
-          bounce;
-
-      }
-
-    }
-
-
-    const dx =
-      ball.x
-      -
-      arena.centerX;
-
-
-    const dy =
-      ball.y
-      -
-      arena.centerY;
-
-
-    const dist =
-      Math.hypot(
-        dx,
-        dy
-      )
-      ||
-      1;
-
-
-    const insideEntrance =
-      dy < 0
-      &&
-      Math.abs(
-        dx
-      )
-      <
-      arena.gap
-      /
-      2
-      +
-      26;
-
-
-    if(
-      dist
-      +
-      ball.radius
-      >
-      arena.radius
-      &&
-      !insideEntrance
-    ){
-
-      const nx =
-        dx
-        /
-        dist;
-
-
-      const ny =
-        dy
-        /
-        dist;
-
-
-      ball.x =
-        arena.centerX
-        +
-        nx
-        *
-        (
-          arena.radius
-          -
-          ball.radius
-        );
-
-
-      ball.y =
-        arena.centerY
-        +
-        ny
-        *
-        (
-          arena.radius
-          -
-          ball.radius
-        );
-
-
-      const velocityNormal =
-        ball.vx
-        *
-        nx
-        +
-        ball.vy
-        *
-        ny;
-
-
-      if(
-        velocityNormal
-        >
-        0
-      ){
-
-        ball.vx -=
-          (
-            1
-            +
-            bounce
-          )
-          *
-          velocityNormal
-          *
-          nx;
-
-
-        ball.vy -=
-          (
-            1
-            +
-            bounce
-          )
-          *
-          velocityNormal
-          *
-          ny;
-
-
-        ball.vx +=
-          (
-            Math.random()
-            -
-            0.5
-          )
-          *
-          chaos
-          *
-          90;
-
-
-        ball.vy +=
-          (
-            Math.random()
-            -
-            0.5
-          )
-          *
-          chaos
-          *
-          90;
-
-      }
-
-    }
-
-
-    clampSpeed(
-      ball
-    );
-
-  }
-
-
-  const grid =
-    buildGrid();
-
-
-  const removed =
-    new Set();
-
-
-  const created =
+  const pairs =
     [];
 
 
-  const checked =
+  const seen =
     new Set();
 
 
   for(
     const [
       key,
-      indexes
+      ids
     ]
     of grid
   ){
 
     const [
-      cellX,
-      cellY
+      gridX,
+      gridY
     ] =
       key
         .split(
-          ','
+          ","
         )
         .map(
           Number
@@ -1419,19 +1900,24 @@ function updatePhysics(
 
         const other =
           grid.get(
+
             (
-              cellX
+              gridX
               +
               offsetX
             )
+
             +
-            ','
+            ","
+
             +
+
             (
-              cellY
+              gridY
               +
               offsetY
             )
+
           );
 
 
@@ -1444,7 +1930,7 @@ function updatePhysics(
 
         for(
           const i
-          of indexes
+          of ids
         ){
 
           for(
@@ -1459,334 +1945,818 @@ function updatePhysics(
             }
 
 
-            const pair =
+            const key =
               i
               +
-              ':'
+              ":"
               +
               j;
 
 
             if(
-              checked.has(
-                pair
+              seen.has(
+                key
               )
             ){
               continue;
             }
 
 
-            checked.add(
-              pair
+            seen.add(
+              key
             );
 
 
-            const ballA =
-              balls[i];
-
-
-            const ballB =
-              balls[j];
-
-
-            if(
-              !ballA
-              ||
-              !ballB
-              ||
-              removed.has(
-                ballA
-              )
-              ||
-              removed.has(
-                ballB
-              )
-            ){
-              continue;
-            }
-
-
-            const dx =
-              ballB.x
-              -
-              ballA.x;
-
-
-            const dy =
-              ballB.y
-              -
-              ballA.y;
-
-
-            const dist =
-              Math.hypot(
-                dx,
-                dy
-              )
-              ||
-              0.001;
-
-
-            const minimumDistance =
-              ballA.radius
-              +
-              ballB.radius;
-
-
-            if(
-              dist
-              >=
-              minimumDistance
-            ){
-              continue;
-            }
-
-
-            const nx =
-              dx
-              /
-              dist;
-
-
-            const ny =
-              dy
-              /
-              dist;
-
-
-            const overlap =
-              minimumDistance
-              -
-              dist;
-
-
-            ballA.x -=
-              nx
-              *
-              overlap
-              *
-              0.5;
-
-
-            ballA.y -=
-              ny
-              *
-              overlap
-              *
-              0.5;
-
-
-            ballB.x +=
-              nx
-              *
-              overlap
-              *
-              0.5;
-
-
-            ballB.y +=
-              ny
-              *
-              overlap
-              *
-              0.5;
-
-
-            if(
-              ballA.level
-              ===
-              ballB.level
-              &&
-              ballA.level
-              <
-              LEVEL_COUNT
-              -
-              1
-              &&
-              ballA.age
-              >
-              0.14
-              &&
-              ballB.age
-              >
-              0.14
-            ){
-
-              const nextLevel =
-                ballA.level
-                +
-                1;
-
-
-              const x =
-                (
-                  ballA.x
-                  +
-                  ballB.x
-                )
-                /
-                2;
-
-
-              const y =
-                (
-                  ballA.y
-                  +
-                  ballB.y
-                )
-                /
-                2;
-
-
-              removed.add(
-                ballA
-              );
-
-
-              removed.add(
-                ballB
-              );
-
-
-              created.push({
-
-                x,
-
-                y,
-
-                vx:
-                  (
-                    ballA.vx
-                    +
-                    ballB.vx
-                  )
-                  /
-                  2
-                  +
-                  (
-                    Math.random()
-                    -
-                    0.5
-                  )
-                  *
-                  55,
-
-                vy:
-                  (
-                    ballA.vy
-                    +
-                    ballB.vy
-                  )
-                  /
-                  2
-                  -
-                  150,
-
-                radius:
-                  getBallRadius(
-                    nextLevel
-                  ),
-
-                level:
-                  nextLevel,
-
-                age:
-                  0,
-
-                angle:
-                  0,
-
-                spin:
-                  (
-                    Math.random()
-                    -
-                    0.5
-                  )
-                  *
-                  0.18
-
-              });
-
-
-              addMergeEffect(
-                x,
-                y,
-                nextLevel
-              );
-
-            }
-
-            else{
-
-              const relativeVelocity =
-                (
-                  ballB.vx
-                  -
-                  ballA.vx
-                )
-                *
-                nx
-                +
-                (
-                  ballB.vy
-                  -
-                  ballA.vy
-                )
-                *
-                ny;
-
-
-              if(
-                relativeVelocity
-                <
-                0
-              ){
-
-                const impulse =
-                  -
-                  (
-                    1
-                    +
-                    bounce
-                  )
-                  *
-                  relativeVelocity
-                  /
-                  2;
-
-
-                ballA.vx -=
-                  impulse
-                  *
-                  nx;
-
-
-                ballA.vy -=
-                  impulse
-                  *
-                  ny;
-
-
-                ballB.vx +=
-                  impulse
-                  *
-                  nx;
-
-
-                ballB.vy +=
-                  impulse
-                  *
-                  ny;
-
-              }
-
-            }
+            pairs.push(
+              [
+                i,
+                j
+              ]
+            );
 
           }
 
         }
 
       }
+
+    }
+
+  }
+
+
+  return pairs;
+
+}
+
+
+
+/* =====================================
+   PHYSICS
+===================================== */
+
+function physicsStep(
+  dt
+){
+
+  const gravity =
+    Number(
+      gravityInput.value
+    );
+
+
+  const restitution =
+    Number(
+      restitutionInput.value
+    );
+
+
+  const damping =
+    Number(
+      dampingInput.value
+    );
+
+
+  for(
+    const ball
+    of balls
+  ){
+
+    ball.age +=
+      dt;
+
+
+    /*
+
+    Im Schacht nur sehr wenig Beschleunigung,
+    damit die blauen Kugeln die gleichmäßigen
+    Abstände aus dem Original behalten.
+
+    */
+
+    if(
+      ball.y
+      <
+      arena.joinY
+      +
+      6
+    ){
+
+      ball.vy +=
+        gravity
+        *
+        0.18
+        *
+        dt;
+
+    }
+
+    else{
+
+      ball.vy +=
+        gravity
+        *
+        dt;
+
+    }
+
+
+    ball.vx *=
+      Math.pow(
+        damping,
+        dt
+        *
+        60
+      );
+
+
+    ball.vy *=
+      Math.pow(
+        0.9992,
+        dt
+        *
+        60
+      );
+
+
+    ball.x +=
+      ball.vx
+      *
+      dt;
+
+
+    ball.y +=
+      ball.vy
+      *
+      dt;
+
+
+    solveArena(
+
+      ball,
+
+      restitution,
+
+      damping
+
+    );
+
+  }
+
+
+  const pairs =
+    getPairs();
+
+
+  /* VERY LIGHT MERGE ASSIST */
+
+  for(
+    const [
+      i,
+      j
+    ]
+    of pairs
+  ){
+
+    const a =
+      balls[i];
+
+
+    const b =
+      balls[j];
+
+
+    if(
+      !a
+      ||
+      !b
+      ||
+      a.level
+      !==
+      b.level
+      ||
+      a.y
+      <
+      arena.joinY
+      ||
+      b.y
+      <
+      arena.joinY
+    ){
+      continue;
+    }
+
+
+    const dx =
+      b.x
+      -
+      a.x;
+
+
+    const dy =
+      b.y
+      -
+      a.y;
+
+
+    const distance =
+      Math.hypot(
+        dx,
+        dy
+      )
+      ||
+      1;
+
+
+    const reach =
+      (
+        a.r
+        +
+        b.r
+      )
+      *
+      1.65;
+
+
+    if(
+      distance
+      <
+      reach
+      &&
+      distance
+      >
+      a.r
+      +
+      b.r
+    ){
+
+      const force =
+        (
+          1
+          -
+          distance
+          /
+          reach
+        )
+        *
+        11;
+
+
+      a.vx +=
+        dx
+        /
+        distance
+        *
+        force
+        *
+        dt;
+
+
+      b.vx -=
+        dx
+        /
+        distance
+        *
+        force
+        *
+        dt;
+
+
+      a.vy +=
+        dy
+        /
+        distance
+        *
+        force
+        *
+        dt;
+
+
+      b.vy -=
+        dy
+        /
+        distance
+        *
+        force
+        *
+        dt;
+
+    }
+
+  }
+
+
+  const removed =
+    new Set();
+
+
+  const created =
+    [];
+
+
+  for(
+    const [
+      i,
+      j
+    ]
+    of pairs
+  ){
+
+    const a =
+      balls[i];
+
+
+    const b =
+      balls[j];
+
+
+    if(
+      !a
+      ||
+      !b
+      ||
+      removed.has(a)
+      ||
+      removed.has(b)
+    ){
+      continue;
+    }
+
+
+    const dx =
+      b.x
+      -
+      a.x;
+
+
+    const dy =
+      b.y
+      -
+      a.y;
+
+
+    const distance =
+      Math.hypot(
+        dx,
+        dy
+      )
+      ||
+      0.001;
+
+
+    const minDistance =
+      a.r
+      +
+      b.r;
+
+
+    if(
+      distance
+      >=
+      minDistance
+    ){
+      continue;
+    }
+
+
+    const nx =
+      dx
+      /
+      distance;
+
+
+    const ny =
+      dy
+      /
+      distance;
+
+
+    const overlap =
+      minDistance
+      -
+      distance;
+
+
+
+    /* =====================================
+       MERGE
+    ===================================== */
+
+    if(
+
+      a.level
+      ===
+      b.level
+
+      &&
+
+      a.level
+      <
+      LEVEL_COUNT
+      -
+      1
+
+      &&
+
+      a.age
+      >
+      0.08
+
+      &&
+
+      b.age
+      >
+      0.08
+
+      &&
+
+      a.y
+      >
+      arena.joinY
+      -
+      5
+
+      &&
+
+      b.y
+      >
+      arena.joinY
+      -
+      5
+
+    ){
+
+      const newLevel =
+        a.level
+        +
+        1;
+
+
+      const totalMass =
+        a.mass
+        +
+        b.mass;
+
+
+      const x =
+        (
+          a.x
+          *
+          a.mass
+          +
+          b.x
+          *
+          b.mass
+        )
+        /
+        totalMass;
+
+
+      const y =
+        (
+          a.y
+          *
+          a.mass
+          +
+          b.y
+          *
+          b.mass
+        )
+        /
+        totalMass;
+
+
+      const vx =
+        (
+          a.vx
+          *
+          a.mass
+          +
+          b.vx
+          *
+          b.mass
+        )
+        /
+        totalMass;
+
+
+      const vy =
+        (
+          a.vy
+          *
+          a.mass
+          +
+          b.vy
+          *
+          b.mass
+        )
+        /
+        totalMass
+        -
+        18;
+
+
+      removed.add(
+        a
+      );
+
+
+      removed.add(
+        b
+      );
+
+
+      created.push(
+
+        makeBall(
+
+          newLevel,
+
+          x,
+
+          y,
+
+          vx,
+
+          vy
+
+        )
+
+      );
+
+
+      addMergeEffect(
+
+        x,
+
+        y,
+
+        newLevel
+
+      );
+
+
+      playMergeSound(
+
+        newLevel,
+
+        x
+
+      );
+
+
+      if(
+        newLevel === 7
+        &&
+        finalReachedAt
+        ===
+        null
+      ){
+
+        finalReachedAt =
+          performance.now();
+
+      }
+
+
+      continue;
+
+    }
+
+
+
+    /* =====================================
+       NORMAL COLLISION
+    ===================================== */
+
+    const invMassA =
+      1
+      /
+      a.mass;
+
+
+    const invMassB =
+      1
+      /
+      b.mass;
+
+
+    const totalInverseMass =
+      invMassA
+      +
+      invMassB;
+
+
+    a.x -=
+      nx
+      *
+      overlap
+      *
+      (
+        invMassA
+        /
+        totalInverseMass
+      );
+
+
+    a.y -=
+      ny
+      *
+      overlap
+      *
+      (
+        invMassA
+        /
+        totalInverseMass
+      );
+
+
+    b.x +=
+      nx
+      *
+      overlap
+      *
+      (
+        invMassB
+        /
+        totalInverseMass
+      );
+
+
+    b.y +=
+      ny
+      *
+      overlap
+      *
+      (
+        invMassB
+        /
+        totalInverseMass
+      );
+
+
+    const relativeX =
+      b.vx
+      -
+      a.vx;
+
+
+    const relativeY =
+      b.vy
+      -
+      a.vy;
+
+
+    const normalVelocity =
+      relativeX
+      *
+      nx
+      +
+      relativeY
+      *
+      ny;
+
+
+    if(
+      normalVelocity < 0
+    ){
+
+      const collisionRestitution =
+        0.04;
+
+
+      const impulse =
+        -
+        (
+          1
+          +
+          collisionRestitution
+        )
+        *
+        normalVelocity
+        /
+        totalInverseMass;
+
+
+      const impulseX =
+        impulse
+        *
+        nx;
+
+
+      const impulseY =
+        impulse
+        *
+        ny;
+
+
+      a.vx -=
+        impulseX
+        *
+        invMassA;
+
+
+      a.vy -=
+        impulseY
+        *
+        invMassA;
+
+
+      b.vx +=
+        impulseX
+        *
+        invMassB;
+
+
+      b.vy +=
+        impulseY
+        *
+        invMassB;
+
+
+
+      /* FRICTION */
+
+      const tangentX =
+        -ny;
+
+
+      const tangentY =
+        nx;
+
+
+      const tangentVelocity =
+        relativeX
+        *
+        tangentX
+        +
+        relativeY
+        *
+        tangentY;
+
+
+      const friction =
+        0.13;
+
+
+      const tangentImpulse =
+        Math.max(
+
+          -
+          Math.abs(
+            impulse
+          )
+          *
+          friction,
+
+          Math.min(
+
+            Math.abs(
+              impulse
+            )
+            *
+            friction,
+
+            -
+            tangentVelocity
+            /
+            totalInverseMass
+
+          )
+
+        );
+
+
+      a.vx -=
+        tangentImpulse
+        *
+        tangentX
+        *
+        invMassA;
+
+
+      a.vy -=
+        tangentImpulse
+        *
+        tangentY
+        *
+        invMassA;
+
+
+      b.vx +=
+        tangentImpulse
+        *
+        tangentX
+        *
+        invMassB;
+
+
+      b.vy +=
+        tangentImpulse
+        *
+        tangentY
+        *
+        invMassB;
 
     }
 
@@ -1845,114 +2815,140 @@ function updatePhysics(
 }
 
 
-function createRainbowGradient(){
 
-  const gradient =
-    ctx.createLinearGradient(
-      50,
-      500,
-      1030,
-      1500
-    );
+/* =====================================
+   DRAW ARENA
+===================================== */
+
+function drawArena(){
+
+  ctx.fillStyle =
+    "#000";
 
 
-  gradient.addColorStop(
+  ctx.fillRect(
     0,
-    '#ff3cac'
+    0,
+    576,
+    1024
   );
-
-
-  gradient.addColorStop(
-    0.2,
-    '#784ba0'
-  );
-
-
-  gradient.addColorStop(
-    0.42,
-    '#2b86c5'
-  );
-
-
-  gradient.addColorStop(
-    0.64,
-    '#47e6b1'
-  );
-
-
-  gradient.addColorStop(
-    0.82,
-    '#f6e652'
-  );
-
-
-  gradient.addColorStop(
-    1,
-    '#ff8f3f'
-  );
-
-
-  return gradient;
-
-}
-
-
-function fitText(
-  text,
-  maxWidth,
-  startSize
-){
-
-  let size =
-    startSize;
-
-
-  ctx.font =
-    `900 ${size}px system-ui`;
-
-
-  while(
-    size > 24
-    &&
-    ctx.measureText(
-      text
-    ).width
-    >
-    maxWidth
-  ){
-
-    size -=
-      2;
-
-
-    ctx.font =
-      `900 ${size}px system-ui`;
-
-  }
-
-
-  return size;
-
-}
-
-
-function drawBall(
-  ball,
-  scale = 1,
-  alpha = 1
-){
-
-  const radius =
-    ball.radius
-    *
-    scale;
 
 
   ctx.save();
 
 
-  ctx.globalAlpha =
-    alpha;
+  ctx.strokeStyle =
+    "#fff";
+
+
+  ctx.lineWidth =
+    arena.line;
+
+
+  ctx.lineCap =
+    "round";
+
+
+  ctx.lineJoin =
+    "round";
+
+
+  const half =
+    (
+      arena.right
+      -
+      arena.left
+    )
+    /
+    2;
+
+
+  const angle =
+    Math.asin(
+      half
+      /
+      arena.r
+    );
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+
+    arena.cx,
+
+    arena.cy,
+
+    arena.r,
+
+    -Math.PI
+    /
+    2
+    +
+    angle,
+
+    Math.PI
+    *
+    1.5
+    -
+    angle
+
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.beginPath();
+
+
+  ctx.moveTo(
+    arena.left,
+    -10
+  );
+
+
+  ctx.lineTo(
+    arena.left,
+    arena.joinY
+  );
+
+
+  ctx.moveTo(
+    arena.right,
+    -10
+  );
+
+
+  ctx.lineTo(
+    arena.right,
+    arena.joinY
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.restore();
+
+}
+
+
+
+/* =====================================
+   BLUE ORB
+===================================== */
+
+function drawOrb(
+  ball
+){
+
+  const r =
+    ball.r;
+
+
+  ctx.save();
 
 
   ctx.translate(
@@ -1961,69 +2957,59 @@ function drawBall(
   );
 
 
-  ctx.rotate(
-    ball.angle
-    ||
-    0
-  );
+  ctx.shadowColor =
+    "#0658ff";
 
 
-  ctx.beginPath();
+  ctx.shadowBlur =
+    12;
 
 
-  ctx.arc(
-    0,
-    0,
-    radius + 8,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.fillStyle =
-    'rgba(255,255,255,.11)';
-
-
-  ctx.fill();
-
-
-  const shell =
+  const gradient =
     ctx.createRadialGradient(
 
-      -radius * 0.32,
-      -radius * 0.35,
-      radius * 0.05,
+      -r * 0.28,
+
+      -r * 0.30,
+
+      r * 0.05,
 
       0,
+
       0,
-      radius
+
+      r
 
     );
 
 
-  shell.addColorStop(
+  gradient.addColorStop(
     0,
-    'rgba(255,255,255,.95)'
+    "#dff8ff"
   );
 
 
-  shell.addColorStop(
-    0.16,
-    'rgba(255,255,255,.28)'
+  gradient.addColorStop(
+    0.13,
+    "#4fd5ff"
   );
 
 
-  shell.addColorStop(
-    0.48,
-    fallbackColors[
-      ball.level
-    ]
+  gradient.addColorStop(
+    0.38,
+    "#075cff"
   );
 
 
-  shell.addColorStop(
+  gradient.addColorStop(
+    0.72,
+    "#00238f"
+  );
+
+
+  gradient.addColorStop(
     1,
-    '#0c1020'
+    "#000726"
   );
 
 
@@ -2033,18 +3019,122 @@ function drawBall(
   ctx.arc(
     0,
     0,
-    radius,
+    r,
     0,
-    Math.PI * 2
+    Math.PI
+    *
+    2
   );
 
 
   ctx.fillStyle =
-    shell;
+    gradient;
 
 
   ctx.fill();
 
+
+  ctx.shadowBlur =
+    0;
+
+
+  ctx.strokeStyle =
+    "#1a77ff";
+
+
+  ctx.lineWidth =
+    1.6;
+
+
+  ctx.stroke();
+
+
+  ctx.globalAlpha =
+    0.72;
+
+
+  ctx.strokeStyle =
+    "#a8efff";
+
+
+  ctx.lineWidth =
+    0.8;
+
+
+  for(
+    let i = 0;
+    i < 3;
+    i++
+  ){
+
+    const angle =
+      ball.age
+      *
+      1.2
+      +
+      i
+      *
+      2.05;
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+
+      Math.cos(
+        angle
+      )
+      *
+      r
+      *
+      0.08,
+
+      Math.sin(
+        angle
+      )
+      *
+      r
+      *
+      0.08,
+
+      r
+      *
+      (
+        0.31
+        +
+        i
+        *
+        0.07
+      ),
+
+      angle,
+
+      angle
+      +
+      0.7
+
+    );
+
+
+    ctx.stroke();
+
+  }
+
+
+  ctx.restore();
+
+}
+
+
+
+/* =====================================
+   SPRITES
+===================================== */
+
+function drawSprite(
+  ball
+){
 
   const image =
     levelImages[
@@ -2053,55 +3143,62 @@ function drawBall(
 
 
   if(
-    image
+    ball.level === 0
+    &&
+    !image
   ){
 
-    const padding =
-      radius
-      *
-      0.12;
-
-
-    const innerRadius =
-      radius
-      -
-      padding;
-
-
-    ctx.save();
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-      0,
-      0,
-      innerRadius,
-      0,
-      Math.PI * 2
+    drawOrb(
+      ball
     );
 
 
-    ctx.clip();
+    return;
+
+  }
 
 
-    const imageScale =
+  ctx.save();
+
+
+  ctx.translate(
+    ball.x,
+    ball.y
+  );
+
+
+  ctx.shadowColor =
+    glowColors[
+      ball.level
+    ];
+
+
+  ctx.shadowBlur =
+    9
+    +
+    ball.level
+    *
+    0.7;
+
+
+  if(
+    image
+  ){
+
+    const target =
+      ball.r
+      *
+      2.36;
+
+
+    const scale =
       Math.min(
 
-        (
-          innerRadius
-          *
-          1.72
-        )
+        target
         /
         image.width,
 
-        (
-          innerRadius
-          *
-          1.72
-        )
+        target
         /
         image.height
 
@@ -2111,13 +3208,13 @@ function drawBall(
     const width =
       image.width
       *
-      imageScale;
+      scale;
 
 
     const height =
       image.height
       *
-      imageScale;
+      scale;
 
 
     ctx.drawImage(
@@ -2138,93 +3235,52 @@ function drawBall(
 
     );
 
-
-    ctx.restore();
-
   }
 
+  else{
 
-  const gloss =
-    ctx.createRadialGradient(
+    ctx.font =
+      `${
+        Math.round(
+          ball.r
+          *
+          2.05
+        )
+      }px Apple Color Emoji,Segoe UI Emoji,sans-serif`;
 
-      -radius * 0.34,
-      -radius * 0.38,
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.textBaseline =
+      "middle";
+
+
+    ctx.fillText(
+
+      fallbackEmoji[
+        ball.level
+      ],
+
       0,
 
-      -radius * 0.24,
-      -radius * 0.25,
-      radius * 0.72
+      2
 
     );
 
-
-  gloss.addColorStop(
-    0,
-    'rgba(255,255,255,.55)'
-  );
-
-
-  gloss.addColorStop(
-    0.42,
-    'rgba(255,255,255,.10)'
-  );
-
-
-  gloss.addColorStop(
-    1,
-    'rgba(255,255,255,0)'
-  );
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-    0,
-    0,
-    radius * 0.94,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.fillStyle =
-    gloss;
-
-
-  ctx.fill();
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-    0,
-    0,
-    radius,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.strokeStyle =
-    'rgba(255,255,255,.58)';
-
-
-  ctx.lineWidth =
-    Math.max(
-      3,
-      radius * 0.045
-    );
-
-
-  ctx.stroke();
+  }
 
 
   ctx.restore();
 
 }
 
+
+
+/* =====================================
+   EFFECTS
+===================================== */
 
 function drawEffects(){
 
@@ -2246,11 +3302,17 @@ function drawEffects(){
 
 
     const radius =
-      effect.r
-      +
-      120
+      radii[
+        effect.level
+      ]
       *
-      progress;
+      (
+        1
+        +
+        progress
+        *
+        0.95
+      );
 
 
     ctx.save();
@@ -2259,29 +3321,27 @@ function drawEffects(){
     ctx.globalAlpha =
       alpha
       *
-      0.75;
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-      effect.x,
-      effect.y,
-      radius,
-      0,
-      Math.PI * 2
-    );
+      0.9;
 
 
     ctx.strokeStyle =
-      fallbackColors[
+      glowColors[
         effect.level
       ];
 
 
+    ctx.shadowColor =
+      glowColors[
+        effect.level
+      ];
+
+
+    ctx.shadowBlur =
+      14;
+
+
     ctx.lineWidth =
-      8
+      2.2
       *
       (
         1
@@ -2289,568 +3349,240 @@ function drawEffects(){
         progress
       )
       +
-      2;
+      0.5;
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+
+      effect.x,
+
+      effect.y,
+
+      radius,
+
+      0,
+
+      Math.PI
+      *
+      2
+
+    );
 
 
     ctx.stroke();
 
 
-    ctx.restore();
-
-  }
-
-}
-
-
-function drawArena(){
-
-  ctx.strokeStyle =
-    createRainbowGradient();
-
-
-  ctx.lineWidth =
-    14;
-
-
-  const gapAngle =
-    Math.asin(
-      (
-        arena.gap
-        /
-        2
-      )
-      /
-      arena.radius
-    );
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-
-    arena.centerX,
-
-    arena.centerY,
-
-    arena.radius,
-
-    -Math.PI
-    /
-    2
-    +
-    gapAngle,
-
-    Math.PI
-    *
-    1.5
-    -
-    gapAngle
-
-  );
-
-
-  ctx.stroke();
-
-
-  ctx.strokeStyle =
-    'rgba(255,255,255,.94)';
-
-
-  ctx.lineWidth =
-    10;
-
-
-  ctx.beginPath();
-
-
-  ctx.moveTo(
-
-    arena.centerX
-    -
-    arena.gap
-    /
-    2,
-
-    130
-
-  );
-
-
-  ctx.lineTo(
-
-    arena.centerX
-    -
-    arena.gap
-    /
-    2,
-
-    arena.centerY
-    -
-    arena.radius
-    +
-    34
-
-  );
-
-
-  ctx.moveTo(
-
-    arena.centerX
-    +
-    arena.gap
-    /
-    2,
-
-    130
-
-  );
-
-
-  ctx.lineTo(
-
-    arena.centerX
-    +
-    arena.gap
-    /
-    2,
-
-    arena.centerY
-    -
-    arena.radius
-    +
-    34
-
-  );
-
-
-  ctx.stroke();
-
-}
-
-
-function drawBackground(){
-
-  const background =
-    ctx.createRadialGradient(
-
-      540,
-      980,
-      120,
-
-      540,
-      980,
-      1050
-
-    );
-
-
-  background.addColorStop(
-    0,
-    '#111528'
-  );
-
-
-  background.addColorStop(
-    0.55,
-    '#070911'
-  );
-
-
-  background.addColorStop(
-    1,
-    '#020307'
-  );
-
-
-  ctx.fillStyle =
-    background;
-
-
-  ctx.fillRect(
-    0,
-    0,
-    1080,
-    1920
-  );
-
-}
-
-
-function drawText(
-  text,
-  y,
-  startSize = 54,
-  alpha = 1
-){
-
-  if(
-    !text.trim()
-  ){
-    return;
-  }
-
-
-  const size =
-    fitText(
-      text,
-      920,
-      startSize
-    );
-
-
-  ctx.save();
-
-
-  ctx.globalAlpha =
-    alpha;
-
-
-  ctx.font =
-    `900 ${size}px system-ui`;
-
-
-  ctx.textAlign =
-    'center';
-
-
-  ctx.textBaseline =
-    'middle';
-
-
-  ctx.lineWidth =
-    10;
-
-
-  ctx.strokeStyle =
-    'rgba(0,0,0,.68)';
-
-
-  ctx.strokeText(
-    text,
-    540,
-    y
-  );
-
-
-  ctx.fillStyle =
-    '#fff';
-
-
-  ctx.fillText(
-    text,
-    540,
-    y
-  );
-
-
-  ctx.restore();
-
-}
-
-
-function drawBottomText(
-  elapsed,
-  timeLeft
-){
-
-  let text =
-    hookInput.value;
-
-
-  const duration =
-    Number(
-      durationInput.value
-    );
-
-
-  if(
-    elapsed
-    >
-    duration
-    *
-    0.72
-    &&
-    timeLeft
-    >
-    8
-  ){
-
-    text =
-      'ALMOST THERE…';
-
-  }
-
-
-  if(
-    timeLeft <= 8
-    &&
-    timeLeft > 0
-  ){
-
-    text =
-      'FINAL FORM?';
-
-  }
-
-
-  drawText(
-    text,
-    1665,
-    52,
-    1
-  );
-
-
-  if(
-    brandInput.value.trim()
-  ){
-
-    ctx.save();
-
-
     ctx.globalAlpha =
-      0.12;
-
-
-    ctx.font =
-      '900 38px system-ui';
-
-
-    ctx.textAlign =
-      'center';
+      alpha
+      *
+      0.75;
 
 
     ctx.fillStyle =
-      '#fff';
-
-
-    ctx.fillText(
-
-      brandInput.value.trim(),
-
-      540,
-
-      1500
-
-    );
-
-
-    ctx.restore();
-
-  }
-
-}
-
-
-function drawFinalForm(
-  progress = 1
-){
-
-  drawBackground();
-
-
-  drawArena();
-
-
-  const ease =
-    1
-    -
-    Math.pow(
-      1
-      -
-      progress,
-      3
-    );
-
-
-  const pulse =
-    1
-    +
-    Math.sin(
-      progress
-      *
-      Math.PI
-    )
-    *
-    0.035;
-
-
-  const finalBall = {
-
-    x:
-      arena.centerX,
-
-    y:
-      arena.centerY,
-
-    radius:
-      305,
-
-    level:
-      LEVEL_COUNT
-      -
-      1,
-
-    angle:
-      0
-
-  };
-
-
-  ctx.save();
-
-
-  ctx.globalAlpha =
-    0.18
-    +
-    0.12
-    *
-    ease;
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-
-    540,
-
-    1010,
-
-    390
-    *
-    ease,
-
-    0,
-
-    Math.PI * 2
-
-  );
-
-
-  ctx.fillStyle =
-    fallbackColors[7];
-
-
-  ctx.fill();
-
-
-  ctx.restore();
-
-
-  drawBall(
-
-    finalBall,
-
-    Math.max(
-      0.02,
-      ease
-    )
-    *
-    pulse,
-
-    1
-
-  );
-
-
-  drawText(
-
-    finalTextInput.value,
-
-    1665,
-
-    62,
-
-    Math.min(
-      1,
-      progress
-      *
-      1.4
-    )
-
-  );
-
-
-  if(
-    brandInput.value.trim()
-  ){
-
-    ctx.save();
-
-
-    ctx.globalAlpha =
-      0.12;
-
-
-    ctx.font =
-      '900 38px system-ui';
-
-
-    ctx.textAlign =
-      'center';
-
-
-    ctx.fillStyle =
-      '#fff';
-
-
-    ctx.fillText(
-
-      brandInput.value.trim(),
-
-      540,
-
-      1500
-
-    );
-
-
-    ctx.restore();
-
-  }
-
-}
-
-
-function drawScene(
-  elapsed,
-  timeLeft
-){
-
-  if(
-    finalMode
-  ){
-
-    const progress =
-      Math.min(
-
-        1,
-
-        (
-          performance.now()
-          -
-          finalStart
+      glowColors[
+        effect.level
+      ];
+
+
+    for(
+      const spark
+      of effect.sparks
+    ){
+
+      const distance =
+        spark.speed
+        *
+        progress;
+
+
+      const x =
+        effect.x
+        +
+        Math.cos(
+          spark.angle
         )
-        /
-        700
+        *
+        distance;
+
+
+      const y =
+        effect.y
+        +
+        Math.sin(
+          spark.angle
+        )
+        *
+        distance;
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+
+        x,
+
+        y,
+
+        spark.size
+        *
+        (
+          1
+          -
+          progress
+          *
+          0.5
+        ),
+
+        0,
+
+        Math.PI
+        *
+        2
 
       );
 
 
-    drawFinalForm(
-      progress
+      ctx.fill();
+
+    }
+
+
+    ctx.restore();
+
+  }
+
+}
+
+
+
+/* =====================================
+   TEXT
+===================================== */
+
+function drawText(
+  elapsed
+){
+
+  const hook =
+    hookInput
+      .value
+      .trim();
+
+
+  if(
+    hook
+    &&
+    elapsed < 4.6
+  ){
+
+    ctx.save();
+
+
+    ctx.font =
+      "700 29px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.textBaseline =
+      "middle";
+
+
+    ctx.fillStyle =
+      "#fff";
+
+
+    ctx.shadowColor =
+      "#000";
+
+
+    ctx.shadowBlur =
+      3;
+
+
+    ctx.fillText(
+
+      hook,
+
+      288,
+
+      350
+
     );
 
 
-    return;
+    ctx.restore();
 
   }
 
 
-  drawBackground();
+  const finalText =
+    finalTextInput
+      .value
+      .trim();
 
+
+  if(
+    finalReachedAt !== null
+    &&
+    finalText
+  ){
+
+    ctx.save();
+
+
+    ctx.font =
+      "800 29px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.fillStyle =
+      "#fff";
+
+
+    ctx.shadowColor =
+      "#000";
+
+
+    ctx.shadowBlur =
+      4;
+
+
+    ctx.fillText(
+
+      finalText,
+
+      288,
+
+      367
+
+    );
+
+
+    ctx.restore();
+
+  }
+
+}
+
+
+
+/* =====================================
+   DRAW
+===================================== */
+
+function draw(
+  elapsed = 0
+){
 
   drawArena();
 
@@ -2860,7 +3592,7 @@ function drawScene(
     of balls
   ){
 
-    drawBall(
+    drawSprite(
       ball
     );
 
@@ -2870,22 +3602,27 @@ function drawScene(
   drawEffects();
 
 
-  drawBottomText(
-    elapsed,
-    timeLeft
+  drawText(
+    elapsed
   );
 
 }
 
 
-function finishGame(){
+
+/* =====================================
+   RESET
+===================================== */
+
+function resetGame(){
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
 
   running =
     false;
-
-
-  finalMode =
-    true;
 
 
   balls =
@@ -2896,60 +3633,95 @@ function finishGame(){
     [];
 
 
-  finalStart =
-    performance.now();
+  accumulator =
+    0;
 
 
-  statusElement.textContent =
-    'Final Form erreicht.';
+  spawnClock =
+    0;
 
 
-  const animate =
-    () => {
-
-      if(
-        !finalMode
-      ){
-        return;
-      }
+  finalReachedAt =
+    null;
 
 
-      drawScene(
-        0,
-        0
-      );
+  draw(
+    0
+  );
 
 
-      if(
-        performance.now()
-        -
-        finalStart
-        <
-        3000
-      ){
-
-        animationFrame =
-          requestAnimationFrame(
-            animate
-          );
-
-      }
-
-      else if(
-        recording
-      ){
-
-        stopRecording();
-
-      }
-
-    };
-
-
-  animate();
+  statusEl.textContent =
+    "Bereit.";
 
 }
 
+
+
+/* =====================================
+   START
+===================================== */
+
+function startGame(){
+
+  ensureAudio();
+
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+
+  balls =
+    [];
+
+
+  effects =
+    [];
+
+
+  accumulator =
+    0;
+
+
+  spawnClock =
+    0;
+
+
+  finalReachedAt =
+    null;
+
+
+  running =
+    true;
+
+
+  startTime =
+    performance.now();
+
+
+  lastTime =
+    startTime;
+
+
+  spawnBall();
+
+
+  statusEl.textContent =
+    "Spiel läuft…";
+
+
+  animationFrame =
+    requestAnimationFrame(
+      gameLoop
+    );
+
+}
+
+
+
+/* =====================================
+   GAME LOOP
+===================================== */
 
 function gameLoop(
   now
@@ -2962,7 +3734,7 @@ function gameLoop(
   }
 
 
-  let frameDelta =
+  const delta =
     Math.min(
 
       0.05,
@@ -2970,7 +3742,7 @@ function gameLoop(
       (
         now
         -
-        lastFrameTime
+        lastTime
       )
       /
       1000
@@ -2978,53 +3750,35 @@ function gameLoop(
     );
 
 
-  lastFrameTime =
+  lastTime =
     now;
 
 
   accumulator +=
-    frameDelta;
+    delta;
 
 
-  const elapsed =
-    (
-      now
-      -
-      gameStartTime
-    )
-    /
-    1000;
+  spawnClock +=
+    delta;
 
 
-  const duration =
-    Number(
-      durationInput.value
-    );
-
-
-  const timeLeft =
-    duration
-    -
-    elapsed;
-
-
-  if(
-    elapsed
-    -
-    lastSpawnTime
-    >
+  const spawnInterval =
     Number(
       spawnRateInput.value
-    )
-  ){
-
-    spawnBall(
-      elapsed
     );
 
 
-    lastSpawnTime =
-      elapsed;
+  while(
+    spawnClock
+    >=
+    spawnInterval
+  ){
+
+    spawnClock -=
+      spawnInterval;
+
+
+    spawnBall();
 
   }
 
@@ -3036,20 +3790,20 @@ function gameLoop(
   while(
     accumulator
     >=
-    FIXED_STEP
+    STEP
     &&
     steps
     <
-    3
+    MAX_STEPS
   ){
 
-    updatePhysics(
-      FIXED_STEP
+    physicsStep(
+      STEP
     );
 
 
     accumulator -=
-      FIXED_STEP;
+      STEP;
 
 
     steps++;
@@ -3060,7 +3814,7 @@ function gameLoop(
   if(
     steps
     ===
-    3
+    MAX_STEPS
   ){
 
     accumulator =
@@ -3069,19 +3823,78 @@ function gameLoop(
   }
 
 
-  drawScene(
-    elapsed,
-    timeLeft
+  const elapsed =
+    (
+      now
+      -
+      startTime
+    )
+    /
+    1000;
+
+
+  draw(
+    elapsed
   );
 
 
+  const maxDuration =
+    Number(
+      durationInput.value
+    );
+
+
+  /*
+
+  Im Original läuft das Spiel nach der
+  Pineapple noch ungefähr 3 Sekunden weiter.
+
+  */
+
   if(
-    timeLeft
-    <=
-    0
+
+    (
+      finalReachedAt
+      !==
+      null
+      &&
+      now
+      -
+      finalReachedAt
+      >
+      3200
+    )
+
+    ||
+
+    elapsed
+    >=
+    maxDuration
+
   ){
 
-    finishGame();
+    running =
+      false;
+
+
+    statusEl.textContent =
+      finalReachedAt !== null
+      ?
+      "Final-Level erreicht."
+      :
+      "Maximale Laufzeit erreicht.";
+
+
+    if(
+      recording
+    ){
+
+      setTimeout(
+        stopRecording,
+        180
+      );
+
+    }
 
 
     return;
@@ -3097,7 +3910,27 @@ function gameLoop(
 }
 
 
+
+/* =====================================
+   RECORDING
+===================================== */
+
+let recorder =
+  null;
+
+
+let recordedChunks =
+  [];
+
+
+let recording =
+  false;
+
+
 function startRecording(){
+
+  ensureAudio();
+
 
   if(
     recording
@@ -3116,11 +3949,11 @@ function startRecording(){
     ||
     typeof MediaRecorder
     ===
-    'undefined'
+    "undefined"
   ){
 
-    statusElement.textContent =
-      'Aufnahme wird hier nicht unterstützt. Nutze Chrome/Edge am Desktop.';
+    statusEl.textContent =
+      "Aufnahme wird hier nicht unterstützt. Nutze Chrome oder Edge am Desktop.";
 
 
     return;
@@ -3128,24 +3961,54 @@ function startRecording(){
   }
 
 
-  const stream =
+  /* Originalvideo = 30 FPS */
+
+  const videoStream =
     canvas.captureStream(
-      60
+      30
+    );
+
+
+  const tracks =
+    [
+      ...videoStream
+        .getVideoTracks()
+    ];
+
+
+  if(
+    audioDestination
+  ){
+
+    tracks.push(
+
+      ...audioDestination
+        .stream
+        .getAudioTracks()
+
+    );
+
+  }
+
+
+  const stream =
+    new MediaStream(
+      tracks
     );
 
 
   let mimeType =
-    'video/webm;codecs=vp9';
+    "video/webm;codecs=vp9,opus";
 
 
   if(
     MediaRecorder.isTypeSupported(
-      'video/mp4'
+      "video/mp4"
     )
   ){
 
     mimeType =
-      'video/mp4';
+      "video/mp4";
 
   }
 
@@ -3156,14 +4019,14 @@ function startRecording(){
   ){
 
     mimeType =
-      'video/webm';
+      "video/webm";
 
   }
 
 
   try{
 
-    mediaRecorder =
+    recorder =
       new MediaRecorder(
 
         stream,
@@ -3173,7 +4036,10 @@ function startRecording(){
           mimeType,
 
           videoBitsPerSecond:
-            9000000
+            6500000,
+
+          audioBitsPerSecond:
+            160000
 
         }
 
@@ -3183,7 +4049,7 @@ function startRecording(){
 
   catch{
 
-    mediaRecorder =
+    recorder =
       new MediaRecorder(
         stream
       );
@@ -3195,13 +4061,11 @@ function startRecording(){
     [];
 
 
-  mediaRecorder.ondataavailable =
+  recorder.ondataavailable =
     event => {
 
       if(
         event.data.size
-        >
-        0
       ){
 
         recordedChunks.push(
@@ -3213,13 +4077,13 @@ function startRecording(){
     };
 
 
-  mediaRecorder.onstop =
+  recorder.onstop =
     () => {
 
       const type =
-        mediaRecorder.mimeType
+        recorder.mimeType
         ||
-        'video/webm';
+        "video/webm";
 
 
       const blob =
@@ -3242,7 +4106,7 @@ function startRecording(){
 
       const link =
         document.createElement(
-          'a'
+          "a"
         );
 
 
@@ -3251,18 +4115,18 @@ function startRecording(){
 
 
       link.download =
-        'bounce-lab-'
+        "bounce-lab-"
         +
         Date.now()
         +
         (
           type.includes(
-            'mp4'
+            "mp4"
           )
           ?
-          '.mp4'
+          ".mp4"
           :
-          '.webm'
+          ".webm"
         );
 
 
@@ -3281,13 +4145,13 @@ function startRecording(){
       );
 
 
-      statusElement.textContent =
-        'Video gespeichert.';
+      statusEl.textContent =
+        "Video mit Merge-Sound gespeichert.";
 
     };
 
 
-  mediaRecorder.start(
+  recorder.start(
     1000
   );
 
@@ -3297,16 +4161,16 @@ function startRecording(){
 
 
   recordButton.textContent =
-    '■ Aufnahme stoppen';
+    "■ Aufnahme stoppen";
 
 
   recordButton.classList.add(
-    'danger'
+    "danger"
   );
 
 
-  statusElement.textContent =
-    'Aufnahme läuft. Jetzt Spiel starten.';
+  statusEl.textContent =
+    "Aufnahme läuft. Jetzt Spiel starten.";
 
 }
 
@@ -3314,14 +4178,14 @@ function startRecording(){
 function stopRecording(){
 
   if(
-    mediaRecorder
+    recorder
     &&
-    mediaRecorder.state
+    recorder.state
     !==
-    'inactive'
+    "inactive"
   ){
 
-    mediaRecorder.stop();
+    recorder.stop();
 
   }
 
@@ -3331,38 +4195,50 @@ function stopRecording(){
 
 
   recordButton.textContent =
-    '● Aufnahme starten';
+    "● Aufnahme starten";
 
 
   recordButton.classList.remove(
-    'danger'
+    "danger"
   );
 
 }
 
 
+
+/* =====================================
+   EVENTS
+===================================== */
+
 startButton.addEventListener(
-  'click',
+  "click",
   startGame
 );
 
 
 resetButton.addEventListener(
-  'click',
+  "click",
   resetGame
 );
 
 
 recordButton.addEventListener(
-  'click',
+  "click",
   startRecording
 );
 
 
-durationValue.textContent =
-  durationInput.value
-  +
-  ' s';
+durationInput.addEventListener(
+  "input",
+  () => {
+
+    durationLabel.textContent =
+      durationInput.value
+      +
+      " s";
+
+  }
+);
 
 
 resetGame();
