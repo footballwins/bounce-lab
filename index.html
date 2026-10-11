@@ -1,0 +1,2020 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bounce Lab</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#07080c;color:#f7f7fb}
+.app{max-width:1240px;margin:auto;padding:14px;display:grid;grid-template-columns:390px minmax(300px,1fr);gap:20px}
+.panel{background:#11131a;border:1px solid #282c38;border-radius:18px;padding:16px;height:max-content;position:sticky;top:14px;box-shadow:0 20px 70px #0009}
+h1{margin:0;font-size:25px}.sub{margin:6px 0 16px;color:#929aab;font-size:12px;line-height:1.5}
+.section{border-top:1px solid #262b37;margin-top:13px;padding-top:13px}.section h2{margin:0 0 10px;font-size:13px}
+label{display:block;font-size:11px;color:#aeb5c7;margin-bottom:5px}input[type=text],input[type=number],select{width:100%;background:#090b10;color:#fff;border:1px solid #303647;border-radius:9px;padding:9px 10px;outline:none}input[type=range]{width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.level{background:#090b10;border:1px solid #292f3c;border-radius:11px;padding:7px;text-align:center}.preview{width:50px;height:50px;margin:0 auto 6px;display:grid;place-items:center;font-size:34px;filter:drop-shadow(0 0 4px #155dff) drop-shadow(0 0 8px #155dff);background-size:contain;background-repeat:no-repeat;background-position:center}.level b{font-size:9px;color:#cbd0df}.level input{width:100%;font-size:8px;margin-top:5px}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.buttons button:last-child{grid-column:auto}button{border:0;border-radius:11px;padding:11px;font-weight:800;cursor:pointer;background:#292e3b;color:#fff;transition:transform .12s ease}button:active{transform:scale(.985)}.primary{background:linear-gradient(135deg,#6c3be9,#d846b5)}.record{background:linear-gradient(135deg,#087f62,#087b9a)}.danger{background:#531925;color:#ffd4dc}
+.status{font-size:11px;color:#9098a9;margin-top:9px;line-height:1.45}.hint{font-size:10px;color:#737b8e;line-height:1.45}.stage{display:flex;justify-content:center;align-items:flex-start}.phone{width:min(520px,100%);aspect-ratio:9/16;background:#000;border:1px solid #252a35;border-radius:22px;overflow:hidden;box-shadow:0 22px 70px #000c,0 0 35px rgba(90,150,255,.07)}canvas{width:100%;height:100%;display:block;background:#000}
+@media(max-width:900px){.app{grid-template-columns:1fr;padding:10px}.panel{position:static}.levels{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="panel">
+<h1>Bounce Lab</h1>
+<div class="sub">1080×1920 High-Quality-Render, 6 Falltempo-Presets, größerer Kugelabstand im Kanal, weiche Übergänge, Jelly-Jiggle und robuste Physik.</div>
+
+<div class="section"><h2>Video</h2>
+<div class="row">
+<div><label>Laufzeit <span id="durationLabel">70 s</span></label><input id="duration" type="range" min="50" max="100" value="70"></div>
+<div><label>Spawn-Abstand</label><select id="spawnRate"><option value="0.46">Extra ruhig · 0,46 s</option><option value="0.40">Ruhig · 0,40 s</option><option value="0.34" selected>Original · 0,34 s</option><option value="0.30">Schnell · 0,30 s</option><option value="0.26">Sehr schnell · 0,26 s</option></select></div>
+</div>
+<div style="margin-top:9px"><label>Falltempo</label><select id="fallMode"><option value="ultra">Ultra Slow · 55%</option><option value="slow" selected>Slow Satisfying · 70%</option><option value="smooth">Smooth · 85%</option><option value="original">Original · 100%</option><option value="fast">Fast · 120%</option><option value="rush">Rush · 145%</option></select></div>
+<div style="margin-top:9px"><label>Start-Hook</label><input id="hook" type="text" value="come closer..."></div>
+<div style="margin-top:9px"><label>Text bei Final-Level</label><input id="finalText" type="text" value=""></div>
+</div>
+
+<div class="section"><h2>Wasserzeichen</h2>
+<label>Text</label><input id="watermark" type="text" value="@BounceLab">
+<div class="row" style="margin-top:9px"><div><label>Stärke <span id="watermarkOpacityLabel">22%</span></label><input id="watermarkOpacity" type="range" min="0" max="100" value="22"></div><div><label>Position</label><select id="watermarkPosition"><option value="center" selected>Mitte</option><option value="bottom-center">Unten mittig</option><option value="bottom-left">Unten links</option><option value="bottom-right">Unten rechts</option><option value="top-left">Oben links</option><option value="top-right">Oben rechts</option></select></div></div>
+</div>
+
+<div class="section"><h2>Eigene Bilder</h2><div class="hint" style="margin-bottom:9px">Blue Orb → Strawberry → Lemon → Grapes → Peach → Pear → Apple → Pineapple.<br><br>Für die beste Qualität transparente PNGs mit hoher Auflösung verwenden.</div><div id="levels" class="levels"></div></div>
+
+<div class="section"><h2>Physik</h2>
+<div class="row3"><div><label>Gravity</label><input id="gravity" type="number" min="80" max="400" step="5" value="225"></div><div><label>Bounce</label><input id="restitution" type="number" min="0" max="0.5" step="0.01" value="0.18"></div><div><label>Damping</label><input id="damping" type="number" min="0.97" max="1" step="0.001" value="0.998"></div></div>
+<div style="margin-top:9px"><label>Jiggle <span id="jiggleLabel">110%</span></label><input id="jiggle" type="range" min="0" max="180" value="110"></div>
+<div style="margin-top:9px"><label>Sound <span id="volumeLabel">62%</span></label><input id="volume" type="range" min="0" max="100" value="62"></div>
+</div>
+
+<div class="buttons"><button id="startButton" class="primary">▶ Spiel starten</button><button id="resetButton">↻ Reset</button><button id="soundTestButton">🔊 Sound testen</button><button id="recordButton" class="record">● Aufnahme starten</button></div>
+<div id="status" class="status">Bereit · Slow Satisfying · 1080×1920 · Sound-Test verfügbar.</div>
+</section>
+<section class="stage"><div class="phone"><canvas id="game" width="1080" height="1920"></canvas></div></section>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const canvas=$("game"),ctx=canvas.getContext("2d",{alpha:false,desynchronized:false});
+const LOGICAL_W=576,LOGICAL_H=1024,RENDER_SCALE=canvas.width/LOGICAL_W;
+ctx.setTransform(RENDER_SCALE,0,0,RENDER_SCALE,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+
+const durationInput=$("duration"),durationLabel=$("durationLabel"),spawnRateInput=$("spawnRate"),fallModeInput=$("fallMode"),hookInput=$("hook"),finalTextInput=$("finalText");
+const watermarkInput=$("watermark"),watermarkOpacityInput=$("watermarkOpacity"),watermarkOpacityLabel=$("watermarkOpacityLabel"),watermarkPositionInput=$("watermarkPosition");
+const gravityInput=$("gravity"),restitutionInput=$("restitution"),dampingInput=$("damping"),jiggleInput=$("jiggle"),jiggleLabel=$("jiggleLabel"),volumeInput=$("volume"),volumeLabel=$("volumeLabel");
+const statusEl=$("status"),startButton=$("startButton"),resetButton=$("resetButton"),soundTestButton=$("soundTestButton"),recordButton=$("recordButton");
+
+const arena={cx:288,cy:512,r:246,left:250,right:326,joinY:269,line:5.5};
+const LEVEL_COUNT=8,radii=[19,24,29,36,44,50,57,66];
+const fallbackEmoji=["","🍓","🍋","🍇","🍑","🍐","🍎","🍍"];
+const glowColors=["#1476ff","#ff3355","#ffe347","#a84cff","#ff7040","#b7ef50","#ff3340","#ffb229"];
+const levelImages=Array(LEVEL_COUNT).fill(null),levelWrap=$("levels");
+
+for(let level=0;level<LEVEL_COUNT;level++){
+  const el=document.createElement("div");el.className="level";
+  el.innerHTML=`<div class="preview" id="preview-${level}">${level===0?"🔵":fallbackEmoji[level]}</div><b>LEVEL ${level+1}</b><input type="file" accept="image/png,image/jpeg,image/webp">`;
+  levelWrap.appendChild(el);
+  el.querySelector("input").addEventListener("change",e=>{const file=e.target.files[0];if(!file)return;const image=new Image();image.onload=()=>{levelImages[level]=image;const p=$(`preview-${level}`);p.textContent="";p.style.backgroundImage=`url("${image.src}")`;};image.src=URL.createObjectURL(file);});
+}
+
+let balls=[],effects=[],running=false,animationFrame=null,startTime=0,lastTime=0,spawnClock=0,accumulator=0,finalReachedAt=null,sceneTime=0;
+const STEP=1/120,MAX_STEPS=8,MAX_BALLS=64;
+
+const SPAWN_Y=-90;
+const MIN_CHUTE_GAP=72;
+const INITIAL_STREAM_SPACING=82;
+
+const FALL_PRESETS={
+  ultra:{label:"Ultra Slow",speed:78,gravityScale:.55,chuteGravity:.08},
+  slow:{label:"Slow Satisfying",speed:102,gravityScale:.70,chuteGravity:.11},
+  smooth:{label:"Smooth",speed:132,gravityScale:.85,chuteGravity:.15},
+  original:{label:"Original",speed:172,gravityScale:1,chuteGravity:.18},
+  fast:{label:"Fast",speed:205,gravityScale:1.20,chuteGravity:.23},
+  rush:{label:"Rush",speed:245,gravityScale:1.45,chuteGravity:.30}
+};
+
+const getFallPreset=()=>FALL_PRESETS[fallModeInput.value]||FALL_PRESETS.slow;
+const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+const easeOutCubic=t=>1-Math.pow(1-clamp(t,0,1),3);
+const smoothstep=t=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+
+function makeBall(level,x=arena.cx,y=SPAWN_Y,vx=0,vy=getFallPreset().speed){
+  return{level,x,y,vx,vy,r:radii[level],age:0,mass:radii[level]**2,squash:0,pop:0,glowBoost:0,jiggle:0,jiggleVelocity:0,jiggleTwist:0};
+}
+
+function seedInitialStream(){
+  const amount=12,firstY=-840,speed=getFallPreset().speed;
+  for(let i=0;i<amount;i++){
+    balls.push(makeBall(0,arena.cx,firstY+i*INITIAL_STREAM_SPACING,0,speed));
+  }
+}
+
+function spawnBall(){
+  if(balls.length>=MAX_BALLS)return false;
+
+  const blocked=balls.some(ball=>
+    ball.y<arena.joinY &&
+    Math.abs(ball.x-arena.cx)<radii[0]*2.2 &&
+    Math.abs(ball.y-SPAWN_Y)<MIN_CHUTE_GAP
+  );
+
+  if(blocked)return false;
+
+  balls.push(makeBall(0,arena.cx,SPAWN_Y,0,getFallPreset().speed));
+  return true;
+}
+
+/* ===========================
+   ROBUSTER AUDIO-FIX
+=========================== */
+
+let audioContext=null;
+let liveGain=null;
+let recordGain=null;
+let audioDestination=null;
+let audioWarmed=false;
+
+const mergeNotes=[329.63,440,587.33,783.99,1046.5,1318.51,1760];
+
+function initAudioGraph(){
+  if(audioContext)return;
+
+  const AudioCtx=
+    window.AudioContext||
+    window.webkitAudioContext;
+
+  if(!AudioCtx){
+    throw new Error("WebAudio wird von diesem Browser nicht unterstützt.");
+  }
+
+  try{
+    audioContext=
+      new AudioCtx({
+        latencyHint:"interactive"
+      });
+  }catch{
+    audioContext=
+      new AudioCtx();
+  }
+
+  liveGain=
+    audioContext.createGain();
+
+  recordGain=
+    audioContext.createGain();
+
+  audioDestination=
+    audioContext.createMediaStreamDestination();
+
+  /*
+    LIVE:
+    direkt zu Mac/Lautsprechern.
+  */
+  liveGain.connect(
+    audioContext.destination
+  );
+
+  /*
+    RECORDING:
+    getrennt zur Aufnahme.
+  */
+  recordGain.connect(
+    audioDestination
+  );
+
+  updateVolume();
+}
+
+function updateVolume(){
+  volumeLabel.textContent=
+    volumeInput.value+
+    "%";
+
+  const value=
+    Number(
+      volumeInput.value
+    )/
+    100;
+
+  if(liveGain){
+    liveGain.gain.value=
+      value;
+  }
+
+  if(recordGain){
+    recordGain.gain.value=
+      value;
+  }
+}
+
+volumeInput.addEventListener(
+  "input",
+  updateVolume
+);
+
+function connectSoundToOutputs(
+  node,
+  x=arena.cx
+){
+  if(
+    !audioContext||
+    !liveGain||
+    !recordGain
+  ){
+    return;
+  }
+
+  /*
+    Stereo falls verfügbar.
+    Sonst normaler Audio-Fallback.
+  */
+  if(
+    typeof audioContext.createStereoPanner===
+    "function"
+  ){
+    const pan=
+      audioContext.createStereoPanner();
+
+    pan.pan.value=
+      clamp(
+        (x-arena.cx)/arena.cx,
+        -.45,
+        .45
+      );
+
+    node.connect(pan);
+
+    pan.connect(
+      liveGain
+    );
+
+    pan.connect(
+      recordGain
+    );
+
+  }else{
+
+    node.connect(
+      liveGain
+    );
+
+    node.connect(
+      recordGain
+    );
+  }
+}
+
+async function ensureAudio(){
+  initAudioGraph();
+
+  if(
+    audioContext.state!==
+    "running"
+  ){
+    await audioContext.resume();
+  }
+
+  if(
+    audioContext.state!==
+    "running"
+  ){
+    throw new Error(
+      "Audio ist im Browser noch gesperrt. Klicke einmal auf 'Sound testen'."
+    );
+  }
+
+  /*
+    Audio-Engine lautlos vorwärmen.
+  */
+  if(!audioWarmed){
+    const o=
+      audioContext.createOscillator();
+
+    const g=
+      audioContext.createGain();
+
+    const n=
+      audioContext.currentTime;
+
+    g.gain.setValueAtTime(
+      .000001,
+      n
+    );
+
+    o.connect(g);
+
+    connectSoundToOutputs(
+      g,
+      arena.cx
+    );
+
+    o.start(n);
+    o.stop(n+.012);
+
+    audioWarmed=true;
+  }
+}
+
+/*
+  Wird direkt beim Pointer-/Touch-Event
+  ausgeführt und nicht erst später.
+  Das ist wichtig für Browser-Autoplay-Sperren.
+*/
+function unlockAudioFromGesture(){
+  try{
+    initAudioGraph();
+
+    if(
+      audioContext.state!==
+      "running"
+    ){
+      audioContext
+        .resume()
+        .catch(()=>{});
+    }
+  }catch{}
+}
+
+document.addEventListener(
+  "pointerdown",
+  unlockAudioFromGesture,
+  {
+    capture:true,
+    passive:true
+  }
+);
+
+document.addEventListener(
+  "touchstart",
+  unlockAudioFromGesture,
+  {
+    capture:true,
+    passive:true
+  }
+);
+
+function playTone(
+  frequency,
+  x=arena.cx,
+  delay=0,
+  duration=.28,
+  peak=.22,
+  type="triangle"
+){
+  if(
+    !audioContext||
+    audioContext.state!==
+    "running"
+  ){
+    return;
+  }
+
+  const now=
+    audioContext.currentTime+
+    Math.max(0,delay);
+
+  const osc=
+    audioContext.createOscillator();
+
+  const gain=
+    audioContext.createGain();
+
+  osc.type=
+    type;
+
+  osc.frequency.setValueAtTime(
+    frequency*1.025,
+    now
+  );
+
+  osc.frequency.exponentialRampToValueAtTime(
+    frequency,
+    now+.045
+  );
+
+  gain.gain.setValueAtTime(
+    .0001,
+    now
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    peak,
+    now+.004
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    .0001,
+    now+duration
+  );
+
+  osc.connect(gain);
+
+  connectSoundToOutputs(
+    gain,
+    x
+  );
+
+  osc.start(now);
+
+  osc.stop(
+    now+
+    duration+
+    .025
+  );
+}
+
+async function testSound(){
+  try{
+    await ensureAudio();
+
+    playTone(
+      659.25,
+      arena.cx,
+      0,
+      .24,
+      .24,
+      "triangle"
+    );
+
+    playTone(
+      987.77,
+      arena.cx,
+      .11,
+      .22,
+      .16,
+      "sine"
+    );
+
+    statusEl.textContent=
+      "🔊 Sound funktioniert · Audio aktiv.";
+
+  }catch(e){
+
+    statusEl.textContent=
+      "Sound konnte nicht gestartet werden: "+
+      e.message;
+  }
+}
+
+function playMergeSound(
+  newLevel,
+  x
+){
+  if(newLevel<1){
+    return;
+  }
+
+  if(!audioContext){
+    return;
+  }
+
+  if(
+    audioContext.state!==
+    "running"
+  ){
+    audioContext
+      .resume()
+      .then(()=>{
+        if(
+          audioContext.state===
+          "running"
+        ){
+          playMergeSound(
+            newLevel,
+            x
+          );
+        }
+      })
+      .catch(()=>{});
+
+    return;
+  }
+
+  const frequency=
+    mergeNotes[
+      Math.min(
+        newLevel-1,
+        mergeNotes.length-1
+      )
+    ];
+
+  /*
+    Hauptton etwas kräftiger und
+    besser hörbar als vorher.
+  */
+  playTone(
+    frequency,
+    x,
+    0,
+    .28,
+    .20,
+    "triangle"
+  );
+
+  /*
+    Kurzer höherer Sparkle.
+  */
+  playTone(
+    frequency*2,
+    x,
+    .018,
+    .19,
+    .055,
+    "sine"
+  );
+
+  /*
+    Tiefer Bonus bei großen Früchten.
+  */
+  if(newLevel>=5){
+    playTone(
+      105,
+      x,
+      0,
+      .11,
+      .04,
+      "sine"
+    );
+  }
+}
+
+/* ===========================
+   EFFECTS
+=========================== */
+
+function addMergeEffect(x,y,level){
+  const sparks=[];
+  for(let i=0;i<10;i++){
+    sparks.push({
+      angle:Math.random()*Math.PI*2,
+      speed:20+Math.random()*36,
+      size:1+Math.random()*1.6
+    });
+  }
+
+  effects.push({
+    x,
+    y,
+    level,
+    age:0,
+    life:.44,
+    sparks
+  });
+
+  if(effects.length>22){
+    effects.shift();
+  }
+}
+
+function nearOpening(b){
+  return b.y<arena.joinY+b.r+5&&
+    b.x>arena.left-b.r*.15&&
+    b.x<arena.right+b.r*.15;
+}
+
+function solveArena(b,restitution,damping){
+  if(b.y-b.r<arena.joinY+2){
+    if(b.x-b.r<arena.left){
+      b.x=arena.left+b.r;
+      if(b.vx<0)b.vx=-b.vx*.08;
+    }
+
+    if(b.x+b.r>arena.right){
+      b.x=arena.right-b.r;
+      if(b.vx>0)b.vx=-b.vx*.08;
+    }
+  }
+
+  const dx=b.x-arena.cx;
+  const dy=b.y-arena.cy;
+  const d=Math.hypot(dx,dy)||1;
+
+  if(d+b.r>arena.r&&!nearOpening(b)){
+    const nx=dx/d;
+    const ny=dy/d;
+
+    b.x=arena.cx+nx*(arena.r-b.r);
+    b.y=arena.cy+ny*(arena.r-b.r);
+
+    const nv=b.vx*nx+b.vy*ny;
+
+    if(nv>0){
+      const impact=Math.min(1,Math.abs(nv)/500);
+      const js=Number(jiggleInput.value)/100;
+
+      b.squash=Math.max(b.squash,impact*.035);
+      b.glowBoost=Math.max(b.glowBoost,impact*.16);
+
+      b.jiggle+=impact*.038*js;
+      b.jiggleVelocity-=impact*.62*js;
+      b.jiggleTwist+=-nx*impact*.018*js;
+
+      b.vx-=(1+restitution)*nv*nx;
+      b.vy-=(1+restitution)*nv*ny;
+
+      const tx=-ny;
+      const ty=nx;
+      const tv=b.vx*tx+b.vy*ty;
+
+      b.vx-=tv*tx*(1-damping);
+      b.vy-=tv*ty*(1-damping);
+
+      if(
+        ny>.5&&
+        Math.abs(b.vx)<14
+      ){
+        const dir=
+          Math.abs(b.x-arena.cx)>2
+          ?
+          Math.sign(b.x-arena.cx)
+          :
+          (Math.random()<.5?-1:1);
+
+        b.vx+=dir*(6+Math.random()*7);
+      }
+    }
+  }
+}
+
+function getPairs(){
+  const pairs=[];
+
+  for(let i=0;i<balls.length;i++){
+    for(let j=i+1;j<balls.length;j++){
+      pairs.push([i,j]);
+    }
+  }
+
+  return pairs;
+}
+
+function physicsStep(dt){
+  const gravity=Number(gravityInput.value);
+  const restitution=Number(restitutionInput.value);
+  const damping=Number(dampingInput.value);
+  const js=Number(jiggleInput.value)/100;
+  const preset=getFallPreset();
+
+  for(const b of balls){
+    b.age+=dt;
+    b.squash*=Math.pow(.80,dt*60);
+    b.pop*=Math.pow(.74,dt*60);
+    b.glowBoost*=Math.pow(.78,dt*60);
+
+    b.jiggleVelocity+=(
+      -205*b.jiggle-
+      14.5*b.jiggleVelocity
+    )*dt;
+
+    b.jiggle+=b.jiggleVelocity*dt;
+
+    const maxJ=.085*Math.max(.4,js);
+
+    b.jiggle=clamp(
+      b.jiggle,
+      -maxJ,
+      maxJ
+    );
+
+    b.jiggleTwist*=Math.pow(.84,dt*60);
+
+    b.vy+=
+      gravity*
+      preset.gravityScale*
+      (
+        b.y<arena.joinY+6
+        ?
+        preset.chuteGravity
+        :
+        1
+      )*
+      dt;
+
+    b.vx*=Math.pow(damping,dt*60);
+    b.vy*=Math.pow(.9993,dt*60);
+
+    b.x+=b.vx*dt;
+    b.y+=b.vy*dt;
+
+    solveArena(
+      b,
+      restitution,
+      damping
+    );
+  }
+
+  const removed=new Set();
+  const created=[];
+
+  for(const [i,j] of getPairs()){
+    const a=balls[i];
+    const b=balls[j];
+
+    if(
+      !a||
+      !b||
+      removed.has(a)||
+      removed.has(b)
+    ){
+      continue;
+    }
+
+    const dx=b.x-a.x;
+    const dy=b.y-a.y;
+    const d=Math.hypot(dx,dy)||.001;
+    const minD=a.r+b.r;
+
+    if(d>=minD){
+      continue;
+    }
+
+    const nx=dx/d;
+    const ny=dy/d;
+    const overlap=minD-d;
+
+    if(
+      a.level===b.level&&
+      a.level<LEVEL_COUNT-1&&
+      a.age>.08&&
+      b.age>.08&&
+      a.y>arena.joinY-5&&
+      b.y>arena.joinY-5
+    ){
+      const nl=a.level+1;
+      const total=a.mass+b.mass;
+
+      const x=
+        (a.x*a.mass+b.x*b.mass)/
+        total;
+
+      const y=
+        (a.y*a.mass+b.y*b.mass)/
+        total;
+
+      const vx=
+        (a.vx*a.mass+b.vx*b.mass)/
+        total+
+        (Math.random()-.5)*20;
+
+      const vy=
+        (a.vy*a.mass+b.vy*b.mass)/
+        total-
+        7;
+
+      removed.add(a);
+      removed.add(b);
+
+      const n=
+        makeBall(
+          nl,
+          x,
+          y,
+          vx,
+          vy
+        );
+
+      n.pop=.095;
+      n.glowBoost=.64;
+      n.jiggle=.078*js;
+      n.jiggleVelocity=-1.05*js;
+      n.jiggleTwist=(Math.random()-.5)*.05*js;
+
+      created.push(n);
+
+      addMergeEffect(
+        x,
+        y,
+        nl
+      );
+
+      playMergeSound(
+        nl,
+        x
+      );
+
+      if(
+        nl===7&&
+        finalReachedAt===null
+      ){
+        finalReachedAt=
+          performance.now();
+      }
+
+      continue;
+    }
+
+    const ia=1/a.mass;
+    const ib=1/b.mass;
+    const sum=ia+ib;
+
+    a.x-=nx*overlap*(ia/sum);
+    a.y-=ny*overlap*(ia/sum);
+
+    b.x+=nx*overlap*(ib/sum);
+    b.y+=ny*overlap*(ib/sum);
+
+    const rvx=b.vx-a.vx;
+    const rvy=b.vy-a.vy;
+    const nv=rvx*nx+rvy*ny;
+
+    if(nv<0){
+      const impulse=
+        -(1+.16)*
+        nv/
+        sum;
+
+      const ix=impulse*nx;
+      const iy=impulse*ny;
+
+      a.vx-=ix*ia;
+      a.vy-=iy*ia;
+
+      b.vx+=ix*ib;
+      b.vy+=iy*ib;
+
+      if(
+        a.y>arena.joinY&&
+        b.y>arena.joinY
+      ){
+        const kick=
+          (Math.random()-.5)*6;
+
+        a.vx+=kick;
+        b.vx-=kick;
+      }
+
+      const impact=
+        Math.min(
+          1,
+          Math.abs(nv)/350
+        );
+
+      a.jiggle+=impact*.026*js;
+      b.jiggle+=impact*.026*js;
+
+      a.jiggleVelocity+=impact*.38*js;
+      b.jiggleVelocity-=impact*.38*js;
+
+      a.jiggleTwist+=-ny*impact*.012*js;
+      b.jiggleTwist+=ny*impact*.012*js;
+    }
+  }
+
+  balls=
+    balls.filter(
+      b=>!removed.has(b)
+    );
+
+  balls.push(...created);
+
+  if(balls.length>MAX_BALLS){
+    balls.splice(
+      0,
+      balls.length-MAX_BALLS
+    );
+  }
+
+  for(const e of effects){
+    e.age+=dt;
+  }
+
+  effects=
+    effects.filter(
+      e=>e.age<e.life
+    );
+}
+
+function drawArena(){
+  ctx.fillStyle="#000";
+
+  ctx.fillRect(
+    0,
+    0,
+    LOGICAL_W,
+    LOGICAL_H
+  );
+
+  const half=
+    (arena.right-arena.left)/2;
+
+  const angle=
+    Math.asin(
+      half/arena.r
+    );
+
+  const pulse=
+    .5+
+    .5*
+    Math.sin(
+      sceneTime*1.35
+    );
+
+  ctx.save();
+
+  ctx.lineCap="round";
+  ctx.lineJoin="round";
+
+  let rainbow;
+
+  if(
+    typeof ctx.createConicGradient===
+    "function"
+  ){
+    rainbow=
+      ctx.createConicGradient(
+        sceneTime*.16,
+        arena.cx,
+        arena.cy
+      );
+
+    rainbow.addColorStop(0,"#42e8ff");
+    rainbow.addColorStop(.22,"#4c7dff");
+    rainbow.addColorStop(.44,"#b34dff");
+    rainbow.addColorStop(.66,"#ff4fa4");
+    rainbow.addColorStop(.84,"#ffb44a");
+    rainbow.addColorStop(1,"#42e8ff");
+  }else{
+    rainbow="#6ca8ff";
+  }
+
+  ctx.strokeStyle=rainbow;
+  ctx.shadowColor="#7d82ff";
+  ctx.shadowBlur=18+pulse*7;
+  ctx.lineWidth=arena.line+4.8;
+  ctx.globalAlpha=.76;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    arena.cx,
+    arena.cy,
+    arena.r,
+    -Math.PI/2+angle,
+    Math.PI*1.5-angle
+  );
+
+  ctx.stroke();
+
+  ctx.globalAlpha=.20;
+  ctx.strokeStyle="#9ed8ff";
+  ctx.shadowColor="#70b8ff";
+  ctx.shadowBlur=10;
+  ctx.lineWidth=arena.line+2.5;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    arena.left,
+    -10
+  );
+
+  ctx.lineTo(
+    arena.left,
+    arena.joinY
+  );
+
+  ctx.moveTo(
+    arena.right,
+    -10
+  );
+
+  ctx.lineTo(
+    arena.right,
+    arena.joinY
+  );
+
+  ctx.stroke();
+
+  ctx.globalAlpha=1;
+  ctx.shadowColor="#fff";
+  ctx.shadowBlur=2.5;
+  ctx.strokeStyle="rgba(255,255,255,.96)";
+  ctx.lineWidth=arena.line;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    arena.cx,
+    arena.cy,
+    arena.r,
+    -Math.PI/2+angle,
+    Math.PI*1.5-angle
+  );
+
+  ctx.stroke();
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    arena.left,
+    -10
+  );
+
+  ctx.lineTo(
+    arena.left,
+    arena.joinY
+  );
+
+  ctx.moveTo(
+    arena.right,
+    -10
+  );
+
+  ctx.lineTo(
+    arena.right,
+    arena.joinY
+  );
+
+  ctx.stroke();
+
+  ctx.globalAlpha=.22;
+  ctx.strokeStyle="#fff";
+  ctx.shadowBlur=0;
+  ctx.lineWidth=1.2;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    arena.cx,
+    arena.cy,
+    arena.r-5,
+    Math.PI*.12,
+    Math.PI*.82
+  );
+
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawBallShape(
+  b,
+  fn
+){
+  const squash=b.squash||0;
+  const pop=b.pop||0;
+  const j=b.jiggle||0;
+
+  ctx.save();
+
+  ctx.translate(
+    b.x,
+    b.y
+  );
+
+  ctx.rotate(
+    (b.jiggleTwist||0)+
+    j*.12
+  );
+
+  ctx.scale(
+    1+squash+pop+j,
+    1-squash*.70+pop-j*.78
+  );
+
+  fn();
+
+  ctx.restore();
+}
+
+function drawOrb(b){
+  const r=b.r;
+
+  drawBallShape(
+    b,
+    ()=>{
+      ctx.shadowColor="#086cff";
+      ctx.shadowBlur=11+b.glowBoost*24;
+
+      const g=
+        ctx.createRadialGradient(
+          -r*.30,
+          -r*.32,
+          r*.05,
+          0,
+          0,
+          r
+        );
+
+      g.addColorStop(0,"#ecfcff");
+      g.addColorStop(.12,"#5edcff");
+      g.addColorStop(.36,"#076aff");
+      g.addColorStop(.68,"#002ca8");
+      g.addColorStop(1,"#000728");
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        r,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fillStyle=g;
+      ctx.fill();
+
+      ctx.shadowBlur=0;
+
+      ctx.strokeStyle=
+        "rgba(120,205,255,.88)";
+
+      ctx.lineWidth=1.3;
+
+      ctx.stroke();
+    }
+  );
+}
+
+function drawSprite(b){
+  const image=
+    levelImages[
+      b.level
+    ];
+
+  if(
+    b.level===0&&
+    !image
+  ){
+    drawOrb(b);
+    return;
+  }
+
+  drawBallShape(
+    b,
+    ()=>{
+      ctx.shadowColor=
+        glowColors[
+          b.level
+        ];
+
+      ctx.shadowBlur=
+        10+
+        b.level*.65+
+        b.glowBoost*24;
+
+      if(image){
+        const target=
+          b.r*2.35;
+
+        const scale=
+          Math.min(
+            target/image.width,
+            target/image.height
+          );
+
+        const w=
+          image.width*scale;
+
+        const h=
+          image.height*scale;
+
+        ctx.drawImage(
+          image,
+          -w/2,
+          -h/2,
+          w,
+          h
+        );
+      }else{
+        ctx.font=
+          `${
+            Math.round(
+              b.r*2.05
+            )
+          }px Apple Color Emoji,Segoe UI Emoji,sans-serif`;
+
+        ctx.textAlign="center";
+        ctx.textBaseline="middle";
+
+        ctx.fillText(
+          fallbackEmoji[
+            b.level
+          ],
+          0,
+          2
+        );
+      }
+    }
+  );
+}
+
+function drawEffects(){
+  for(const e of effects){
+    const p=
+      clamp(
+        e.age/e.life,
+        0,
+        1
+      );
+
+    const q=
+      easeOutCubic(p);
+
+    const alpha=
+      1-p;
+
+    const color=
+      glowColors[
+        e.level
+      ];
+
+    const base=
+      radii[
+        e.level
+      ];
+
+    ctx.save();
+
+    const fr=
+      base*
+      (.65+q*1.25);
+
+    const flash=
+      ctx.createRadialGradient(
+        e.x,
+        e.y,
+        0,
+        e.x,
+        e.y,
+        fr
+      );
+
+    flash.addColorStop(
+      0,
+      `rgba(255,255,255,${.20*alpha})`
+    );
+
+    flash.addColorStop(
+      .18,
+      color
+    );
+
+    flash.addColorStop(
+      1,
+      "rgba(0,0,0,0)"
+    );
+
+    ctx.globalAlpha=.20*alpha;
+    ctx.fillStyle=flash;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      e.x,
+      e.y,
+      fr,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.globalAlpha=.82*alpha;
+    ctx.strokeStyle=color;
+    ctx.shadowColor=color;
+    ctx.shadowBlur=18;
+    ctx.lineWidth=2.2*(1-p)+.35;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      e.x,
+      e.y,
+      base*(.80+q*.95),
+      0,
+      Math.PI*2
+    );
+
+    ctx.stroke();
+
+    ctx.globalAlpha=.76*alpha;
+    ctx.fillStyle=color;
+
+    for(const s of e.sparks){
+      const dist=s.speed*q;
+
+      const x=
+        e.x+
+        Math.cos(
+          s.angle
+        )*
+        dist;
+
+      const y=
+        e.y+
+        Math.sin(
+          s.angle
+        )*
+        dist;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        x,
+        y,
+        s.size*(1-p*.55),
+        0,
+        Math.PI*2
+      );
+
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+}
+
+function drawText(elapsed){
+  const hook=
+    hookInput.value.trim();
+
+  if(
+    hook&&
+    elapsed<4.6
+  ){
+    const a=
+      Math.min(
+        smoothstep(
+          elapsed/.34
+        ),
+        smoothstep(
+          (4.6-elapsed)/.48
+        )
+      );
+
+    ctx.save();
+
+    ctx.globalAlpha=a;
+
+    ctx.font=
+      "700 29px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+    ctx.fillStyle="#fff";
+    ctx.shadowColor="#90c8ff";
+    ctx.shadowBlur=6;
+
+    ctx.fillText(
+      hook,
+      288,
+      350
+    );
+
+    ctx.restore();
+  }
+
+  const ft=
+    finalTextInput.value.trim();
+
+  if(
+    finalReachedAt!==null&&
+    ft
+  ){
+    const age=
+      performance.now()-
+      finalReachedAt;
+
+    if(age<3400){
+      const intro=
+        easeOutCubic(
+          age/320
+        );
+
+      const out=
+        age>2850
+        ?
+        smoothstep(
+          (3400-age)/550
+        )
+        :
+        1;
+
+      ctx.save();
+
+      ctx.globalAlpha=
+        intro*out;
+
+      ctx.translate(
+        288,
+        368
+      );
+
+      ctx.scale(
+        .93+.07*intro,
+        .93+.07*intro
+      );
+
+      ctx.font=
+        "800 28px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+      ctx.textAlign="center";
+      ctx.textBaseline="middle";
+      ctx.fillStyle="#fff";
+      ctx.shadowColor="#8ec6ff";
+      ctx.shadowBlur=8;
+
+      ctx.fillText(
+        ft,
+        0,
+        0
+      );
+
+      ctx.restore();
+    }
+  }
+}
+
+function drawWatermark(){
+  const text=
+    watermarkInput.value.trim();
+
+  if(!text){
+    return;
+  }
+
+  const opacity=
+    Number(
+      watermarkOpacityInput.value
+    )/
+    100;
+
+  const pos=
+    watermarkPositionInput.value;
+
+  let x=288;
+  let y=512;
+  let align="center";
+
+  if(pos==="bottom-center"){
+    y=980;
+  }else if(pos==="bottom-left"){
+    x=18;
+    y=988;
+    align="left";
+  }else if(pos==="bottom-right"){
+    x=558;
+    y=988;
+    align="right";
+  }else if(pos==="top-left"){
+    x=18;
+    y=42;
+    align="left";
+  }else if(pos==="top-right"){
+    x=558;
+    y=42;
+    align="right";
+  }
+
+  ctx.save();
+
+  ctx.globalAlpha=
+    opacity;
+
+  ctx.font=
+    pos==="center"
+    ?
+    "800 24px system-ui,-apple-system,sans-serif"
+    :
+    "700 16px system-ui,-apple-system,sans-serif";
+
+  ctx.textAlign=
+    align;
+
+  ctx.textBaseline=
+    "middle";
+
+  ctx.fillStyle=
+    "#fff";
+
+  ctx.shadowColor=
+    "#000";
+
+  ctx.shadowBlur=
+    5;
+
+  ctx.fillText(
+    text,
+    x,
+    y
+  );
+
+  ctx.restore();
+}
+
+function draw(
+  elapsed=0
+){
+  sceneTime=elapsed;
+
+  drawArena();
+
+  for(const b of balls){
+    drawSprite(b);
+  }
+
+  drawEffects();
+
+  drawText(
+    elapsed
+  );
+
+  drawWatermark();
+}
+
+function resetGame(){
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+  running=false;
+  balls=[];
+  effects=[];
+  accumulator=0;
+  spawnClock=0;
+  finalReachedAt=null;
+  sceneTime=0;
+
+  draw(0);
+
+  statusEl.textContent=
+    `Bereit · ${
+      getFallPreset().label
+    } · 1080×1920 · bis 60 FPS.`;
+}
+
+async function startGame(){
+  try{
+    await ensureAudio();
+  }catch(e){
+    statusEl.textContent=
+      "Audio konnte nicht gestartet werden: "+
+      e.message;
+
+    return;
+  }
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+  balls=[];
+  effects=[];
+  accumulator=0;
+  spawnClock=0;
+  finalReachedAt=null;
+
+  running=true;
+
+  startTime=
+    performance.now();
+
+  lastTime=
+    startTime;
+
+  seedInitialStream();
+
+  statusEl.textContent=
+    `Spiel läuft · ${
+      getFallPreset().label
+    }…`;
+
+  animationFrame=
+    requestAnimationFrame(
+      gameLoop
+    );
+}
+
+function gameLoop(now){
+  if(!running){
+    return;
+  }
+
+  const delta=
+    Math.min(
+      .05,
+      (now-lastTime)/1000
+    );
+
+  lastTime=now;
+
+  accumulator+=delta;
+  spawnClock+=delta;
+
+  const spawnInterval=
+    Number(
+      spawnRateInput.value
+    );
+
+  while(
+    spawnClock>=
+    spawnInterval
+  ){
+    if(spawnBall()){
+      spawnClock-=
+        spawnInterval;
+    }else{
+      spawnClock=
+        spawnInterval;
+
+      break;
+    }
+  }
+
+  let steps=0;
+
+  while(
+    accumulator>=STEP&&
+    steps<MAX_STEPS
+  ){
+    physicsStep(STEP);
+    accumulator-=STEP;
+    steps++;
+  }
+
+  if(steps===MAX_STEPS){
+    accumulator=0;
+  }
+
+  const elapsed=
+    (now-startTime)/1000;
+
+  draw(elapsed);
+
+  if(
+    finalReachedAt!==null&&
+    now-finalReachedAt>=3200
+  ){
+    running=false;
+
+    draw(elapsed);
+
+    statusEl.textContent=
+      "Final-Level erreicht – Video beendet.";
+
+    if(recording){
+      setTimeout(
+        stopRecording,
+        180
+      );
+    }
+
+    return;
+  }
+
+  if(
+    elapsed>=
+    Number(
+      durationInput.value
+    )
+  ){
+    running=false;
+
+    statusEl.textContent=
+      "Laufzeit beendet.";
+
+    if(recording){
+      setTimeout(
+        stopRecording,
+        150
+      );
+    }
+
+    return;
+  }
+
+  animationFrame=
+    requestAnimationFrame(
+      gameLoop
+    );
+}
+
+let recorder=null;
+let recordedChunks=[];
+let recording=false;
+
+async function startRecording(){
+  if(recording){
+    stopRecording();
+    return;
+  }
+
+  try{
+    await ensureAudio();
+  }catch(e){
+    statusEl.textContent=
+      "Audio konnte nicht gestartet werden: "+
+      e.message;
+
+    return;
+  }
+
+  if(
+    !canvas.captureStream||
+    typeof MediaRecorder===
+    "undefined"
+  ){
+    statusEl.textContent=
+      "Aufnahme wird hier nicht unterstützt. Nutze Chrome am MacBook.";
+
+    return;
+  }
+
+  const videoStream=
+    canvas.captureStream(
+      60
+    );
+
+  const videoTrack=
+    videoStream
+      .getVideoTracks()[0];
+
+  if(
+    videoTrack&&
+    "contentHint" in videoTrack
+  ){
+    videoTrack.contentHint=
+      "motion";
+  }
+
+  const tracks=[
+    ...videoStream
+      .getVideoTracks()
+  ];
+
+  if(audioDestination){
+    for(
+      const track
+      of audioDestination
+        .stream
+        .getAudioTracks()
+    ){
+      if(
+        "contentHint"
+        in track
+      ){
+        track.contentHint=
+          "music";
+      }
+
+      tracks.push(track);
+    }
+  }
+
+  const stream=
+    new MediaStream(
+      tracks
+    );
+
+  const candidates=[
+    "video/webm;codecs=vp9,opus",
+    "video/webm;codecs=vp8,opus",
+    "video/mp4"
+  ];
+
+  const mimeType=
+    candidates.find(
+      t=>
+        MediaRecorder
+          .isTypeSupported(t)
+    )||
+    "";
+
+  try{
+    recorder=
+      mimeType
+      ?
+      new MediaRecorder(
+        stream,
+        {
+          mimeType,
+          videoBitsPerSecond:
+            12000000,
+          audioBitsPerSecond:
+            192000
+        }
+      )
+      :
+      new MediaRecorder(
+        stream
+      );
+  }catch{
+    recorder=
+      new MediaRecorder(
+        stream
+      );
+  }
+
+  recordedChunks=[];
+
+  recorder.ondataavailable=
+    e=>{
+      if(e.data.size){
+        recordedChunks.push(
+          e.data
+        );
+      }
+    };
+
+  recorder.onstop=
+    ()=>{
+      const type=
+        recorder.mimeType||
+        "video/webm";
+
+      const blob=
+        new Blob(
+          recordedChunks,
+          {
+            type
+          }
+        );
+
+      const url=
+        URL.createObjectURL(
+          blob
+        );
+
+      const link=
+        document.createElement(
+          "a"
+        );
+
+      link.href=url;
+
+      link.download=
+        "bounce-lab-1080p-"+
+        Date.now()+
+        (
+          type.includes("mp4")
+          ?
+          ".mp4"
+          :
+          ".webm"
+        );
+
+      link.click();
+
+      setTimeout(
+        ()=>
+          URL.revokeObjectURL(
+            url
+          ),
+        2000
+      );
+
+      statusEl.textContent=
+        "1080×1920 Video mit Sound gespeichert.";
+    };
+
+  recorder.start(
+    250
+  );
+
+  recording=true;
+
+  recordButton.textContent=
+    "■ Aufnahme stoppen";
+
+  recordButton.classList.add(
+    "danger"
+  );
+
+  statusEl.textContent=
+    "1080×1920 Aufnahme läuft. Jetzt Spiel starten.";
+}
+
+function stopRecording(){
+  if(
+    recorder&&
+    recorder.state!==
+    "inactive"
+  ){
+    recorder.stop();
+  }
+
+  recording=false;
+
+  recordButton.textContent=
+    "● Aufnahme starten";
+
+  recordButton.classList.remove(
+    "danger"
+  );
+}
+
+durationInput.addEventListener(
+  "input",
+  ()=>
+    durationLabel.textContent=
+      durationInput.value+
+      " s"
+);
+
+fallModeInput.addEventListener(
+  "change",
+  ()=>{
+    const p=
+      getFallPreset();
+
+    statusEl.textContent=
+      `Falltempo: ${
+        p.label
+      }.`;
+
+    if(running){
+      for(const b of balls){
+        if(
+          b.y<
+          arena.joinY
+        ){
+          b.vy=
+            Math.min(
+              Math.max(
+                b.vy,
+                0
+              ),
+              p.speed*
+              1.15
+            );
+        }
+      }
+    }
+  }
+);
+
+watermarkOpacityInput.addEventListener(
+  "input",
+  ()=>
+    watermarkOpacityLabel.textContent=
+      watermarkOpacityInput.value+
+      "%"
+);
+
+jiggleInput.addEventListener(
+  "input",
+  ()=>
+    jiggleLabel.textContent=
+      jiggleInput.value+
+      "%"
+);
+
+/*
+  Audio schon beim direkten Drücken
+  entsperren.
+*/
+startButton.addEventListener(
+  "pointerdown",
+  unlockAudioFromGesture
+);
+
+recordButton.addEventListener(
+  "pointerdown",
+  unlockAudioFromGesture
+);
+
+soundTestButton.addEventListener(
+  "pointerdown",
+  unlockAudioFromGesture
+);
+
+startButton.addEventListener(
+  "click",
+  startGame
+);
+
+resetButton.addEventListener(
+  "click",
+  resetGame
+);
+
+soundTestButton.addEventListener(
+  "click",
+  testSound
+);
+
+recordButton.addEventListener(
+  "click",
+  startRecording
+);
+
+durationLabel.textContent=
+  durationInput.value+
+  " s";
+
+watermarkOpacityLabel.textContent=
+  watermarkOpacityInput.value+
+  "%";
+
+jiggleLabel.textContent=
+  jiggleInput.value+
+  "%";
+
+updateVolume();
+resetGame();
+</script>
+</body>
+</html>
