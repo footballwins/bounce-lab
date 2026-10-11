@@ -1,0 +1,5624 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bounce Lab</title>
+
+<style>
+:root{
+  color-scheme:dark;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+
+*{
+  box-sizing:border-box
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#07080c;
+  color:#f7f7fb
+}
+
+.app{
+  max-width:1240px;
+  margin:auto;
+  padding:14px;
+  display:grid;
+  grid-template-columns:390px minmax(300px,1fr);
+  gap:20px
+}
+
+.panel{
+  background:#11131a;
+  border:1px solid #282c38;
+  border-radius:18px;
+  padding:16px;
+  height:max-content;
+  position:sticky;
+  top:14px;
+  box-shadow:0 20px 70px #0009
+}
+
+h1{
+  margin:0;
+  font-size:25px
+}
+
+.sub{
+  margin:6px 0 16px;
+  color:#929aab;
+  font-size:12px;
+  line-height:1.5
+}
+
+.section{
+  border-top:1px solid #262b37;
+  margin-top:13px;
+  padding-top:13px
+}
+
+.section h2{
+  margin:0 0 10px;
+  font-size:13px
+}
+
+label{
+  display:block;
+  font-size:11px;
+  color:#aeb5c7;
+  margin-bottom:5px
+}
+
+input[type=text],
+input[type=number],
+select{
+  width:100%;
+  background:#090b10;
+  color:#fff;
+  border:1px solid #303647;
+  border-radius:9px;
+  padding:9px 10px;
+  outline:none
+}
+
+input[type=range]{
+  width:100%
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px
+}
+
+.row3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px
+}
+
+.levels{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px
+}
+
+.level{
+  background:#090b10;
+  border:1px solid #292f3c;
+  border-radius:11px;
+  padding:7px;
+  text-align:center
+}
+
+.preview{
+  width:50px;
+  height:50px;
+  margin:0 auto 6px;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+
+  filter:
+    drop-shadow(0 0 4px #155dff)
+    drop-shadow(0 0 8px #155dff);
+
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center
+}
+
+.level b{
+  font-size:9px;
+  color:#cbd0df
+}
+
+.level input{
+  width:100%;
+  font-size:8px;
+  margin-top:5px
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:14px
+}
+
+.buttons button:last-child{
+  grid-column:1/-1
+}
+
+button{
+  border:0;
+  border-radius:11px;
+  padding:11px;
+  font-weight:800;
+  cursor:pointer;
+  background:#292e3b;
+  color:#fff
+}
+
+.primary{
+  background:linear-gradient(
+    135deg,
+    #6c3be9,
+    #d846b5
+  )
+}
+
+.record{
+  background:linear-gradient(
+    135deg,
+    #087f62,
+    #087b9a
+  )
+}
+
+.danger{
+  background:#531925;
+  color:#ffd4dc
+}
+
+.status{
+  font-size:11px;
+  color:#9098a9;
+  margin-top:9px;
+  line-height:1.45
+}
+
+.hint{
+  font-size:10px;
+  color:#737b8e;
+  line-height:1.45
+}
+
+.stage{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start
+}
+
+.phone{
+  width:min(520px,100%);
+  aspect-ratio:9/16;
+  background:#000;
+  border:1px solid #252a35;
+  border-radius:22px;
+  overflow:hidden;
+
+  box-shadow:
+    0 22px 70px #000c,
+    0 0 35px rgba(90,150,255,.07)
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  background:#000
+}
+
+@media(max-width:900px){
+
+  .app{
+    grid-template-columns:1fr;
+    padding:10px
+  }
+
+  .panel{
+    position:static
+  }
+
+  .levels{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<section class="panel">
+
+<h1>
+Bounce Lab
+</h1>
+
+<div class="sub">
+Satisfying-Version mit Jelly-Jiggle, Glow,
+synchronen Merge-Chimes, Anti-Stack-Physik
+und einstellbarem Wasserzeichen.
+</div>
+
+
+<div class="section">
+
+<h2>
+Video
+</h2>
+
+<div class="row">
+
+<div>
+
+<label>
+Laufzeit
+<span id="durationLabel">
+70 s
+</span>
+</label>
+
+<input
+  id="duration"
+  type="range"
+  min="50"
+  max="100"
+  value="70"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Spawn-Abstand
+</label>
+
+<select id="spawnRate">
+
+<option
+  value="0.34"
+  selected
+>
+Original · 0,34 s
+</option>
+
+<option value="0.38">
+Ruhiger
+</option>
+
+<option value="0.30">
+Schneller
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div style="margin-top:9px">
+
+<label>
+Start-Hook
+</label>
+
+<input
+  id="hook"
+  type="text"
+  value="come closer..."
+>
+
+</div>
+
+
+<div style="margin-top:9px">
+
+<label>
+Text bei Final-Level
+</label>
+
+<input
+  id="finalText"
+  type="text"
+  value=""
+>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<h2>
+Wasserzeichen
+</h2>
+
+<label>
+Text
+</label>
+
+<input
+  id="watermark"
+  type="text"
+  value="@BounceLab"
+>
+
+
+<div
+  class="row"
+  style="margin-top:9px"
+>
+
+<div>
+
+<label>
+Stärke
+<span id="watermarkOpacityLabel">
+38%
+</span>
+</label>
+
+<input
+  id="watermarkOpacity"
+  type="range"
+  min="0"
+  max="100"
+  value="38"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Position
+</label>
+
+<select id="watermarkPosition">
+
+<option
+  value="bottom-left"
+  selected
+>
+Unten links
+</option>
+
+<option value="bottom-right">
+Unten rechts
+</option>
+
+<option value="top-left">
+Oben links
+</option>
+
+<option value="top-right">
+Oben rechts
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<h2>
+Eigene Bilder
+</h2>
+
+<div
+  class="hint"
+  style="margin-bottom:9px"
+>
+Blue Orb → Strawberry → Lemon → Grapes →
+Peach → Pear → Apple → Pineapple.
+
+<br><br>
+
+Am besten transparente PNGs verwenden.
+</div>
+
+<div
+  id="levels"
+  class="levels"
+></div>
+
+</div>
+
+
+<div class="section">
+
+<h2>
+Physik
+</h2>
+
+
+<div class="row3">
+
+<div>
+
+<label>
+Gravity
+</label>
+
+<input
+  id="gravity"
+  type="number"
+  min="80"
+  max="400"
+  step="5"
+  value="225"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Bounce
+</label>
+
+<input
+  id="restitution"
+  type="number"
+  min="0"
+  max="0.5"
+  step="0.01"
+  value="0.18"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Damping
+</label>
+
+<input
+  id="damping"
+  type="number"
+  min="0.97"
+  max="1"
+  step="0.001"
+  value="0.998"
+>
+
+</div>
+
+</div>
+
+
+<div style="margin-top:9px">
+
+<label>
+Jiggle
+<span id="jiggleLabel">
+100%
+</span>
+</label>
+
+<input
+  id="jiggle"
+  type="range"
+  min="0"
+  max="160"
+  value="100"
+>
+
+</div>
+
+
+<div style="margin-top:9px">
+
+<label>
+Sound
+<span id="volumeLabel">
+62%
+</span>
+</label>
+
+<input
+  id="volume"
+  type="range"
+  min="0"
+  max="100"
+  value="62"
+>
+
+</div>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+  id="startButton"
+  class="primary"
+>
+▶ Spiel starten
+</button>
+
+<button id="resetButton">
+↻ Reset
+</button>
+
+<button
+  id="recordButton"
+  class="record"
+>
+● Aufnahme starten
+</button>
+
+</div>
+
+
+<div
+  id="status"
+  class="status"
+>
+Bereit. Für ein fertiges Video zuerst Aufnahme starten,
+danach Spiel starten.
+</div>
+
+</section>
+
+
+<section class="stage">
+
+<div class="phone">
+
+<canvas
+  id="game"
+  width="576"
+  height="1024"
+></canvas>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const $ =
+  id =>
+    document.getElementById(
+      id
+    );
+
+
+const canvas =
+  $("game");
+
+
+const ctx =
+  canvas.getContext(
+    "2d",
+    {
+      alpha:false
+    }
+  );
+
+
+ctx.imageSmoothingEnabled =
+  true;
+
+
+ctx.imageSmoothingQuality =
+  "high";
+
+
+const durationInput =
+  $("duration");
+
+
+const durationLabel =
+  $("durationLabel");
+
+
+const spawnRateInput =
+  $("spawnRate");
+
+
+const hookInput =
+  $("hook");
+
+
+const finalTextInput =
+  $("finalText");
+
+
+const watermarkInput =
+  $("watermark");
+
+
+const watermarkOpacityInput =
+  $("watermarkOpacity");
+
+
+const watermarkOpacityLabel =
+  $("watermarkOpacityLabel");
+
+
+const watermarkPositionInput =
+  $("watermarkPosition");
+
+
+const gravityInput =
+  $("gravity");
+
+
+const restitutionInput =
+  $("restitution");
+
+
+const dampingInput =
+  $("damping");
+
+
+const jiggleInput =
+  $("jiggle");
+
+
+const jiggleLabel =
+  $("jiggleLabel");
+
+
+const volumeInput =
+  $("volume");
+
+
+const volumeLabel =
+  $("volumeLabel");
+
+
+const statusEl =
+  $("status");
+
+
+const startButton =
+  $("startButton");
+
+
+const resetButton =
+  $("resetButton");
+
+
+const recordButton =
+  $("recordButton");
+
+
+/* =====================================================
+   ARENA
+===================================================== */
+
+const arena = {
+
+  cx:288,
+
+  cy:512,
+
+  r:246,
+
+  left:250,
+
+  right:326,
+
+  joinY:269,
+
+  line:5.5
+
+};
+
+
+/* =====================================================
+   LEVELS
+===================================================== */
+
+const LEVEL_COUNT =
+  8;
+
+
+const radii = [
+
+  19,
+
+  24,
+
+  29,
+
+  36,
+
+  44,
+
+  50,
+
+  57,
+
+  66
+
+];
+
+
+const fallbackEmoji = [
+
+  "",
+
+  "🍓",
+
+  "🍋",
+
+  "🍇",
+
+  "🍑",
+
+  "🍐",
+
+  "🍎",
+
+  "🍍"
+
+];
+
+
+const glowColors = [
+
+  "#1476ff",
+
+  "#ff3355",
+
+  "#ffe347",
+
+  "#a84cff",
+
+  "#ff7040",
+
+  "#b7ef50",
+
+  "#ff3340",
+
+  "#ffb229"
+
+];
+
+
+const levelImages =
+  Array(
+    LEVEL_COUNT
+  ).fill(
+    null
+  );
+
+
+const levelWrap =
+  $("levels");
+
+
+for(
+  let level = 0;
+  level < LEVEL_COUNT;
+  level++
+){
+
+  const element =
+    document.createElement(
+      "div"
+    );
+
+
+  element.className =
+    "level";
+
+
+  element.innerHTML =
+    `
+
+      <div
+        class="preview"
+        id="preview-${level}"
+      >
+
+        ${
+          level === 0
+          ?
+          "🔵"
+          :
+          fallbackEmoji[level]
+        }
+
+      </div>
+
+      <b>
+        LEVEL ${level + 1}
+      </b>
+
+      <input
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+      >
+
+    `;
+
+
+  levelWrap.appendChild(
+    element
+  );
+
+
+  element
+    .querySelector(
+      "input"
+    )
+    .addEventListener(
+      "change",
+      event => {
+
+        const file =
+          event.target.files[0];
+
+
+        if(
+          !file
+        ){
+          return;
+        }
+
+
+        const image =
+          new Image();
+
+
+        image.onload =
+          () => {
+
+            levelImages[
+              level
+            ] =
+              image;
+
+
+            const preview =
+              $(
+                `preview-${level}`
+              );
+
+
+            preview.textContent =
+              "";
+
+
+            preview.style.backgroundImage =
+              `url("${image.src}")`;
+
+          };
+
+
+        image.src =
+          URL.createObjectURL(
+            file
+          );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let balls =
+  [];
+
+
+let effects =
+  [];
+
+
+let running =
+  false;
+
+
+let animationFrame =
+  null;
+
+
+let startTime =
+  0;
+
+
+let lastTime =
+  0;
+
+
+let spawnClock =
+  0;
+
+
+let accumulator =
+  0;
+
+
+let finalReachedAt =
+  null;
+
+
+const STEP =
+  1 / 120;
+
+
+const MAX_STEPS =
+  6;
+
+
+const MAX_BALLS =
+  64;
+
+
+/* =====================================================
+   BALL
+===================================================== */
+
+function makeBall(
+
+  level,
+
+  x = arena.cx,
+
+  y = -25,
+
+  vx = 0,
+
+  vy = 172
+
+){
+
+  return {
+
+    level,
+
+    x,
+
+    y,
+
+    vx,
+
+    vy,
+
+    r:
+      radii[
+        level
+      ],
+
+    age:
+      0,
+
+    mass:
+      radii[level]
+      *
+      radii[level],
+
+    squash:
+      0,
+
+    pop:
+      0,
+
+    glowBoost:
+      0,
+
+    jiggle:
+      0,
+
+    jiggleVelocity:
+      0,
+
+    jiggleTwist:
+      0
+
+  };
+
+}
+
+
+/* =====================================================
+   INITIAL STREAM
+===================================================== */
+
+function seedInitialStream(){
+
+  const spacing =
+    59;
+
+
+  const amount =
+    10;
+
+
+  const firstY =
+    -5;
+
+
+  for(
+    let i = 0;
+    i < amount;
+    i++
+  ){
+
+    balls.push(
+
+      makeBall(
+
+        0,
+
+        arena.cx,
+
+        firstY
+        +
+        i
+        *
+        spacing,
+
+        0,
+
+        172
+
+      )
+
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SPAWN
+===================================================== */
+
+function spawnBall(){
+
+  if(
+    balls.length
+    >=
+    MAX_BALLS
+  ){
+    return;
+  }
+
+
+  balls.push(
+
+    makeBall(
+
+      0,
+
+      arena.cx,
+
+      -25,
+
+      0,
+
+      172
+
+    )
+
+  );
+
+}
+
+
+/* =====================================================
+   LOW-LATENCY AUDIO
+===================================================== */
+
+let audioContext =
+  null;
+
+
+let masterGain =
+  null;
+
+
+let audioDestination =
+  null;
+
+
+let audioWarmed =
+  false;
+
+
+const mergeNotes = [
+
+  329.63,
+
+  440.00,
+
+  587.33,
+
+  783.99,
+
+  1046.50,
+
+  1318.51,
+
+  1760.00
+
+];
+
+
+function updateVolume(){
+
+  volumeLabel.textContent =
+    volumeInput.value
+    +
+    "%";
+
+
+  if(
+    masterGain
+  ){
+
+    masterGain.gain.value =
+      Number(
+        volumeInput.value
+      )
+      /
+      100;
+
+  }
+
+}
+
+
+volumeInput.addEventListener(
+  "input",
+  updateVolume
+);
+
+
+/* =====================================================
+   AUDIO START / WARM-UP
+===================================================== */
+
+async function ensureAudio(){
+
+  const AudioCtx =
+    window.AudioContext
+    ||
+    window.webkitAudioContext;
+
+
+  if(
+    !AudioCtx
+  ){
+
+    throw new Error(
+      "WebAudio wird von diesem Browser nicht unterstützt."
+    );
+
+  }
+
+
+  if(
+    !audioContext
+  ){
+
+    /*
+      "interactive" fordert beim Browser
+      eine möglichst niedrige Audio-Latenz an.
+    */
+
+    try{
+
+      audioContext =
+        new AudioCtx({
+
+          latencyHint:
+            "interactive"
+
+        });
+
+    }
+
+    catch{
+
+      audioContext =
+        new AudioCtx();
+
+    }
+
+
+    masterGain =
+      audioContext
+        .createGain();
+
+
+    audioDestination =
+      audioContext
+        .createMediaStreamDestination();
+
+
+    /*
+      Kein DynamicsCompressor mehr.
+
+      Der Sound geht direkt an:
+      1. Lautsprecher
+      2. Recorder
+    */
+
+    masterGain.connect(
+      audioContext.destination
+    );
+
+
+    masterGain.connect(
+      audioDestination
+    );
+
+
+    updateVolume();
+
+  }
+
+
+  /*
+    Nicht nur resume() auslösen,
+    sondern wirklich darauf warten.
+  */
+
+  if(
+    audioContext.state
+    !==
+    "running"
+  ){
+
+    await audioContext.resume();
+
+  }
+
+
+  /*
+    Audio-Graph einmal lautlos vorwärmen.
+
+    Dadurch muss beim ersten echten
+    Merge nicht erst die Audio-Pipeline
+    hochfahren.
+  */
+
+  if(
+    !audioWarmed
+  ){
+
+    const osc =
+      audioContext
+        .createOscillator();
+
+
+    const gain =
+      audioContext
+        .createGain();
+
+
+    const now =
+      audioContext.currentTime;
+
+
+    gain.gain
+      .setValueAtTime(
+        0.000001,
+        now
+      );
+
+
+    osc.connect(
+      gain
+    );
+
+
+    gain.connect(
+      masterGain
+    );
+
+
+    osc.start(
+      now
+    );
+
+
+    osc.stop(
+      now
+      +
+      0.008
+    );
+
+
+    audioWarmed =
+      true;
+
+  }
+
+}
+
+
+/* =====================================================
+   MERGE SOUND
+===================================================== */
+
+function playMergeSound(
+
+  newLevel,
+
+  x
+
+){
+
+  if(
+
+    !audioContext
+
+    ||
+
+    audioContext.state
+    !==
+    "running"
+
+    ||
+
+    newLevel < 1
+
+  ){
+
+    return;
+
+  }
+
+
+  const index =
+    Math.min(
+
+      newLevel
+      -
+      1,
+
+      mergeNotes.length
+      -
+      1
+
+    );
+
+
+  const frequency =
+    mergeNotes[
+      index
+    ];
+
+
+  /*
+    Nur 1 Millisekunde Vorlauf.
+
+    Genug für den nächsten Audio-Block,
+    ohne einen hörbaren Delay einzubauen.
+  */
+
+  const now =
+    audioContext.currentTime
+    +
+    0.001;
+
+
+  const pan =
+    audioContext
+      .createStereoPanner();
+
+
+  pan.pan.value =
+    Math.max(
+
+      -0.45,
+
+      Math.min(
+
+        0.45,
+
+        (
+          x
+          -
+          arena.cx
+        )
+
+        /
+
+        arena.cx
+
+      )
+
+    );
+
+
+  pan.connect(
+    masterGain
+  );
+
+
+  /* MAIN PLING */
+
+  const osc =
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  osc.type =
+    "sine";
+
+
+  osc.frequency
+    .setValueAtTime(
+
+      frequency
+      *
+      1.03,
+
+      now
+
+    );
+
+
+  osc.frequency
+    .exponentialRampToValueAtTime(
+
+      frequency,
+
+      now
+      +
+      0.045
+
+    );
+
+
+  gain.gain
+    .setValueAtTime(
+
+      0.0001,
+
+      now
+
+    );
+
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+
+      0.13,
+
+      now
+      +
+      0.002
+
+    );
+
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+
+      0.0001,
+
+      now
+      +
+      0.24
+
+    );
+
+
+  osc.connect(
+    gain
+  );
+
+
+  gain.connect(
+    pan
+  );
+
+
+  osc.start(
+    now
+  );
+
+
+  osc.stop(
+    now
+    +
+    0.255
+  );
+
+
+  /* SPARKLE */
+
+  const sparkle =
+    audioContext
+      .createOscillator();
+
+
+  const sparkleGain =
+    audioContext
+      .createGain();
+
+
+  sparkle.type =
+    "sine";
+
+
+  sparkle.frequency
+    .setValueAtTime(
+
+      frequency
+      *
+      4,
+
+      now
+
+    );
+
+
+  sparkleGain.gain
+    .setValueAtTime(
+
+      0.0001,
+
+      now
+
+    );
+
+
+  sparkleGain.gain
+    .exponentialRampToValueAtTime(
+
+      0.017,
+
+      now
+      +
+      0.0015
+
+    );
+
+
+  sparkleGain.gain
+    .exponentialRampToValueAtTime(
+
+      0.0001,
+
+      now
+      +
+      0.13
+
+    );
+
+
+  sparkle.connect(
+    sparkleGain
+  );
+
+
+  sparkleGain.connect(
+    pan
+  );
+
+
+  sparkle.start(
+    now
+  );
+
+
+  sparkle.stop(
+    now
+    +
+    0.145
+  );
+
+
+  /* BIG FRUIT BODY */
+
+  if(
+    newLevel >= 5
+  ){
+
+    const low =
+      audioContext
+        .createOscillator();
+
+
+    const lowGain =
+      audioContext
+        .createGain();
+
+
+    low.type =
+      "sine";
+
+
+    low.frequency
+      .setValueAtTime(
+
+        105,
+
+        now
+
+      );
+
+
+    lowGain.gain
+      .setValueAtTime(
+
+        0.0001,
+
+        now
+
+      );
+
+
+    lowGain.gain
+      .exponentialRampToValueAtTime(
+
+        0.025,
+
+        now
+        +
+        0.002
+
+      );
+
+
+    lowGain.gain
+      .exponentialRampToValueAtTime(
+
+        0.0001,
+
+        now
+        +
+        0.08
+
+      );
+
+
+    low.connect(
+      lowGain
+    );
+
+
+    lowGain.connect(
+      pan
+    );
+
+
+    low.start(
+      now
+    );
+
+
+    low.stop(
+      now
+      +
+      0.09
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   MERGE EFFECT
+===================================================== */
+
+function addMergeEffect(
+
+  x,
+
+  y,
+
+  level
+
+){
+
+  const sparks =
+    [];
+
+
+  for(
+    let i = 0;
+    i < 9;
+    i++
+  ){
+
+    sparks.push({
+
+      angle:
+        Math.random()
+        *
+        Math.PI
+        *
+        2,
+
+      speed:
+        18
+        +
+        Math.random()
+        *
+        34,
+
+      size:
+        1
+        +
+        Math.random()
+        *
+        1.6
+
+    });
+
+  }
+
+
+  effects.push({
+
+    x,
+
+    y,
+
+    level,
+
+    age:
+      0,
+
+    life:
+      0.38,
+
+    sparks
+
+  });
+
+
+  if(
+    effects.length
+    >
+    20
+  ){
+
+    effects.shift();
+
+  }
+
+}
+
+
+/* =====================================================
+   OPENING
+===================================================== */
+
+function nearOpening(
+  ball
+){
+
+  return (
+
+    ball.y
+    <
+    arena.joinY
+    +
+    ball.r
+    +
+    5
+
+    &&
+
+    ball.x
+    >
+    arena.left
+    -
+    ball.r
+    *
+    0.15
+
+    &&
+
+    ball.x
+    <
+    arena.right
+    +
+    ball.r
+    *
+    0.15
+
+  );
+
+}
+
+
+/* =====================================================
+   ARENA COLLISION
+===================================================== */
+
+function solveArena(
+
+  ball,
+
+  restitution,
+
+  damping
+
+){
+
+  /*
+    SCHACHT
+  */
+
+  if(
+    ball.y
+    -
+    ball.r
+    <
+    arena.joinY
+    +
+    2
+  ){
+
+    if(
+      ball.x
+      -
+      ball.r
+      <
+      arena.left
+    ){
+
+      ball.x =
+        arena.left
+        +
+        ball.r;
+
+
+      if(
+        ball.vx
+        <
+        0
+      ){
+
+        ball.vx =
+          -ball.vx
+          *
+          0.08;
+
+      }
+
+    }
+
+
+    if(
+      ball.x
+      +
+      ball.r
+      >
+      arena.right
+    ){
+
+      ball.x =
+        arena.right
+        -
+        ball.r;
+
+
+      if(
+        ball.vx
+        >
+        0
+      ){
+
+        ball.vx =
+          -ball.vx
+          *
+          0.08;
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    KREIS
+  */
+
+  const dx =
+    ball.x
+    -
+    arena.cx;
+
+
+  const dy =
+    ball.y
+    -
+    arena.cy;
+
+
+  const distance =
+    Math.hypot(
+      dx,
+      dy
+    )
+    ||
+    1;
+
+
+  if(
+
+    distance
+    +
+    ball.r
+    >
+    arena.r
+
+    &&
+
+    !nearOpening(
+      ball
+    )
+
+  ){
+
+    const nx =
+      dx
+      /
+      distance;
+
+
+    const ny =
+      dy
+      /
+      distance;
+
+
+    ball.x =
+      arena.cx
+      +
+      nx
+      *
+      (
+        arena.r
+        -
+        ball.r
+      );
+
+
+    ball.y =
+      arena.cy
+      +
+      ny
+      *
+      (
+        arena.r
+        -
+        ball.r
+      );
+
+
+    const normalVelocity =
+      ball.vx
+      *
+      nx
+
+      +
+
+      ball.vy
+      *
+      ny;
+
+
+    if(
+      normalVelocity
+      >
+      0
+    ){
+
+      const impact =
+        Math.min(
+
+          1,
+
+          Math.abs(
+            normalVelocity
+          )
+
+          /
+
+          500
+
+        );
+
+
+      ball.squash =
+        Math.max(
+
+          ball.squash,
+
+          impact
+          *
+          0.035
+
+        );
+
+
+      ball.glowBoost =
+        Math.max(
+
+          ball.glowBoost,
+
+          impact
+          *
+          0.16
+
+        );
+
+
+      /*
+        JIGGLE
+      */
+
+      const jiggleStrength =
+        Number(
+          jiggleInput.value
+        )
+
+        /
+
+        100;
+
+
+      ball.jiggle +=
+
+        impact
+
+        *
+
+        0.038
+
+        *
+
+        jiggleStrength;
+
+
+      ball.jiggleVelocity -=
+
+        impact
+
+        *
+
+        0.62
+
+        *
+
+        jiggleStrength;
+
+
+      ball.jiggleTwist +=
+
+        -nx
+
+        *
+
+        impact
+
+        *
+
+        0.018
+
+        *
+
+        jiggleStrength;
+
+
+      /*
+        BOUNCE
+      */
+
+      ball.vx -=
+
+        (
+          1
+          +
+          restitution
+        )
+
+        *
+
+        normalVelocity
+
+        *
+
+        nx;
+
+
+      ball.vy -=
+
+        (
+          1
+          +
+          restitution
+        )
+
+        *
+
+        normalVelocity
+
+        *
+
+        ny;
+
+
+      /*
+        TANGENTIAL
+      */
+
+      const tangentX =
+        -ny;
+
+
+      const tangentY =
+        nx;
+
+
+      const tangentVelocity =
+
+        ball.vx
+        *
+        tangentX
+
+        +
+
+        ball.vy
+        *
+        tangentY;
+
+
+      ball.vx -=
+
+        tangentVelocity
+
+        *
+
+        tangentX
+
+        *
+
+        (
+          1
+          -
+          damping
+        );
+
+
+      ball.vy -=
+
+        tangentVelocity
+
+        *
+
+        tangentY
+
+        *
+
+        (
+          1
+          -
+          damping
+        );
+
+
+      /*
+        ANTI STACK
+      */
+
+      if(
+
+        ny > 0.50
+
+        &&
+
+        Math.abs(
+          ball.vx
+        )
+        <
+        14
+
+      ){
+
+        const direction =
+
+          Math.abs(
+            ball.x
+            -
+            arena.cx
+          )
+          >
+          2
+
+          ?
+
+          Math.sign(
+            ball.x
+            -
+            arena.cx
+          )
+
+          :
+
+          (
+            Math.random()
+            <
+            0.5
+
+            ?
+
+            -1
+
+            :
+
+            1
+          );
+
+
+        ball.vx +=
+
+          direction
+
+          *
+
+          (
+            6
+            +
+            Math.random()
+            *
+            7
+          );
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   COLLISION PAIRS
+===================================================== */
+
+function getPairs(){
+
+  const cellSize =
+    82;
+
+
+  const grid =
+    new Map();
+
+
+  const pairs =
+    [];
+
+
+  const seen =
+    new Set();
+
+
+  for(
+    let i = 0;
+    i < balls.length;
+    i++
+  ){
+
+    const ball =
+      balls[i];
+
+
+    const gx =
+      Math.floor(
+        ball.x
+        /
+        cellSize
+      );
+
+
+    const gy =
+      Math.floor(
+        ball.y
+        /
+        cellSize
+      );
+
+
+    const key =
+      gx
+      +
+      ","
+      +
+      gy;
+
+
+    if(
+      !grid.has(
+        key
+      )
+    ){
+
+      grid.set(
+        key,
+        []
+      );
+
+    }
+
+
+    grid
+      .get(
+        key
+      )
+      .push(
+        i
+      );
+
+  }
+
+
+  for(
+    const [
+      key,
+      ids
+    ]
+    of grid
+  ){
+
+    const [
+      gx,
+      gy
+    ] =
+      key
+        .split(
+          ","
+        )
+        .map(
+          Number
+        );
+
+
+    for(
+      let ox = -1;
+      ox <= 1;
+      ox++
+    ){
+
+      for(
+        let oy = -1;
+        oy <= 1;
+        oy++
+      ){
+
+        const other =
+          grid.get(
+
+            (
+              gx
+              +
+              ox
+            )
+
+            +
+
+            ","
+
+            +
+
+            (
+              gy
+              +
+              oy
+            )
+
+          );
+
+
+        if(
+          !other
+        ){
+          continue;
+        }
+
+
+        for(
+          const i
+          of ids
+        ){
+
+          for(
+            const j
+            of other
+          ){
+
+            if(
+              i >= j
+            ){
+              continue;
+            }
+
+
+            const pairKey =
+              i
+              +
+              ":"
+              +
+              j;
+
+
+            if(
+              seen.has(
+                pairKey
+              )
+            ){
+              continue;
+            }
+
+
+            seen.add(
+              pairKey
+            );
+
+
+            pairs.push(
+              [
+                i,
+                j
+              ]
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  return pairs;
+
+}
+
+
+/* =====================================================
+   PHYSICS
+===================================================== */
+
+function physicsStep(
+  dt
+){
+
+  const gravity =
+    Number(
+      gravityInput.value
+    );
+
+
+  const restitution =
+    Number(
+      restitutionInput.value
+    );
+
+
+  const damping =
+    Number(
+      dampingInput.value
+    );
+
+
+  const jiggleStrength =
+    Number(
+      jiggleInput.value
+    )
+
+    /
+
+    100;
+
+
+  for(
+    const ball
+    of balls
+  ){
+
+    ball.age +=
+      dt;
+
+
+    ball.squash *=
+      Math.pow(
+
+        0.80,
+
+        dt
+        *
+        60
+
+      );
+
+
+    ball.pop *=
+      Math.pow(
+
+        0.76,
+
+        dt
+        *
+        60
+
+      );
+
+
+    ball.glowBoost *=
+      Math.pow(
+
+        0.78,
+
+        dt
+        *
+        60
+
+      );
+
+
+    /*
+      JELLY SPRING
+    */
+
+    const jiggleStiffness =
+      205;
+
+
+    const jiggleDamping =
+      14.5;
+
+
+    ball.jiggleVelocity +=
+
+      (
+        -jiggleStiffness
+        *
+        ball.jiggle
+
+        -
+
+        jiggleDamping
+        *
+        ball.jiggleVelocity
+      )
+
+      *
+
+      dt;
+
+
+    ball.jiggle +=
+
+      ball.jiggleVelocity
+
+      *
+
+      dt;
+
+
+    const maxJiggle =
+
+      0.085
+
+      *
+
+      Math.max(
+        0.4,
+        jiggleStrength
+      );
+
+
+    ball.jiggle =
+      Math.max(
+
+        -maxJiggle,
+
+        Math.min(
+
+          maxJiggle,
+
+          ball.jiggle
+
+        )
+
+      );
+
+
+    ball.jiggleTwist *=
+      Math.pow(
+
+        0.84,
+
+        dt
+        *
+        60
+
+      );
+
+
+    /*
+      GRAVITY
+    */
+
+    ball.vy +=
+
+      gravity
+
+      *
+
+      (
+        ball.y
+        <
+        arena.joinY
+        +
+        6
+
+        ?
+
+        0.18
+
+        :
+
+        1
+      )
+
+      *
+
+      dt;
+
+
+    ball.vx *=
+      Math.pow(
+
+        damping,
+
+        dt
+        *
+        60
+
+      );
+
+
+    ball.vy *=
+      Math.pow(
+
+        0.9993,
+
+        dt
+        *
+        60
+
+      );
+
+
+    ball.x +=
+      ball.vx
+      *
+      dt;
+
+
+    ball.y +=
+      ball.vy
+      *
+      dt;
+
+
+    solveArena(
+
+      ball,
+
+      restitution,
+
+      damping
+
+    );
+
+  }
+
+
+  const pairs =
+    getPairs();
+
+
+  const removed =
+    new Set();
+
+
+  const created =
+    [];
+
+
+  for(
+    const [
+      i,
+      j
+    ]
+    of pairs
+  ){
+
+    const a =
+      balls[i];
+
+
+    const b =
+      balls[j];
+
+
+    if(
+
+      !a
+
+      ||
+
+      !b
+
+      ||
+
+      removed.has(
+        a
+      )
+
+      ||
+
+      removed.has(
+        b
+      )
+
+    ){
+
+      continue;
+
+    }
+
+
+    const dx =
+      b.x
+      -
+      a.x;
+
+
+    const dy =
+      b.y
+      -
+      a.y;
+
+
+    const distance =
+      Math.hypot(
+        dx,
+        dy
+      )
+      ||
+      0.001;
+
+
+    const minDistance =
+      a.r
+      +
+      b.r;
+
+
+    if(
+      distance
+      >=
+      minDistance
+    ){
+
+      continue;
+
+    }
+
+
+    const nx =
+      dx
+      /
+      distance;
+
+
+    const ny =
+      dy
+      /
+      distance;
+
+
+    const overlap =
+      minDistance
+      -
+      distance;
+
+
+    /* =================================================
+       MERGE
+    ================================================= */
+
+    if(
+
+      a.level
+      ===
+      b.level
+
+      &&
+
+      a.level
+      <
+      LEVEL_COUNT
+      -
+      1
+
+      &&
+
+      a.age
+      >
+      0.08
+
+      &&
+
+      b.age
+      >
+      0.08
+
+      &&
+
+      a.y
+      >
+      arena.joinY
+      -
+      5
+
+      &&
+
+      b.y
+      >
+      arena.joinY
+      -
+      5
+
+    ){
+
+      const newLevel =
+        a.level
+        +
+        1;
+
+
+      const totalMass =
+        a.mass
+        +
+        b.mass;
+
+
+      const x =
+
+        (
+          a.x
+          *
+          a.mass
+
+          +
+
+          b.x
+          *
+          b.mass
+        )
+
+        /
+
+        totalMass;
+
+
+      const y =
+
+        (
+          a.y
+          *
+          a.mass
+
+          +
+
+          b.y
+          *
+          b.mass
+        )
+
+        /
+
+        totalMass;
+
+
+      const vx =
+
+        (
+          a.vx
+          *
+          a.mass
+
+          +
+
+          b.vx
+          *
+          b.mass
+        )
+
+        /
+
+        totalMass
+
+        +
+
+        (
+          Math.random()
+          -
+          0.5
+        )
+
+        *
+
+        20;
+
+
+      const vy =
+
+        (
+          a.vy
+          *
+          a.mass
+
+          +
+
+          b.vy
+          *
+          b.mass
+        )
+
+        /
+
+        totalMass
+
+        -
+
+        7;
+
+
+      removed.add(
+        a
+      );
+
+
+      removed.add(
+        b
+      );
+
+
+      const newBall =
+        makeBall(
+
+          newLevel,
+
+          x,
+
+          y,
+
+          vx,
+
+          vy
+
+        );
+
+
+      newBall.pop =
+        0.08;
+
+
+      newBall.glowBoost =
+        0.62;
+
+
+      newBall.jiggle =
+        0.075
+        *
+        jiggleStrength;
+
+
+      newBall.jiggleVelocity =
+        -1.05
+        *
+        jiggleStrength;
+
+
+      newBall.jiggleTwist =
+
+        (
+          Math.random()
+          -
+          0.5
+        )
+
+        *
+
+        0.05
+
+        *
+
+        jiggleStrength;
+
+
+      created.push(
+        newBall
+      );
+
+
+      /*
+        Visueller Merge und Ton werden
+        im exakt selben Physik-Tick erzeugt.
+      */
+
+      addMergeEffect(
+
+        x,
+
+        y,
+
+        newLevel
+
+      );
+
+
+      playMergeSound(
+
+        newLevel,
+
+        x
+
+      );
+
+
+      if(
+
+        newLevel
+        ===
+        7
+
+        &&
+
+        finalReachedAt
+        ===
+        null
+
+      ){
+
+        finalReachedAt =
+          performance.now();
+
+      }
+
+
+      continue;
+
+    }
+
+
+    /* =================================================
+       NORMAL COLLISION
+    ================================================= */
+
+    const invMassA =
+      1
+      /
+      a.mass;
+
+
+    const invMassB =
+      1
+      /
+      b.mass;
+
+
+    const totalInverseMass =
+      invMassA
+      +
+      invMassB;
+
+
+    a.x -=
+
+      nx
+
+      *
+
+      overlap
+
+      *
+
+      (
+        invMassA
+        /
+        totalInverseMass
+      );
+
+
+    a.y -=
+
+      ny
+
+      *
+
+      overlap
+
+      *
+
+      (
+        invMassA
+        /
+        totalInverseMass
+      );
+
+
+    b.x +=
+
+      nx
+
+      *
+
+      overlap
+
+      *
+
+      (
+        invMassB
+        /
+        totalInverseMass
+      );
+
+
+    b.y +=
+
+      ny
+
+      *
+
+      overlap
+
+      *
+
+      (
+        invMassB
+        /
+        totalInverseMass
+      );
+
+
+    const relativeX =
+      b.vx
+      -
+      a.vx;
+
+
+    const relativeY =
+      b.vy
+      -
+      a.vy;
+
+
+    const normalVelocity =
+
+      relativeX
+      *
+      nx
+
+      +
+
+      relativeY
+      *
+      ny;
+
+
+    if(
+      normalVelocity
+      <
+      0
+    ){
+
+      const collisionRestitution =
+        0.16;
+
+
+      const impulse =
+
+        -
+
+        (
+          1
+          +
+          collisionRestitution
+        )
+
+        *
+
+        normalVelocity
+
+        /
+
+        totalInverseMass;
+
+
+      const impulseX =
+        impulse
+        *
+        nx;
+
+
+      const impulseY =
+        impulse
+        *
+        ny;
+
+
+      a.vx -=
+
+        impulseX
+
+        *
+
+        invMassA;
+
+
+      a.vy -=
+
+        impulseY
+
+        *
+
+        invMassA;
+
+
+      b.vx +=
+
+        impulseX
+
+        *
+
+        invMassB;
+
+
+      b.vy +=
+
+        impulseY
+
+        *
+
+        invMassB;
+
+
+      /*
+        SIDE KICK
+      */
+
+      if(
+
+        a.y
+        >
+        arena.joinY
+
+        &&
+
+        b.y
+        >
+        arena.joinY
+
+      ){
+
+        const sideKick =
+
+          (
+            Math.random()
+            -
+            0.5
+          )
+
+          *
+
+          6;
+
+
+        a.vx +=
+          sideKick;
+
+
+        b.vx -=
+          sideKick;
+
+      }
+
+
+      /*
+        CONTACT JIGGLE
+      */
+
+      const impact =
+        Math.min(
+
+          1,
+
+          Math.abs(
+            normalVelocity
+          )
+
+          /
+
+          350
+
+        );
+
+
+      a.jiggle +=
+
+        impact
+
+        *
+
+        0.026
+
+        *
+
+        jiggleStrength;
+
+
+      b.jiggle +=
+
+        impact
+
+        *
+
+        0.026
+
+        *
+
+        jiggleStrength;
+
+
+      a.jiggleVelocity +=
+
+        impact
+
+        *
+
+        0.38
+
+        *
+
+        jiggleStrength;
+
+
+      b.jiggleVelocity -=
+
+        impact
+
+        *
+
+        0.38
+
+        *
+
+        jiggleStrength;
+
+
+      a.jiggleTwist +=
+
+        -ny
+
+        *
+
+        impact
+
+        *
+
+        0.012
+
+        *
+
+        jiggleStrength;
+
+
+      b.jiggleTwist +=
+
+        ny
+
+        *
+
+        impact
+
+        *
+
+        0.012
+
+        *
+
+        jiggleStrength;
+
+    }
+
+  }
+
+
+  balls =
+    balls.filter(
+
+      ball =>
+        !removed.has(
+          ball
+        )
+
+    );
+
+
+  balls.push(
+    ...created
+  );
+
+
+  if(
+    balls.length
+    >
+    MAX_BALLS
+  ){
+
+    balls.splice(
+
+      0,
+
+      balls.length
+      -
+      MAX_BALLS
+
+    );
+
+  }
+
+
+  for(
+    const effect
+    of effects
+  ){
+
+    effect.age +=
+      dt;
+
+  }
+
+
+  effects =
+    effects.filter(
+
+      effect =>
+        effect.age
+        <
+        effect.life
+
+    );
+
+}
+
+
+/* =====================================================
+   ARENA DRAW
+===================================================== */
+
+function drawArena(){
+
+  ctx.fillStyle =
+    "#000";
+
+
+  ctx.fillRect(
+
+    0,
+
+    0,
+
+    576,
+
+    1024
+
+  );
+
+
+  const half =
+
+    (
+      arena.right
+      -
+      arena.left
+    )
+
+    /
+
+    2;
+
+
+  const angle =
+    Math.asin(
+
+      half
+      /
+      arena.r
+
+    );
+
+
+  ctx.save();
+
+
+  ctx.lineCap =
+    "round";
+
+
+  ctx.lineJoin =
+    "round";
+
+
+  /*
+    GLOW
+  */
+
+  ctx.strokeStyle =
+    "rgba(145,205,255,.18)";
+
+
+  ctx.shadowColor =
+    "#7ec4ff";
+
+
+  ctx.shadowBlur =
+    10;
+
+
+  ctx.lineWidth =
+    arena.line
+    +
+    2.5;
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+
+    arena.cx,
+
+    arena.cy,
+
+    arena.r,
+
+    -Math.PI
+    /
+    2
+    +
+    angle,
+
+    Math.PI
+    *
+    1.5
+    -
+    angle
+
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.beginPath();
+
+
+  ctx.moveTo(
+
+    arena.left,
+
+    -10
+
+  );
+
+
+  ctx.lineTo(
+
+    arena.left,
+
+    arena.joinY
+
+  );
+
+
+  ctx.moveTo(
+
+    arena.right,
+
+    -10
+
+  );
+
+
+  ctx.lineTo(
+
+    arena.right,
+
+    arena.joinY
+
+  );
+
+
+  ctx.stroke();
+
+
+  /*
+    WHITE CORE
+  */
+
+  ctx.shadowColor =
+    "#fff";
+
+
+  ctx.shadowBlur =
+    3;
+
+
+  ctx.strokeStyle =
+    "#fff";
+
+
+  ctx.lineWidth =
+    arena.line;
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+
+    arena.cx,
+
+    arena.cy,
+
+    arena.r,
+
+    -Math.PI
+    /
+    2
+    +
+    angle,
+
+    Math.PI
+    *
+    1.5
+    -
+    angle
+
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.beginPath();
+
+
+  ctx.moveTo(
+
+    arena.left,
+
+    -10
+
+  );
+
+
+  ctx.lineTo(
+
+    arena.left,
+
+    arena.joinY
+
+  );
+
+
+  ctx.moveTo(
+
+    arena.right,
+
+    -10
+
+  );
+
+
+  ctx.lineTo(
+
+    arena.right,
+
+    arena.joinY
+
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   JIGGLE DRAW TRANSFORM
+===================================================== */
+
+function drawBallShape(
+
+  ball,
+
+  callback
+
+){
+
+  const squash =
+    ball.squash
+    ||
+    0;
+
+
+  const pop =
+    ball.pop
+    ||
+    0;
+
+
+  const jiggle =
+    ball.jiggle
+    ||
+    0;
+
+
+  const scaleX =
+
+    1
+
+    +
+
+    squash
+
+    +
+
+    pop
+
+    +
+
+    jiggle;
+
+
+  const scaleY =
+
+    1
+
+    -
+
+    squash
+    *
+    0.70
+
+    +
+
+    pop
+
+    -
+
+    jiggle
+    *
+    0.78;
+
+
+  ctx.save();
+
+
+  ctx.translate(
+
+    ball.x,
+
+    ball.y
+
+  );
+
+
+  ctx.rotate(
+
+    (
+      ball.jiggleTwist
+      ||
+      0
+    )
+
+    +
+
+    jiggle
+    *
+    0.12
+
+  );
+
+
+  ctx.scale(
+
+    scaleX,
+
+    scaleY
+
+  );
+
+
+  callback();
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   BLUE ORB
+===================================================== */
+
+function drawOrb(
+  ball
+){
+
+  const r =
+    ball.r;
+
+
+  drawBallShape(
+
+    ball,
+
+    () => {
+
+      ctx.shadowColor =
+        "#086cff";
+
+
+      ctx.shadowBlur =
+
+        11
+
+        +
+
+        ball.glowBoost
+        *
+        24;
+
+
+      const gradient =
+        ctx.createRadialGradient(
+
+          -r * 0.30,
+
+          -r * 0.32,
+
+          r * 0.05,
+
+          0,
+
+          0,
+
+          r
+
+        );
+
+
+      gradient.addColorStop(
+        0,
+        "#ecfcff"
+      );
+
+
+      gradient.addColorStop(
+        0.12,
+        "#5edcff"
+      );
+
+
+      gradient.addColorStop(
+        0.36,
+        "#076aff"
+      );
+
+
+      gradient.addColorStop(
+        0.68,
+        "#002ca8"
+      );
+
+
+      gradient.addColorStop(
+        1,
+        "#000728"
+      );
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+
+        0,
+
+        0,
+
+        r,
+
+        0,
+
+        Math.PI
+        *
+        2
+
+      );
+
+
+      ctx.fillStyle =
+        gradient;
+
+
+      ctx.fill();
+
+
+      ctx.shadowBlur =
+        0;
+
+
+      ctx.strokeStyle =
+        "rgba(120,205,255,.88)";
+
+
+      ctx.lineWidth =
+        1.3;
+
+
+      ctx.stroke();
+
+    }
+
+  );
+
+}
+
+
+/* =====================================================
+   FRUIT
+===================================================== */
+
+function drawSprite(
+  ball
+){
+
+  const image =
+    levelImages[
+      ball.level
+    ];
+
+
+  if(
+
+    ball.level
+    ===
+    0
+
+    &&
+
+    !image
+
+  ){
+
+    drawOrb(
+      ball
+    );
+
+
+    return;
+
+  }
+
+
+  drawBallShape(
+
+    ball,
+
+    () => {
+
+      ctx.shadowColor =
+        glowColors[
+          ball.level
+        ];
+
+
+      ctx.shadowBlur =
+
+        10
+
+        +
+
+        ball.level
+        *
+        0.65
+
+        +
+
+        ball.glowBoost
+        *
+        24;
+
+
+      if(
+        image
+      ){
+
+        const target =
+          ball.r
+          *
+          2.35;
+
+
+        const scale =
+          Math.min(
+
+            target
+            /
+            image.width,
+
+            target
+            /
+            image.height
+
+          );
+
+
+        const width =
+          image.width
+          *
+          scale;
+
+
+        const height =
+          image.height
+          *
+          scale;
+
+
+        ctx.drawImage(
+
+          image,
+
+          -width
+          /
+          2,
+
+          -height
+          /
+          2,
+
+          width,
+
+          height
+
+        );
+
+      }
+
+      else{
+
+        ctx.font =
+          `${
+            Math.round(
+              ball.r
+              *
+              2.05
+            )
+          }px Apple Color Emoji,Segoe UI Emoji,sans-serif`;
+
+
+        ctx.textAlign =
+          "center";
+
+
+        ctx.textBaseline =
+          "middle";
+
+
+        ctx.fillText(
+
+          fallbackEmoji[
+            ball.level
+          ],
+
+          0,
+
+          2
+
+        );
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =====================================================
+   EFFECTS
+===================================================== */
+
+function drawEffects(){
+
+  for(
+    const effect
+    of effects
+  ){
+
+    const progress =
+      effect.age
+      /
+      effect.life;
+
+
+    const alpha =
+      1
+      -
+      progress;
+
+
+    const radius =
+
+      radii[
+        effect.level
+      ]
+
+      *
+
+      (
+        1
+        +
+        progress
+        *
+        0.9
+      );
+
+
+    ctx.save();
+
+
+    ctx.globalAlpha =
+      alpha
+      *
+      0.75;
+
+
+    ctx.strokeStyle =
+      glowColors[
+        effect.level
+      ];
+
+
+    ctx.shadowColor =
+      glowColors[
+        effect.level
+      ];
+
+
+    ctx.shadowBlur =
+      18;
+
+
+    ctx.lineWidth =
+
+      2
+
+      *
+
+      (
+        1
+        -
+        progress
+      )
+
+      +
+
+      0.4;
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+
+      effect.x,
+
+      effect.y,
+
+      radius,
+
+      0,
+
+      Math.PI
+      *
+      2
+
+    );
+
+
+    ctx.stroke();
+
+
+    ctx.globalAlpha =
+      alpha
+      *
+      0.25;
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+
+      effect.x,
+
+      effect.y,
+
+      radius
+      *
+      1.22,
+
+      0,
+
+      Math.PI
+      *
+      2
+
+    );
+
+
+    ctx.stroke();
+
+
+    ctx.globalAlpha =
+      alpha
+      *
+      0.70;
+
+
+    ctx.fillStyle =
+      glowColors[
+        effect.level
+      ];
+
+
+    for(
+      const spark
+      of effect.sparks
+    ){
+
+      const distance =
+        spark.speed
+        *
+        progress;
+
+
+      const x =
+
+        effect.x
+
+        +
+
+        Math.cos(
+          spark.angle
+        )
+
+        *
+
+        distance;
+
+
+      const y =
+
+        effect.y
+
+        +
+
+        Math.sin(
+          spark.angle
+        )
+
+        *
+
+        distance;
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+
+        x,
+
+        y,
+
+        spark.size
+
+        *
+
+        (
+          1
+          -
+          progress
+          *
+          0.5
+        ),
+
+        0,
+
+        Math.PI
+        *
+        2
+
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.restore();
+
+  }
+
+}
+
+
+/* =====================================================
+   TEXT
+===================================================== */
+
+function drawText(
+  elapsed
+){
+
+  const hook =
+    hookInput
+      .value
+      .trim();
+
+
+  if(
+
+    hook
+
+    &&
+
+    elapsed
+    <
+    4.6
+
+  ){
+
+    const fadeIn =
+      Math.min(
+
+        1,
+
+        elapsed
+        /
+        0.35
+
+      );
+
+
+    const fadeOut =
+      Math.min(
+
+        1,
+
+        (
+          4.6
+          -
+          elapsed
+        )
+
+        /
+
+        0.45
+
+      );
+
+
+    ctx.save();
+
+
+    ctx.globalAlpha =
+      Math.min(
+
+        fadeIn,
+
+        fadeOut
+
+      );
+
+
+    ctx.font =
+      "700 29px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.textBaseline =
+      "middle";
+
+
+    ctx.fillStyle =
+      "#fff";
+
+
+    ctx.shadowColor =
+      "#90c8ff";
+
+
+    ctx.shadowBlur =
+      6;
+
+
+    ctx.fillText(
+
+      hook,
+
+      288,
+
+      350
+
+    );
+
+
+    ctx.restore();
+
+  }
+
+
+  const finalText =
+    finalTextInput
+      .value
+      .trim();
+
+
+  if(
+
+    finalReachedAt
+    !==
+    null
+
+    &&
+
+    finalText
+
+    &&
+
+    performance.now()
+    -
+    finalReachedAt
+    <
+    4000
+
+  ){
+
+    ctx.save();
+
+
+    ctx.font =
+      "800 28px ui-monospace,SFMono-Regular,Menlo,monospace";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.textBaseline =
+      "middle";
+
+
+    ctx.fillStyle =
+      "#fff";
+
+
+    ctx.shadowColor =
+      "#8ec6ff";
+
+
+    ctx.shadowBlur =
+      8;
+
+
+    ctx.fillText(
+
+      finalText,
+
+      288,
+
+      368
+
+    );
+
+
+    ctx.restore();
+
+  }
+
+}
+
+
+/* =====================================================
+   WATERMARK
+===================================================== */
+
+function drawWatermark(){
+
+  const text =
+    watermarkInput
+      .value
+      .trim();
+
+
+  if(
+    !text
+  ){
+    return;
+  }
+
+
+  const opacity =
+    Number(
+      watermarkOpacityInput.value
+    )
+
+    /
+
+    100;
+
+
+  const position =
+    watermarkPositionInput.value;
+
+
+  let x =
+    18;
+
+
+  let y =
+    988;
+
+
+  let align =
+    "left";
+
+
+  if(
+    position
+    ===
+    "bottom-right"
+  ){
+
+    x =
+      558;
+
+
+    y =
+      988;
+
+
+    align =
+      "right";
+
+  }
+
+  else if(
+    position
+    ===
+    "top-left"
+  ){
+
+    x =
+      18;
+
+
+    y =
+      42;
+
+  }
+
+  else if(
+    position
+    ===
+    "top-right"
+  ){
+
+    x =
+      558;
+
+
+    y =
+      42;
+
+
+    align =
+      "right";
+
+  }
+
+
+  ctx.save();
+
+
+  ctx.globalAlpha =
+    opacity;
+
+
+  ctx.font =
+    "700 16px system-ui,-apple-system,sans-serif";
+
+
+  ctx.textAlign =
+    align;
+
+
+  ctx.textBaseline =
+    "middle";
+
+
+  ctx.fillStyle =
+    "#fff";
+
+
+  ctx.shadowColor =
+    "#000";
+
+
+  ctx.shadowBlur =
+    5;
+
+
+  ctx.fillText(
+
+    text,
+
+    x,
+
+    y
+
+  );
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW
+===================================================== */
+
+function draw(
+  elapsed = 0
+){
+
+  drawArena();
+
+
+  for(
+    const ball
+    of balls
+  ){
+
+    drawSprite(
+      ball
+    );
+
+  }
+
+
+  drawEffects();
+
+
+  drawText(
+    elapsed
+  );
+
+
+  drawWatermark();
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetGame(){
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+
+  running =
+    false;
+
+
+  balls =
+    [];
+
+
+  effects =
+    [];
+
+
+  accumulator =
+    0;
+
+
+  spawnClock =
+    0;
+
+
+  finalReachedAt =
+    null;
+
+
+  draw(
+    0
+  );
+
+
+  statusEl.textContent =
+    "Bereit.";
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+async function startGame(){
+
+  /*
+    Ganz wichtig:
+
+    Das Spiel beginnt erst,
+    nachdem WebAudio wirklich läuft.
+  */
+
+  try{
+
+    await ensureAudio();
+
+  }
+
+  catch(
+    error
+  ){
+
+    statusEl.textContent =
+      "Audio konnte nicht gestartet werden: "
+      +
+      error.message;
+
+
+    return;
+
+  }
+
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+
+  balls =
+    [];
+
+
+  effects =
+    [];
+
+
+  accumulator =
+    0;
+
+
+  spawnClock =
+    0;
+
+
+  finalReachedAt =
+    null;
+
+
+  running =
+    true;
+
+
+  /*
+    Zeitbasis erst NACH
+    Audio-Resume starten.
+  */
+
+  startTime =
+    performance.now();
+
+
+  lastTime =
+    startTime;
+
+
+  seedInitialStream();
+
+
+  statusEl.textContent =
+    "Spiel läuft…";
+
+
+  animationFrame =
+    requestAnimationFrame(
+      gameLoop
+    );
+
+}
+
+
+/* =====================================================
+   GAME LOOP
+===================================================== */
+
+function gameLoop(
+  now
+){
+
+  if(
+    !running
+  ){
+    return;
+  }
+
+
+  const delta =
+    Math.min(
+
+      0.05,
+
+      (
+        now
+        -
+        lastTime
+      )
+
+      /
+
+      1000
+
+    );
+
+
+  lastTime =
+    now;
+
+
+  accumulator +=
+    delta;
+
+
+  spawnClock +=
+    delta;
+
+
+  const spawnInterval =
+    Number(
+      spawnRateInput.value
+    );
+
+
+  while(
+    spawnClock
+    >=
+    spawnInterval
+  ){
+
+    spawnClock -=
+      spawnInterval;
+
+
+    spawnBall();
+
+  }
+
+
+  let steps =
+    0;
+
+
+  while(
+
+    accumulator
+    >=
+    STEP
+
+    &&
+
+    steps
+    <
+    MAX_STEPS
+
+  ){
+
+    physicsStep(
+      STEP
+    );
+
+
+    accumulator -=
+      STEP;
+
+
+    steps++;
+
+  }
+
+
+  if(
+    steps
+    ===
+    MAX_STEPS
+  ){
+
+    accumulator =
+      0;
+
+  }
+
+
+  const elapsed =
+
+    (
+      now
+      -
+      startTime
+    )
+
+    /
+
+    1000;
+
+
+  draw(
+    elapsed
+  );
+
+
+  const maxDuration =
+    Number(
+      durationInput.value
+    );
+
+
+  if(
+    elapsed
+    >=
+    maxDuration
+  ){
+
+    running =
+      false;
+
+
+    statusEl.textContent =
+      "Laufzeit beendet.";
+
+
+    if(
+      recording
+    ){
+
+      setTimeout(
+
+        stopRecording,
+
+        120
+
+      );
+
+    }
+
+
+    return;
+
+  }
+
+
+  animationFrame =
+    requestAnimationFrame(
+      gameLoop
+    );
+
+}
+
+
+/* =====================================================
+   RECORDING
+===================================================== */
+
+let recorder =
+  null;
+
+
+let recordedChunks =
+  [];
+
+
+let recording =
+  false;
+
+
+async function startRecording(){
+
+  if(
+    recording
+  ){
+
+    stopRecording();
+
+
+    return;
+
+  }
+
+
+  /*
+    Audio komplett starten,
+    bevor MediaRecorder erzeugt wird.
+  */
+
+  try{
+
+    await ensureAudio();
+
+  }
+
+  catch(
+    error
+  ){
+
+    statusEl.textContent =
+      "Audio konnte nicht gestartet werden: "
+      +
+      error.message;
+
+
+    return;
+
+  }
+
+
+  if(
+
+    !canvas.captureStream
+
+    ||
+
+    typeof MediaRecorder
+    ===
+    "undefined"
+
+  ){
+
+    statusEl.textContent =
+      "Aufnahme wird hier nicht unterstützt. Nutze Chrome am MacBook.";
+
+
+    return;
+
+  }
+
+
+  const videoStream =
+    canvas.captureStream(
+      30
+    );
+
+
+  const videoTrack =
+    videoStream
+      .getVideoTracks()[0];
+
+
+  if(
+    videoTrack
+    &&
+    "contentHint"
+    in
+    videoTrack
+  ){
+
+    videoTrack.contentHint =
+      "motion";
+
+  }
+
+
+  const tracks =
+    [
+      ...videoStream
+        .getVideoTracks()
+    ];
+
+
+  if(
+    audioDestination
+  ){
+
+    const audioTracks =
+      audioDestination
+        .stream
+        .getAudioTracks();
+
+
+    for(
+      const track
+      of audioTracks
+    ){
+
+      if(
+        "contentHint"
+        in
+        track
+      ){
+
+        track.contentHint =
+          "music";
+
+      }
+
+
+      tracks.push(
+        track
+      );
+
+    }
+
+  }
+
+
+  const stream =
+    new MediaStream(
+      tracks
+    );
+
+
+  /*
+    WebM + Opus zuerst.
+
+    Das ist in Chrome normalerweise
+    am stabilsten für Audio/Video-Sync.
+  */
+
+  const candidates = [
+
+    "video/webm;codecs=vp9,opus",
+
+    "video/webm;codecs=vp8,opus",
+
+    "video/mp4"
+
+  ];
+
+
+  const mimeType =
+    candidates.find(
+
+      type =>
+        MediaRecorder
+          .isTypeSupported(
+            type
+          )
+
+    )
+
+    ||
+
+    "";
+
+
+  try{
+
+    recorder =
+      mimeType
+
+      ?
+
+      new MediaRecorder(
+
+        stream,
+
+        {
+
+          mimeType,
+
+          videoBitsPerSecond:
+            6500000,
+
+          audioBitsPerSecond:
+            160000
+
+        }
+
+      )
+
+      :
+
+      new MediaRecorder(
+        stream
+      );
+
+  }
+
+  catch{
+
+    recorder =
+      new MediaRecorder(
+        stream
+      );
+
+  }
+
+
+  recordedChunks =
+    [];
+
+
+  recorder.ondataavailable =
+    event => {
+
+      if(
+        event.data.size
+      ){
+
+        recordedChunks.push(
+          event.data
+        );
+
+      }
+
+    };
+
+
+  recorder.onstop =
+    () => {
+
+      const type =
+        recorder.mimeType
+        ||
+        "video/webm";
+
+
+      const blob =
+        new Blob(
+
+          recordedChunks,
+
+          {
+            type
+          }
+
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+
+      link.href =
+        url;
+
+
+      link.download =
+
+        "bounce-lab-"
+
+        +
+
+        Date.now()
+
+        +
+
+        (
+          type.includes(
+            "mp4"
+          )
+
+          ?
+
+          ".mp4"
+
+          :
+
+          ".webm"
+        );
+
+
+      link.click();
+
+
+      setTimeout(
+
+        () =>
+          URL.revokeObjectURL(
+            url
+          ),
+
+        2000
+
+      );
+
+
+      statusEl.textContent =
+        "Video mit synchronem Sound gespeichert.";
+
+    };
+
+
+  /*
+    Kleinere Chunks statt 1000 ms.
+  */
+
+  recorder.start(
+    250
+  );
+
+
+  recording =
+    true;
+
+
+  recordButton.textContent =
+    "■ Aufnahme stoppen";
+
+
+  recordButton.classList.add(
+    "danger"
+  );
+
+
+  statusEl.textContent =
+    "Aufnahme läuft. Jetzt Spiel starten.";
+
+}
+
+
+/* =====================================================
+   STOP RECORDING
+===================================================== */
+
+function stopRecording(){
+
+  if(
+
+    recorder
+
+    &&
+
+    recorder.state
+    !==
+    "inactive"
+
+  ){
+
+    recorder.stop();
+
+  }
+
+
+  recording =
+    false;
+
+
+  recordButton.textContent =
+    "● Aufnahme starten";
+
+
+  recordButton.classList.remove(
+    "danger"
+  );
+
+}
+
+
+/* =====================================================
+   UI
+===================================================== */
+
+durationInput.addEventListener(
+
+  "input",
+
+  () => {
+
+    durationLabel.textContent =
+      durationInput.value
+      +
+      " s";
+
+  }
+
+);
+
+
+watermarkOpacityInput.addEventListener(
+
+  "input",
+
+  () => {
+
+    watermarkOpacityLabel.textContent =
+      watermarkOpacityInput.value
+      +
+      "%";
+
+  }
+
+);
+
+
+jiggleInput.addEventListener(
+
+  "input",
+
+  () => {
+
+    jiggleLabel.textContent =
+      jiggleInput.value
+      +
+      "%";
+
+  }
+
+);
+
+
+startButton.addEventListener(
+
+  "click",
+
+  startGame
+
+);
+
+
+resetButton.addEventListener(
+
+  "click",
+
+  resetGame
+
+);
+
+
+recordButton.addEventListener(
+
+  "click",
+
+  startRecording
+
+);
+
+
+durationLabel.textContent =
+  durationInput.value
+  +
+  " s";
+
+
+watermarkOpacityLabel.textContent =
+  watermarkOpacityInput.value
+  +
+  "%";
+
+
+jiggleLabel.textContent =
+  jiggleInput.value
+  +
+  "%";
+
+
+updateVolume();
+
+
+resetGame();
+
+</script>
+
+</body>
+</html>
